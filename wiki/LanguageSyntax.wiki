@@ -7,23 +7,25 @@ Example program/snippets demonstrating functionality
 
 = Keywords = 
 == Predefined Events  == 
-  _each generation
+  _each generation_
 
-  _each mutation
+  _each mutation_
 
-  each mating
+  _each mating_
 
-  each selection
+  _each selection_
 
-  organism born
+  _organism born_ 
 
-  organism killed
+  _organism killed_ [organism]
 
-  organism mutated
+  _organism mutated_ [organism]
 
-  organism mates with organism
+  _organism mates with organism_ [organism_a organism_b]
 
-  organism fitness changes
+  _child born_ [child]
+
+  _organism fitness changes_ [organism]
 
 == Debugging Modifiers == 
   before
@@ -44,6 +46,8 @@ Example program/snippets demonstrating functionality
 
 
 == Functions/Operators ==
+
+  _to_
 
 === List operators ===
 {{{
