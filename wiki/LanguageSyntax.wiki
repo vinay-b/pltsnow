@@ -7,6 +7,9 @@ Example program/snippets demonstrating functionality
 
 = Keywords = 
 == Predefined Events  == 
+
+  _EVENT_ {IMPLICIT PARAMETER}
+
   _each generation_
 
   _each mutation_
