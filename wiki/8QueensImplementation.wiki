@@ -1,0 +1,70 @@
+#summary One-sentence summary of this page.
+#labels Phase-Requirements,Featured
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+{{{
+MaxGenerations = 800
+MaxFitness = 28
+
+define gene
+ int(1..8)
+end
+
+define chromosome
+ gene[8]
+end
+
+define organism
+ chromosome[1]
+
+ construct:
+   name = <some_name>
+   for each gene in each chromosome
+     gene.value = rand(1:8)
+   end
+   fitness = 0
+ end
+end
+
+define evaluate fitness:
+	for organism:
+		fitness = 28;
+		for chromosome in organism:
+		      for gene1 in chromosome from 0:6
+			for gene2 in chromosome from gene1.index + 1:7
+				if gene1 == gene2
+					fitness ?
+                               end
+				if gene1 ? gene2 / gene1.index ?gene2.index == 1
+					fitness ?
+				end
+			end
+		end
+	end
+end
+
+define mate
+ child = splice [at rand(0:7)]
+end
+
+define mutate organism:
+	for chromosome in organism
+		gene[rand(0:7)].value = rand (1:8)
+       end
+end
+
+define select parent
+	both:
+		<proper selection function>
+end
+
+define next generation:
+ retain top 10[%] old
+end
+
+}}}
