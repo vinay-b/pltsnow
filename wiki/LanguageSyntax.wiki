@@ -5,8 +5,12 @@
 
 Example program/snippets demonstrating functionality
 
+= List operators = 
 
-= Details =
+max, min, average, append, extend, pop, push, index, for..in.., reverse, map, filter, search, sort
+
+
+= Snippets =
 
 {{{
 to construct organism:
