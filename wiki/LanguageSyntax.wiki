@@ -7,6 +7,7 @@ Example program/snippets demonstrating functionality
 
 = Keywords = 
 == Predefined Events  == 
+Actions can be provided to zero, many, or all of these predefined event hooks.
 
   each _EVENT_ {IMPLICIT PARAMETER}
 
@@ -37,6 +38,8 @@ each organism killed:
 }}}
 
 == Debugging Modifiers == 
+Defines at relative to an event the execution of an action.
+
   _before_ hooks action to pre-event
 
   _after_ *default* hooks action to post-event
@@ -52,6 +55,9 @@ after each selection:
 
 
 == Environmental Parameters ==
+Global parameters that should be re-evaluated `each generation`.
+Read-only accessible at all points of the simulation flow.
+
   _populationSize_ defines the total population after mating.
 
   _topParentPool_ defines the elite subset from which to mate.
@@ -70,6 +76,9 @@ each generation:
 
 
 == Environmental Variables/Descriptors ==
+Global parameters that should are re-evaluated by the compiler at `each generation`.
+Read-only accessible at all points of the simulation flow.
+
   PARAMETER {TYPE}
 
   _averageFitness_ {value} describes the average fitness of the population.
@@ -95,7 +104,17 @@ each generation:
 
 == Functions/Operators ==
 
-  _to_
+  _to ACTION NAME_ defines a new subroutine/function. I have no idea how parameters are passed. Closures? 
+ACTION NAME should be a camelCased single world.  How is an action called?
+
+*example*
+{{{
+to printTopSolution:
+  print "best solution thus far: " . maxFitnessAllTime
+
+each generation:
+  printTopSolution
+}}} 
 
 === List operators ===
 {{{
@@ -127,10 +146,13 @@ to mate:
 }}}
 
 === Required Actions===
-to construct
-to mate
-to mutate
-to get fitness
+  _to construct_ {chromosome} should create a new, initial chromosome. Often random.
+
+  _to mate_ {chromosomeA chromosomeB} should define how to recombine chromosomes to form a new chromosome.
+
+  _to mutate_ {chromosomeA chromosomeB} should define how to recombine a chromosome with a newly-constructed chromosome, yielding a mutated chromosome.
+
+  _to get fitness_ {chromosome} should define the calculation of fitness for a chromosome.
 
 
 = Snippets =
