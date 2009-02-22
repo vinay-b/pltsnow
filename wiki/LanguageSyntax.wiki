@@ -31,9 +31,9 @@ Example program/snippets demonstrating functionality
   each _organism fitness changes_ {organism} occurs as the fitness of an organism changes.
 
 == Debugging Modifiers == 
-  _before_
+  _before_ hooks action to pre-event
 
-  _after_
+  _after_ *default* hooks action to post-event
 
 
 == Environmental Parameters ==
