@@ -62,6 +62,12 @@ after each selection:
 
   _mutation rate_ defines the probability of mutation on a per-organism basis.
 
+*example*
+{{{
+each generation:
+  population size *=  1.05
+}}}
+
 
 == Environmental Variables/Descriptors ==
   _average fitness_ describes the average fitness of the population.
@@ -78,7 +84,11 @@ after each selection:
 
   _min fitness all time_ describes the bottom organism ever encountered.
 
-
+*example*
+{{{
+each generation:
+  print "best solution thus far: " + max fitness all time
+}}}
 
 
 == Functions/Operators ==
