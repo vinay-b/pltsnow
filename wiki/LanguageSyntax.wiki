@@ -15,17 +15,17 @@ Example program/snippets demonstrating functionality
 
   _each selection_
 
-  _organism born_ 
+  _organism constructed_ {organism} 
 
-  _organism killed_ [organism]
+  _organism killed_ {organism}
 
-  _organism mutated_ [organism]
+  _organism mutated_ {organism}
 
-  _organism mates with organism_ [organism_a organism_b]
+  _organism mates with organism_ {organism_a organism_b}
 
-  _child born_ [child]
+  _child born_ {organism} 
 
-  _organism fitness changes_ [organism]
+  _organism fitness changes_ {organism}
 
 == Debugging Modifiers == 
   before
