@@ -116,6 +116,10 @@ each generation:
   printTopSolution
 }}} 
 
+ _define_ 
+
+
+
 === List operators ===
 {{{
 first()
