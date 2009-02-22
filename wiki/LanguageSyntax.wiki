@@ -10,30 +10,30 @@ Example program/snippets demonstrating functionality
 
   each _EVENT_ {IMPLICIT PARAMETER}
 
-  each _generation_
+  each _generation_ occurs as an entire iteration happens
 
-  each _mutation_
+  each _mutation_ occurs at the mutation stage 
 
-  each _mating_
+  each _mating_ occurs at the mating stage
 
-  each _selection_
+  each _selection_ occurs at the selection stage
 
-  each _organism constructed_ {organism} 
+  each _organism constructed_ {organism} occurs as a single organism is created.  Initial creation-inclusive.
 
-  each _organism killed_ {organism}
+  each _organism killed_ {organism} occurs as a single organism is removed from the population.
 
-  each _organism mutated_ {organism}
+  each _organism mutated_ {organism} occurs as a single organism is randomly mutated.
 
-  each _organism mates with organism_ {organism_a organism_b}
+  each _organism mates with organism_ {organism_a organism_b} occurs when two organisms recombine to construct a new organism.
 
-  each _child born_ {organism} 
+  each _child born_ {organism} occurs as a single organism is created through mating. Initial creation-exclusive.
 
-  each _organism fitness changes_ {organism}
+  each _organism fitness changes_ {organism} occurs as the fitness of an organism changes.
 
 == Debugging Modifiers == 
-  before
+  _before_
 
-  after
+  _after_
 
 
 == Environmental Parameters ==
