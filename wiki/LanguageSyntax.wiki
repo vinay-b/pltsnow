@@ -24,13 +24,13 @@ Example program/snippets demonstrating functionality
 
   each _organism mutated_ {organism} occurs as a single organism is randomly mutated.
 
-  each _organism mates with organism_ {organism_a organism_b} occurs when two organisms recombine to construct a new organism.
+  each _organism mates with organism_ {organismA organismB} occurs when two organisms recombine to construct a new organism.
 
   each _child born_ {organism} occurs as a single organism is created through mating. Initial creation-exclusive.
 
   each _organism fitness changes_ {organism} occurs as the fitness of an organism changes.
 
-*example*
+*Example:*
 {{{
 each organism killed:
    print "killing " . organism.fitness
@@ -41,55 +41,55 @@ each organism killed:
 
   _after_ *default* hooks action to post-event
 
-*example*
+*Example:*
 {{{
 before each selection:
-  print "before selection, current population size: " . population size
+  print "before selection, current population size: " . populationSize
 
 after each selection:
-  print "after selection, current population size: " . population size
+  print "after selection, current population size: " . populationSize
 }}}
 
 
 == Environmental Parameters ==
-  _population size_ defines the total population after mating.
+  _populationSize_ defines the total population after mating.
 
-  _top parent pool_ defines the elite subset from which to mate.
+  _topParentPool_ defines the elite subset from which to mate.
 
-  _bottom parent pool_ defines the highly suboptimal subset from which to mate, to improve genetic differentiation.
+  _bottomParentPool_ defines the highly suboptimal subset from which to mate, to improve genetic differentiation.
 
-  _organism lifespan_ defines the lifespan of a single organism.
+  _organismLifespan_ defines the lifespan of a single organism.
 
-  _mutation rate_ defines the probability of mutation on a per-organism basis.
+  _mutationRate_ defines the probability of mutation on a per-organism basis.
 
-*example*
+*Example:*
 {{{
 each generation:
-  population size *=  1.05
+  populationSize *=  1.05
 }}}
 
 
 == Environmental Variables/Descriptors ==
   PARAMETER {TYPE}
 
-  _average fitness_ {value} describes the average fitness of the population.
+  _averageFitness_ {value} describes the average fitness of the population.
 
-  _average age_ {value} describes the average age of the population.
+  _averageAge_ {value} describes the average age of the population.
 
-  _max fitness_ {organism} describes the top organism in the current population.
+  _maxFitness_ {organism} describes the top organism in the current population.
 
-  _min fitness_ {organism} describes the bottom organism in the current population.
+  _minFitness_ {organism} describes the bottom organism in the current population.
 
   _oldest_ {organism} describes the oldest organism in the current population.
 
-  _max fitness all time_ {organism} describes  the top organism ever encountered.
+  _maxFitnessAllTime_ {organism} describes  the top organism ever encountered.
 
-  _min fitness all time_ {organism} describes the bottom organism ever encountered.
+  _minFitnessAllTime_ {organism} describes the bottom organism ever encountered.
 
-*example*
+*Example:*
 {{{
 each generation:
-  print "best solution thus far: " . max fitness all time
+  print "best solution thus far: " . maxFitnessAllTime
 }}}
 
 
