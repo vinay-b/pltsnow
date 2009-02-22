@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Example program/snippets demonstrating functionality
 #labels Phase-Requirements,Phase-Design,Featured
 
 = Introduction =
@@ -15,7 +15,7 @@ extend()
 pop() 
 push() 
 index() 
-for..in..() 
+for..in..
 reverse() 
 map() 
 filter() 
