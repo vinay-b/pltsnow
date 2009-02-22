@@ -7,40 +7,40 @@ Example program/snippets demonstrating functionality
 
 = Keywords = 
 == Predefined Events  == 
-  each generation
+  *each generation*
 
-  each mutation
+  *each mutation*
 
-  each mating
+  *each mating*
 
-  each selection
+  *each selection*
 
-  organism born
+  *organism born*
 
-  organism killed
+  *organism killed*
 
-  organism mutated
+  *organism mutated*
 
-  organism mates with organism
+  *organism mates with organism*
 
-  organism fitness changes
+  *organism fitness changes*
 
 == Debugging Modifiers == 
-  before
+  *before*
 
-  after
+  *after*
 
 
 == Environmental Parameters ==
-  population size
+  *population size*
 
-  mutation rate
+  *mutation rate*
 
 
 == Environmental Variables/Descriptors ==
-  average fitness
+  *average fitness*
 
-  average age
+  *average age*
 
 
 == Functions/Operators ==
