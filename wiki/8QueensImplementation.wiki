@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary A Sample Program: 1st Look
 #labels Phase-Requirements,Featured
 
 = Introduction =
