@@ -70,19 +70,21 @@ each generation:
 
 
 == Environmental Variables/Descriptors ==
-  _average fitness_ describes the average fitness of the population.
+  PARAMETER {TYPE}
 
-  _average age_ describes the average age of the population.
+  _average fitness_ {value} describes the average fitness of the population.
 
-  _max fitness_ describes the top organism in the current population.
+  _average age_ {value} describes the average age of the population.
 
-  _min fitness_ describes the bottom organism in the current population.
+  _max fitness_ {organism} describes the top organism in the current population.
 
-  _oldest_ describes the oldest organism in the current population.
+  _min fitness_ {organism} describes the bottom organism in the current population.
 
-  _max fitness all time_ describes  the top organism ever encountered.
+  _oldest_ {organism} describes the oldest organism in the current population.
 
-  _min fitness all time_ describes the bottom organism ever encountered.
+  _max fitness all time_ {organism} describes  the top organism ever encountered.
+
+  _min fitness all time_ {organism} describes the bottom organism ever encountered.
 
 *example*
 {{{
