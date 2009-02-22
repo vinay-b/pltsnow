@@ -1,0 +1,43 @@
+#summary One-sentence summary of this page.
+#labels Phase-Requirements,Phase-Design,Featured
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+{{{
+to construct organism:
+    (global organism.count)
+    name = count;  // dynamic construction
+    fingers = 10;  // random construction
+    for gene in chromosome:
+        gene.x = gene.count;
+        gene.y = random; // automatic typing
+
+
+to mate male and female:
+    splice [at 5[%] [and 10]]
+
+to mutate organism:
+    // mate with implicit random organism
+
+each generation:
+        population_size = population_size *= 1.01
+        // etc.
+        // these variable are evaluated each generation
+
+// debugging statements
+before organism killed:
+    print "killing organism"
+
+after mutations:
+    print "done with mutations"
+}}}
