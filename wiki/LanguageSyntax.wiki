@@ -49,9 +49,21 @@ Example program/snippets demonstrating functionality
 
 
 == Environmental Variables/Descriptors ==
-  _average fitness_
+  _average fitness_ describes the average fitness of the population.
 
-  _average age_
+  _average age_ describes the average age of the population.
+
+  _max fitness_ describes the top organism in the current population.
+
+  _min fitness_ describes the bottom organism in the current population.
+
+  _oldest_ describes the oldest organism in the current population.
+
+  _max fitness all time_ describes  the top organism ever encountered.
+
+  _min fitness all time_ describes the bottom organism ever encountered.
+
+
 
 
 == Functions/Operators ==
