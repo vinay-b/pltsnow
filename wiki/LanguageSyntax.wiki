@@ -30,10 +30,25 @@ Example program/snippets demonstrating functionality
 
   each _organism fitness changes_ {organism} occurs as the fitness of an organism changes.
 
+*example*
+{{{
+each organism killed:
+   print "killing " . organism.fitness
+}}}
+
 == Debugging Modifiers == 
   _before_ hooks action to pre-event
 
   _after_ *default* hooks action to post-event
+
+*example*
+{{{
+before each selection:
+  print "before selection, current population size: " + population size
+
+after each selection:
+  print "after selection, current population size: " + population size
+}}}
 
 
 == Environmental Parameters ==
