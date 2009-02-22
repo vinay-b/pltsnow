@@ -8,27 +8,38 @@ Example program/snippets demonstrating functionality
 = Keywords = 
 == Predefined Events  == 
   each generation
+
   each mutation
+
   each mating
+
   each selection
+
   organism born
+
   organism killed
+
   organism mutated
+
   organism mates with organism
+
   organism fitness changes
 
 == Debugging Modifiers == 
   before
+
   after
 
 
 == Environmental Parameters ==
   population size
+
   mutation rate
 
 
 == Environmental Variables/Descriptors ==
   average fitness
+
   average age
 
 
@@ -55,7 +66,7 @@ sort()
 }}}
 
 === Chromosome Operators ===
-{{{splice [at \d[%] [and \d]]}}}  on two implicit chromosomes
+`splice [at \d[%] [and \d]]`  on two implicit chromosomes
 
 = Snippets =
 
