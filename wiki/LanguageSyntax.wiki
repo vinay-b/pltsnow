@@ -44,10 +44,10 @@ each organism killed:
 *example*
 {{{
 before each selection:
-  print "before selection, current population size: " + population size
+  print "before selection, current population size: " . population size
 
 after each selection:
-  print "after selection, current population size: " + population size
+  print "after selection, current population size: " . population size
 }}}
 
 
@@ -87,7 +87,7 @@ each generation:
 *example*
 {{{
 each generation:
-  print "best solution thus far: " + max fitness all time
+  print "best solution thus far: " . max fitness all time
 }}}
 
 
@@ -117,6 +117,19 @@ sort()
 
 === Chromosome Operators ===
 `splice [at \d[%] [and \d]]`  on two implicit chromosomes
+
+*example*
+{{{
+to mate:
+  splice at 5 and 15
+}}}
+
+=== Required Actions===
+to construct
+to mate
+to mutate
+to get fitness
+
 
 = Snippets =
 
