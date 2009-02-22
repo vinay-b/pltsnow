@@ -7,17 +7,41 @@ Example program/snippets demonstrating functionality
 
 = Keywords = 
 == Predefined Events  == 
+each generation
+organism born
+organism killed
+organism mutated
+organism mates with organism
+organism fitness changes
+each mutation
+each mating
+each selection
+
 
 == Debugging Modifiers == 
+before
+after
+
 
 == Environmental Parameters ==
+population size
+mutation rate
+
+
+== Environmental Variables/Descriptors ==
+average fitness
+average age
+
 
 == Functions/Operators ==
 
 === List operators ===
 {{{
+first()
+last()
 max()
 min() 
+sum()
 average() 
 append()
 extend()
@@ -26,11 +50,13 @@ push()
 index() 
 for..in..
 reverse() 
-map() 
 filter() 
 search() 
 sort()
 }}}
+
+=== Chromosome Operators ===
+splice [at \d[%] [and \d]]  on implicit chromosomes
 
 = Snippets =
 
