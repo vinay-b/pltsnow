@@ -37,9 +37,15 @@ Example program/snippets demonstrating functionality
 
 
 == Environmental Parameters ==
-  population size
+  _population size_ defines the total population after mating.
 
-  mutation rate
+  _top parent pool_ defines the elite subset from which to mate.
+
+  _bottom parent pool_ defines the highly suboptimal subset from which to mate, to improve genetic differentiation.
+
+  _organism lifespan_ defines the lifespan of a single organism.
+
+  _mutation rate_ defines the probability of mutation on a per-organism basis.
 
 
 == Environmental Variables/Descriptors ==
