@@ -8,27 +8,27 @@ Example program/snippets demonstrating functionality
 = Keywords = 
 == Predefined Events  == 
 
-  _EVENT_ {IMPLICIT PARAMETER}
+  each _EVENT_ {IMPLICIT PARAMETER}
 
-  _each generation_
+  each _generation_
 
-  _each mutation_
+  each _mutation_
 
-  _each mating_
+  each _mating_
 
-  _each selection_
+  each _selection_
 
-  _organism constructed_ {organism} 
+  each _organism constructed_ {organism} 
 
-  _organism killed_ {organism}
+  each _organism killed_ {organism}
 
-  _organism mutated_ {organism}
+  each _organism mutated_ {organism}
 
-  _organism mates with organism_ {organism_a organism_b}
+  each _organism mates with organism_ {organism_a organism_b}
 
-  _child born_ {organism} 
+  each _child born_ {organism} 
 
-  _organism fitness changes_ {organism}
+  each _organism fitness changes_ {organism}
 
 == Debugging Modifiers == 
   before
