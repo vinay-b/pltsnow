@@ -159,6 +159,14 @@ to mate:
   _to get fitness_ {chromosome} should define the calculation of fitness for a chromosome.
 
 
+=== Required Parameters===
+  TERMINATION CONDITIONS
+
+  _maxGenerations_
+
+  _maxFitness_
+
+
 = Snippets =
 
 {{{
