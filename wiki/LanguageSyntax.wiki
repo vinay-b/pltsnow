@@ -169,39 +169,3 @@ to mate:
   _to mutate_ {chromosomeA chromosomeB} should define how to recombine a chromosome with a newly-constructed chromosome, yielding a mutated chromosome.
 
   _to getFitness_ {chromosome} should define the calculation of fitness for a chromosome.
-
-
-=== Required Parameters===
-
-
-
-= Snippets =
-
-{{{
-to construct organism:
-    (global organism.count)
-    name = count;  // dynamic construction
-    fingers = 10;  // random construction
-    for gene in chromosome:
-        gene.x = gene.count;
-        gene.y = random; // automatic typing
-
-
-to mate male and female:
-    splice [at 5[%] [and 10]]
-
-to mutate organism:
-    // mate with implicit random organism
-
-each generation:
-        population_size = population_size *= 1.01
-        // etc.
-        // these variable are evaluated each generation
-
-// debugging statements
-before organism killed:
-    print "killing organism"
-
-after mutations:
-    print "done with mutations"
-}}}
