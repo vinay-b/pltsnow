@@ -74,5 +74,8 @@ each generation:
   for each organism
     print name + ' ' + getFitness
   end
+
+  #set the mutation rate to some random number between 10-50
+  mutationRate = rand(10:50)
 end
 }}}
