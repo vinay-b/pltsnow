@@ -55,6 +55,7 @@ after each selection:
 
 
 == Environmental Parameters ==
+Parameters are set by the programmer and modify the behavior of the population.
 Global parameters that should be re-evaluated `each generation`.
 Read-only accessible at all points of the simulation flow.
 
@@ -75,8 +76,9 @@ each generation:
 }}}
 
 
-== Environmental Variables/Descriptors ==
-Global parameters that should are re-evaluated by the compiler at `each generation`.
+== Environmental Variables ==
+Variables describe the current state of the environment.
+Environmental variables are re-evaluated by the compiler at `each generation`.
 Read-only accessible at all points of the simulation flow.
 
   PARAMETER {TYPE}
