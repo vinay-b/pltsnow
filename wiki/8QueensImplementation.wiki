@@ -8,63 +8,63 @@ Add your content here.
 
 = Details =
 {{{
+#These two variables define the stopping criteria. You can specify either or both.
+#MaxGenerations will limit the number of generations to run for (may not be optimal!)
+#MaxFitness will limit to some fitness stopping point.
+#If you provide both, then it will stop at whichever comes first.
 MaxGenerations = 800
 MaxFitness = 28
 
+#Specify a selection method
+SelectMethod = BY_BEST_FITNESS
+
+#This defines a gene. In this case, the gene just contains 1 atom - "value"
 define gene
- int(1..8)
+ (value)
 end
 
+#This defines a chromosome. In this case, a chromosome is composed of 8 genes
 define chromosome
- gene[8]
+ 8 genes
 end
 
-define organism
- chromosome[1]
+#This defines an organism and how it is initialized
+to construct organism:
+   #Here you can see that we are setting some arbitrary parameter
+   #as a member field of organism, implicitely declaring it
+   #We set it to the global variable "COUNT" which is the number of
+   #organisms created thus far
+   name = organism.COUNT
 
- construct:
-   name = <some_name>
+   #Set each gene to have a random value from 1-8
    for each gene in each chromosome
      gene.value = rand(1:8)
    end
-   fitness = 0
- end
 end
 
-define evaluate fitness:
-	for organism:
-		fitness = 28;
-		for chromosome in organism:
-		      for gene1 in chromosome from 0:6
-			for gene2 in chromosome from gene1.index + 1:7
-				if gene1 == gene2
-					fitness ?
-                               end
-				if gene1 ? gene2 / gene1.index ?gene2.index == 1
-					fitness ?
-				end
-			end
-		end
+to evaluate fitness:
+	fitness = 28;
+	for each gene1 in chromosome from 0:6 #Loop over each gene except for the last one
+	    for each gene2 in chromosome from gene1.index + 1:7
+		if gene1 = gene2 #In sn*w, = is always a comparison operator in an if
+		    fitness--
+                end
+	        if (gene1 - gene2) / (gene1.index - gene2.index) = 1
+	            fitness--
+	        end
 	end
 end
 
-define mate
- child = splice [at rand(0:7)]
+to mate
+ child = splice [at rand(0:7)] #Randomly splice 2 organisms to get the child
 end
 
-define mutate organism:
-	for chromosome in organism
-		gene[rand(0:7)].value = rand (1:8)
-       end
+to mutate organism:
+   #mutate the organism by randomly changing a gene
+   gene[rand(0:7)].value = rand (1:8)
 end
 
-define select parent
-	both:
-		<proper selection function>
+each generation:
+  topParentPool = 10%
 end
-
-define next generation:
- retain top 10[%] old
-end
-
 }}}
