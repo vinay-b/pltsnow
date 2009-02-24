@@ -69,6 +69,8 @@ Read-only accessible at all points of the simulation flow.
 
   _mutationRate_ defines the probability of mutation on a per-organism basis.
 
+  _selectMethod_ 
+
 *Termination Conditions*
 
   _maxGenerations_
