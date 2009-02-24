@@ -61,7 +61,7 @@ to mate
  child = splice [at rand(0:7)] #Randomly splice 2 organisms to get the child
 end
 
-to mutate organism:
+to mutate chromosome:
    #mutate the organism by randomly changing a gene
    gene[rand(0:7)].value = rand (1:8)
 end
