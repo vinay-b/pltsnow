@@ -169,3 +169,7 @@ to mate:
   _to mutate_ {chromosomeA chromosomeB} should define how to recombine a chromosome with a newly-constructed chromosome, yielding a mutated chromosome.
 
   _to getFitness_ {chromosome} should define the calculation of fitness for a chromosome.
+
+=Other thoughts=
+To be included if we have time:
+  * Provide a built in function for iterating over all pairs of items in a list
