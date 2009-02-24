@@ -69,6 +69,12 @@ Read-only accessible at all points of the simulation flow.
 
   _mutationRate_ defines the probability of mutation on a per-organism basis.
 
+*Termination Conditions*
+
+  _maxGenerations_
+
+  _maxFitness_
+
 *Example:*
 {{{
 each generation:
@@ -158,15 +164,11 @@ to mate:
 
   _to mutate_ {chromosomeA chromosomeB} should define how to recombine a chromosome with a newly-constructed chromosome, yielding a mutated chromosome.
 
-  _to get fitness_ {chromosome} should define the calculation of fitness for a chromosome.
+  _to getFitness_ {chromosome} should define the calculation of fitness for a chromosome.
 
 
 === Required Parameters===
-  TERMINATION CONDITIONS
 
-  _maxGenerations_
-
-  _maxFitness_
 
 
 = Snippets =
