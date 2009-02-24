@@ -31,6 +31,8 @@ Actions can be provided to zero, many, or all of these predefined event hooks.
 
   each _organism fitness changes_ {organism} occurs as the fitness of an organism changes.
 
+  each _termination_ occurs as the program reaches the termination conditions.
+
 *Example:*
 {{{
 each organism killed:
