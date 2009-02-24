@@ -34,7 +34,7 @@ to construct organism:
    #as a member field of organism, implicitely declaring it
    #We set it to the global variable "COUNT" which is the number of
    #organisms created thus far
-   name = organism.COUNT
+   name = ORGANISM_COUNT
 
    #Set each gene to have a random value from 1-8
    for each gene in each chromosome
@@ -44,8 +44,10 @@ end
 
 to evaluate fitness:
 	fitness = 28;
-	for each gene1 in chromosome from 0:6 #Loop over each gene except for the last one
-	    for each gene2 in chromosome from gene1.index + 1:7
+
+        #Loop over each gene except for the last one
+	for each gene in chromosome as gene1 from 0:6
+	    for each gene in chromosome as gene2 from gene1.index + 1:7
 		if gene1 = gene2 #In sn*w, = is always a comparison operator in an if
 		    fitness--
                 end
@@ -66,5 +68,11 @@ end
 
 each generation:
   topParentPool = 10%
+  #print the average fitness
+  print averageFitness
+  #print the "name" and fitness of each organism
+  for each organism
+    print name + ' ' + getFitness
+  end
 end
 }}}
