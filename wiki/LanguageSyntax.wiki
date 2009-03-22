@@ -39,7 +39,7 @@ each organism killed:
    print "killing " . organism.fitness
 }}}
 
-== Debugging Modifiers == 
+== Event Modifiers == 
 Defines at relative to an event the execution of an action.
 
   _before_ hooks action to pre-event
