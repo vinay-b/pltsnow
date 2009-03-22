@@ -19,7 +19,7 @@ Actions can be provided to zero, many, or all of these predefined event hooks.
 
   each _selection_ occurs at the selection stage
 
-  each _organismConstructed_ {organism} occurs as a single organism is created.  Initial creation-inclusive.
+  each _organismConstructed_:organims occurs as a single organism is created.  Initial creation-inclusive.
 
   each _organismKilled_ {organism} occurs as a single organism is removed from the population.
 
