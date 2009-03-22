@@ -19,17 +19,17 @@ Actions can be provided to zero, many, or all of these predefined event hooks.
 
   each _selection_ occurs at the selection stage
 
-  each _organism constructed_ {organism} occurs as a single organism is created.  Initial creation-inclusive.
+  each _organismConstructed_ {organism} occurs as a single organism is created.  Initial creation-inclusive.
 
-  each _organism killed_ {organism} occurs as a single organism is removed from the population.
+  each _organismKilled_ {organism} occurs as a single organism is removed from the population.
 
-  each _organism mutated_ {organism} occurs as a single organism is randomly mutated.
+  each _organismMutated_ {organism} occurs as a single organism is randomly mutated.
 
-  each _organism mates with organism_ {organismA organismB} occurs when two organisms recombine to construct a new organism.
+  each _organismMatesWithOrganism_ {organismA organismB} occurs when two organisms recombine to construct a new organism.
 
-  each _child born_ {organism} occurs as a single organism is created through mating. Initial creation-exclusive.
+  each _childBorn_ {organism} occurs as a single organism is created through mating. Initial creation-exclusive.
 
-  each _organism fitness changes_ {organism} occurs as the fitness of an organism changes.
+  each _organismFitnessChanges_ {organism} occurs as the fitness of an organism changes.
 
   each _termination_ occurs as the program reaches the termination conditions.
 
