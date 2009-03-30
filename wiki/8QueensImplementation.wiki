@@ -1,13 +1,5 @@
-#summary A Sample Program: 1st Look
 #labels Phase-Requirements,Featured
 
-= Introduction =
-
-Add your content here.
-
-
-= Details =
-{{{
 #These two variables define the stopping criteria. You can specify either or both.
 #MaxGenerations will limit the number of generations to run for (may not be optimal!)
 #MaxFitness will limit to some fitness stopping point.
@@ -36,11 +28,11 @@ to constructOrganism:
 end
 
 to evaluateFitness: organism
-        var cur_fit = 28;
-		var i;
-		var j;
-		var gene1;
-		var gene2;
+        var cur_fit = 28
+		var i
+		var j
+		var gene1
+		var gene2
 		
 		for i from 0 to 6
 			# a deep copy. by value
@@ -78,4 +70,3 @@ each generation:
   print "average fitness: " + averageFitness
 
 end
-}}}
