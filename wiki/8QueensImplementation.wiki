@@ -1,5 +1,5 @@
 #labels Phase-Requirements,Featured
-
+{{{
 #These two variables define the stopping criteria. You can specify either or both.
 #MaxGenerations will limit the number of generations to run for (may not be optimal!)
 #MaxFitness will limit to some fitness stopping point.
@@ -70,3 +70,4 @@ each generation:
   print "average fitness: " + averageFitness
 
 end
+}}}
