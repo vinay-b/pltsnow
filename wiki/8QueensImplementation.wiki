@@ -20,7 +20,7 @@ define chromosome
 end
 
 #This defines an organism and how it is initialized
-to constructOrganism:
+to construct:
    #Set each gene to have a random value from 1-8
    foreach gene in chromosome as gene1
    		gene1.num = rand:0 8
