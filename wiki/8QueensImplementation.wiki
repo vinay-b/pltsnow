@@ -12,70 +12,70 @@ Add your content here.
 #MaxGenerations will limit the number of generations to run for (may not be optimal!)
 #MaxFitness will limit to some fitness stopping point.
 #If you provide both, then it will stop at whichever comes first.
-MaxGenerations = 800
-MaxFitness = 28
-
-#Specify a selection method
-SelectMethod = BY_BEST_FITNESS
+~MaxGenerations = 800
+~MaxFitness     = 28
+~topParentPool  = 10%
+~mutationRate   = rand(10:50)
 
 #This defines a gene. In this case, the gene just contains 1 atom - "value"
 define gene
- (value)
+	num
 end
 
 #This defines a chromosome. In this case, a chromosome is composed of 8 genes
 define chromosome
- 8 genes
+	8 genes
 end
 
 #This defines an organism and how it is initialized
-to construct organism:
-   #Here you can see that we are setting some arbitrary parameter
-   #as a member field of organism, implicitely declaring it
-   #We set it to the global variable "COUNT" which is the number of
-   #organisms created thus far
-   name = ORGANISM_COUNT
-
-   #Set each gene to have a random value from 1-8
-   for each gene in each chromosome
-     gene.value = rand(1:8)
-   end
+to constructOrganism:
+   #Set each gene to have a random value from 1-8
+   foreach gene in chromosome as gene1
+   		gene1.num = rand:0 8
+   end
 end
 
-to evaluate fitness:
-	fitness = 28;
+to evaluateFitness: organism
+        var cur_fit = 28;
+		var i;
+		var j;
+		var gene1;
+		var gene2;
+		
+		for i from 0 to 6
+			# a deep copy. by value
+			gene1 = nth(i, organism.chromosome)
+			
+			for j from 1 to 7
+				gene2 = nth(j, organism.chromosome)
+				
+				# by value comparison.
+				if gene1 = gene2
+					cur_fit = cur_fit - 1
+				end
+				
+				if ((gene1.num - gene2.num) / (i - j)) = 1
+					cur_fit = cur_fit - 1
+				end
+			end
+		end
 
-        #Loop over each gene except for the last one
-	for each gene in chromosome as gene1 from 0:6
-	    for each gene in chromosome as gene2 from gene1.index + 1:7
-		if gene1 = gene2 #In sn*w, = is always a comparison operator in an if
-		    fitness--
-                end
-	        if (gene1 - gene2) / (gene1.index - gene2.index) = 1
-	            fitness--
-	        end
-	end
+		organism.fitness = cur_fit
 end
 
-to mate
- child = splice [at rand(0:7)] #Randomly splice 2 organisms to get the child
+to mate: organismA organismB
+	#Randomly splice 2 organisms to get the child
+	splice at (rand: 0 8) 
 end
 
-to mutate chromosome:
-   #mutate the organism by randomly changing a gene
-   gene[rand(0:7)].value = rand (1:8)
+to mutate chromosome: organismA
+   #mutate the organism by randomly changing a gene
+   nth( (rand: 0 8), organism.chromosome ) =  rand: 1 8
 end
 
 each generation:
-  topParentPool = 10%
-  #print the average fitness
-  print averageFitness
-  #print the "name" and fitness of each organism
-  for each organism
-    print name + ' ' + getFitness
-  end
+  #print the average fitness
+  print "average fitness: " + averageFitness
 
-  #set the mutation rate to some random number between 10-50
-  mutationRate = rand(10:50)
 end
 }}}
