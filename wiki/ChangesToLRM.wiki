@@ -1,0 +1,3 @@
+events don't begin with '~'
+
+add MinFitness, avgFitness 
