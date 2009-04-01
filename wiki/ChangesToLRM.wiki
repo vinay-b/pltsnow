@@ -1,3 +1,5 @@
 events don't begin with '~'
 
-add MinFitness, avgFitness 
+add minFitness, avgFitness
+
+remove maxGenerations 
