@@ -3,3 +3,5 @@ events don't begin with '~'
 add minFitness, avgFitness
 
 remove maxGenerations 
+
+add initialization event
