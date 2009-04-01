@@ -5,3 +5,7 @@ add minFitness, avgFitness
 remove maxGenerations 
 
 add initialization event
+
+after init is before population construction
+
+before termination is after population release...just before termination
