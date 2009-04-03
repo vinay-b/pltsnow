@@ -1,0 +1,77 @@
+#These two variables define the stopping criteria. You can specify either or 
+~endGenerations= 800
+~endFitness     = 28
+~topParentPool  = 0.1
+~mutationRate   = (rand: 1 5)/10
+
+#This defines a gene. In this case, the gene just contains 1 atom - "value"
+define gene:
+	num
+end
+
+#This defines a chromosome. In this case, a chromosome is composed of 8 genes
+define chromosome:
+	8 genes
+end
+
+#This defines an organism and how it is initialized
+to construct: organism
+	#Set each gene to have a random value from 0-7
+	foreach gene in organism.chromosome as gene1
+		gene1.num = rand: 0 8
+	end
+	construct = organism
+end
+
+to evaluateFitness: organism
+	var curfit = 28
+	var i,j,gene1,gene2
+  
+	for i from 0 to 6
+		# a deep copy. by value
+		gene1 = nth:i, organism.chromosome
+ 
+		for j from 1 to 7
+			gene2 = nth:j, organism.chromosome
+   
+			#Check to see if gene1 and gene2 are in the same row
+			if gene1 = gene2 then
+				curfit = curfit - 1
+			#Check to see if they are along the same diagonal
+			elseif ((gene1.num - gene2.num) / (i - j)) = 1 then
+				curfit = curfit - 1
+			end
+		end
+	end
+
+	evaluateFitness = 28 - curfit
+end
+
+to mate: organismA organismB child
+	#Randomly splice 2 organisms to get the child
+	child.chromosome = splice:(rand: 0 8)  
+	mate = child
+end
+
+to mutate: organismA
+	#mutate the organism by randomly changing a gene
+	nth: (rand: 0 8), organism.chromosome  =  rand: 0 8
+	mutate = organismA
+end
+
+before each generation:
+	print: "average fitness: " + averageFitness
+end
+
+after each termination:
+	print: "The best solution found was:\n"
+	foreach organism in ~population
+		if (evaluateFitness: organism) = ~endFitness then
+		#this is the optimal solution, print it out
+       			for i from 0 to 7
+ 				print: "queen at" + i + ","  + (nth: i, organism.chromsome.gene) + "\n"
+			end
+		end
+	end
+end
+

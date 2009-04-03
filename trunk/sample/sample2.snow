@@ -1,0 +1,35 @@
+~endGenerations= 800
+~endFitness = -1
+~populationSize = 100
+
+define gene:
+num
+end
+
+define chromosome:
+  2 genes
+end
+
+define organism:
+   1 chromosome
+   fitness
+   name
+end
+
+to construct: organism
+  #fitness set to 1
+  organism.fitness=1
+  
+  organism.name = ~organismCount
+  
+  #use the foreach loop to iterate through every gene quickly
+  foreach gene in organism.chromosome as gene1
+      gene1.num = organism.name
+  end
+  construct=organism
+end
+
+after each generation:
+  print: ~generationCount
+end
+
