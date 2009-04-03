@@ -16,3 +16,6 @@ lex:
 
 freezeit: $(SOURCES)
 	cc -o ../bin/freezeit $(SOURCES) $(LIB)
+
+clean:
+	rm ../bin/freezeit lex.yy.c y.tab.c y.tab.h
