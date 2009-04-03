@@ -1,0 +1,52 @@
+#|
+These two variables define the stopping criteria. You can specify either or both. EndGenerationswill limit the number of generations to run for (may not be optimal!). EndFitness will limit to some fitness stopping point. If you provide both, then it will stop at whichever comes first.
+|#
+~endGenerations= -1
+~endFitness     = 8
+~populationSize = 10
+
+# This defines a gene. In this case, the gene just contains 1 atom - "value"
+# Will be either 1 or 0
+define gene:
+ # single atom named "value"
+  num
+end
+
+define chromosome:
+ # equivalent to "8 genes"
+ (gene gene gene gene gene gene gene gene)
+end
+
+to construct: organism
+ #Set each gene to have a random num, 0 or 1
+ foreach gene in organism.chromosome as gene1
+  # randI - random, inclusive
+  gene1.num = randI: 0, 1
+ end
+ construct = organism
+end
+
+to evaluateFitness: organism
+ var curfit = 0
+
+    #Loop over each gene except for the last one
+    foreach gene in organism.chromosome as gene1
+     curfit = curfit + gene1.num
+    end
+
+ evaluateFitness = curfit
+end
+
+to mate: organismA, organismB, newOrganism
+  newOrganism.chromsome = splice: (rand: 0 100) / 100, organismA.chromosome, organismB.chromosome
+  mate=newOrganism
+end
+
+after each generation:
+  print: "average fitness: " + ~averageFitness
+end
+
+before each termination:
+ print: ~endFitness
+end
+
