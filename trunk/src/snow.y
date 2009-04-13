@@ -19,6 +19,10 @@ import java.util.Scanner;
 
 %%
 program_program : program_unit {
+System.out.println("import com.google.code.pltsnow.snowfield.*;");
+System.out.println("import com.google.code.pltsnow.gen.*;");
+System.out.println("import java.util.ArrayList;");
+
 System.out.println("public class SnowProgramImp extends BaseSnowProgram {\n");
 System.out.println($1.sval);
 System.out.println("}");
@@ -264,103 +268,10 @@ identifier_list		:
 
 %%
 
-String ins;
-StringTokenizer st;
-			
-			
-ParserVal doForeach(ParserVal id,ParserVal in, ParserVal as, ParserVal from, ParserVal stmt)
-{
-	String r = "";
-	String type = "Object";
-	r = " for(" + type +" " + as.sval + " : " + in.sval + "){\n";
-	r += stmt.sval;
-	r += "}\n";
-	return new ParserVal(r);
-}
-
-ParserVal moleLazyCreate(ParserVal num, ParserVal ofWhat)
-{
-	String r = "";
-	r += "\tpublic ArrayList "+ofWhat.sval+";\n";
-	return new ParserVal(r);
-}
-
-ParserVal moleCreateOne(ParserVal thingToMake)
-{
-	return new ParserVal("\tpublic Object "+thingToMake.sval+";\n");
-}
-ParserVal assignVariable(ParserVal id, ParserVal val)
-{
-	if(id.sval.charAt(0) == '~')
-		return new ParserVal("protected void set_" + id.sval.substring(1) + "(){\n\tsymbols.put(\"" + id.sval + "\",\"" + val.sval + "\");\n}\n");
-	else if(id.sval.contains("symbols.get("))
-		return new ParserVal("symbols.put(" + id.sval.substring(12,id.sval.lastIndexOf("\"") + 1) + ",\"" + val.sval + "\");");
-	else
-		return new ParserVal(id.sval + "=" + val.sval + ";");
-}
-ParserVal createFunction(ParserVal functionName,ParserVal params, ParserVal statements)
-{
-	String r = "";
-	String parsedParams = params.sval;
-	if(parsedParams != "")
-	{
-		parsedParams = "Object " + parsedParams;
-		parsedParams.replace(",",", Object ");
-	}
-	r += "protected Object snw" + functionName.sval + " (" + parsedParams + "){\n";
-	r += statements.sval.replace(functionName.sval+"=","return ");
-	
-	//TODO - implement something to make sure there is a return!
-	r += "\n}";
-	return new ParserVal(r);
-}
-ParserVal createDebugHook(ParserVal timeSeq,ParserVal event,ParserVal statements)
-{
-	String r = new String();
-	r += ("protected void " + timeSeq.sval.toLowerCase() + event.sval.toUpperCase() + "{" + "\n");
-	r += (statements.sval);
-	r += ("}\n");
-	return new ParserVal(r);
-}
-
-ParserVal executeFunction(ParserVal fname,ParserVal params)
-{
-	return new ParserVal("snw"+fname.sval+"("+params.sval+");\n");
-}
-
-ParserVal defineMolecule(ParserVal name, ParserVal def)
-{
-	String r = "";
-	r+="class " + name.sval + "{\n";
-	r+=def.sval;
-	r+= "}";
-	return new ParserVal(r );
-}
-private Yylex lexer;
-
-  /* interface to the lexer */
-  private int yylex () {
-    int yyl_return = -1;
-    try {
-      yyl_return = lexer.yylex();
-    }
-    catch (IOException e) {
-      System.err.println("IO error :"+e);
-    }
-    return yyl_return;
-  }
-
-void yyerror(String s)
-{
- System.out.println("par:"+s);
-}
-
-boolean newline;
-
- public Parser(Reader r) {
-    lexer = new Yylex(r, this);
-  }
-public static void main(String args[]) throws IOException {
-    Parser yyparser = new Parser(new FileReader(args[0]));
-    yyparser.yyparse();    
-  }
+	protected Parser(Reader r) {
+	    lexer = new Yylex(r, this);
+	  }
+	public static void main(String args[]) throws IOException {
+	    Parser yyparser = new Parser(new FileReader(args[0]));
+	    yyparser.yyparse();    
+	  }
