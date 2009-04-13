@@ -1050,7 +1050,7 @@ case 26:
 break;
 case 27:
 //#line 83 "snow.y"
-{ yyval = new ParserVal(val_peek(2).sval+"."+val_peek(0).sval); }
+{ yyval = buildCompoundIdentifier(val_peek(2),val_peek(0)); }
 break;
 case 28:
 //#line 84 "snow.y"

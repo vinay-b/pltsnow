@@ -80,7 +80,7 @@ identifier		:
 			;
 
 compound_identifier	:
-				compound_identifier DOT IDENTIFIER { $$ = new ParserVal($1.sval+"."+$3.sval); }
+				compound_identifier DOT IDENTIFIER { $$ = buildCompoundIdentifier($1,$3); }
 			|	IDENTIFIER {$$ = $1;}
 			;
 postfix_expression	:

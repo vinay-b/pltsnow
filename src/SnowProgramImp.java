@@ -16,27 +16,33 @@ protected void set_populationSize(){
 }
 
 
-class gene extends BaseGene{
-	public Object num;
+protected void moleDef_gene(){
+symbols.put("gene",new SnowType(SnowType.NIL));
+String mName = "gene";
+	symbols.get(mName).addField("num");
 }
 
-class chromosome extends BaseChromosome{
-	public ArrayList<SnowType> genes;
+protected void moleDef_chromosome(){
+symbols.put("chromosome",new SnowType(SnowType.NIL));
+String mName = "chromosome";
+	symbols.get(mName).addField("genes");
 }
 
-class organism extends BaseOrganism{
-	public ArrayList<SnowType> chromosome;
-	public Object fitness;
-	public Object name;
+protected void moleDef_organism(){
+symbols.put("organism",new SnowType(SnowType.NIL));
+String mName = "organism";
+	symbols.get(mName).addField("chromosome");
+	symbols.get(mName).addField("fitness");
+	symbols.get(mName).addField("name");
 }
 
 protected SnowType snw_construct (SnowType organism){
 
-organism.fitness=1;
-organism.name=symbols.get("~organismCount");
+symbols.get("organism").getField("fitness").set(1);
+symbols.get("organism").getField("name").set(symbols.get("~organismCount"));
 
- for(SnowType gene1 : organism.chromosome){
-gene1.num=organism.name;}
+ for(SnowType gene1 : symbols.get("organism").getField("chromosome")){
+gene1.getField("num").set(symbols.get("organism").getField("name"));}
 return organism;
 }
 
