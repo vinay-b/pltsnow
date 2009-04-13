@@ -89,7 +89,7 @@ public class BaseSnowProgram {
 	{
 		return null;
 	}
-	protected final BaseOrganism splice(SnowType o1, SnowType o2, SnowType r)
+	protected final SnowType splice(SnowType o1, SnowType o2, SnowType r)
 	{
 		return null;
 	}
