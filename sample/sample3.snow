@@ -14,7 +14,7 @@ end
 
 define chromosome:
  # equivalent to "8 genes"
- (gene gene gene gene gene gene gene gene)
+ 8 genes
 end
 
 to construct: organism
@@ -42,11 +42,11 @@ to mate: organismA, organismB, newOrganism
   mate=newOrganism
 end
 
-after each generation:
+after generation:
   print: "average fitness: " + ~averageFitness
 end
 
-before each termination:
+before termination:
  print: ~endFitness
 end
 

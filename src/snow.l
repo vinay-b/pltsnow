@@ -1,64 +1,77 @@
-%{
-#include "y.tab.h"
-%}
-digit		[0-9]
-ncc		[^#|]|\n
 %%
-\#.*\n						{return NEWLINE;}
-#\|(#|{ncc})*\|\|*({ncc}(#|{ncc})*\|\|*)*#	{return NEWLINE;}
-to					{	return TO;}
-for					{	return FOR;}
-foreach					{	return FOREACH;}
-each					{	return EACH;}
-while					{	return WHILE;}
-return					{	return RETURN;}
-do					{	return DO;}
-end					{	return END;}
-define					{	return DEFINE;}
-var					{	return VAR;}
-if					{	return IF;}
-then					{	return THEN;}
-else					{	return ELSE;}
-elseif					{	return ELSIF;}
-elsif					{	return ELSIF;}
-from					{	return FROM;}
-as					{	return AS;}
-in					{	return IN;}
-by					{	return BY;}
-nil					{	return NIL;}
-true					{	return TRUE;}
-false					{	return FALSE;}
-before					{	return BEFORE;}
-after					{	return AFTER;}
-"++"					{	return PLUSPLUS;}
-"--"					{	return MINUSMINUS;}
-"+"					{	return PLUS;}
-"-"					{	return MINUS;}
-"*"					{	return MUL;}
-"/"					{	return DIV;}
-"%"					{	return MODULO;}
-"^"					{	return POWER;}	
-"<<"					{	return LIST_OP_PUSH;}
-">>"					{	return LIST_OP_POP;}
-"<="					{	return REL_OP_LE;}
-"<"					{	return REL_OP_LT;}
-">="					{	return REL_OP_GE;}
-">"					{	return REL_OP_GT;}
-"="					{	return EQUALS;}
-"!="					{	return REL_OP_NE;}
-and|"&&"				{	return LOG_OP_AND;}
-or|"||"					{	return LOG_OP_OR;}
-not|"!"					{	return LOG_OP_NOT;}
-"("					{	return LPAREN;}
-")"					{	return RPAREN;}
-":"					{	return COLON;}
-","					{	return COMMA;}
-\.					{	return DOT;}
-generation|termination|mutation|mating|selection|organismConstructed|organismKilled|organismMutated|organismMatesWithOrganism|childBorn|organismFitnessChanges	{	return EVENT_NAME_IDENTIFIER;}
-[a-zA-Z][a-zA-Z0-9]*			{	return IDENTIFIER;}
-\~[a-zA-Z][a-zA-Z0-9]*			{	return SYS_IDENTIFIER;}
-\"([^"]|\\\"|\\n)*\"|\'([^']|\\\'\\n)*\'	{	return STRING;}
--?{digit}*(\.{digit}+)?			{	return NUMERIC;}
-\n					{	return NEWLINE;}
+
+%byaccj
+
+%{
+  /* store a reference to the parser object */
+  private static Parser yyparser;
+
+  /* constructor taking an additional parser object */
+  public Yylex(java.io.Reader r, Parser yyparser) {
+    this(r);
+    this.yyparser = yyparser;
+  }
+%}
+
+digit=		[0-9]
+ncc=		[^#|]|\n
+%%
+
+\#.*\n						{return yyparser.NEWLINE;}
+#\|(#|{ncc})*\|\|*({ncc}(#|{ncc})*\|\|*)*#	{return yyparser.NEWLINE;}
+to					{	return yyparser.TO;}
+for				{	return yyparser.FOR;}
+foreach				{	return yyparser.FOREACH;}
+each				{	return yyparser.EACH;}
+while				{	return yyparser.WHILE;}
+return				{	return yyparser.RETURN;}
+do				{	return yyparser.DO;}
+end				{	return yyparser.END;}
+define				{	return yyparser.DEFINE;}
+var				{	return yyparser.VAR;}
+if				{	return yyparser.IF;}
+then				{	return yyparser.THEN;}
+else				{	return yyparser.ELSE;}
+elseif				{	return yyparser.ELSIF;}
+elsif				{	return yyparser.ELSIF;}
+from				{	return yyparser.FROM;}
+as				{	return yyparser.AS;}
+in				{	return yyparser.IN;}
+by				{	return yyparser.BY;}
+nil				{	return yyparser.NIL;}
+true				{	return yyparser.TRUE;}
+false				{	return yyparser.FALSE;}
+before				{	return yyparser.BEFORE;}
+after				{	return yyparser.AFTER;}
+"++"					{	return yyparser.PLUSPLUS;}
+"--"					{	return yyparser.MINUSMINUS;}
+"+"					{	return yyparser.PLUS;}
+"-"					{	return yyparser.MINUS;}
+"*"					{	return yyparser.MUL;}
+"/"					{	return yyparser.DIV;}
+"%"					{	return yyparser.MODULO;}
+"^"					{	return yyparser.POWER;}	
+"<<"					{	return yyparser.LIST_OP_PUSH;}
+">>"					{	return yyparser.LIST_OP_POP;}
+"<="					{	return yyparser.REL_OP_LE;}
+"<"					{	return yyparser.REL_OP_LT;}
+">="					{	return yyparser.REL_OP_GE;}
+">"					{	return yyparser.REL_OP_GT;}
+"="					{	return yyparser.EQUALS;}
+"!="					{	return yyparser.REL_OP_NE;}
+"and"|"&&"				{	return yyparser.LOG_OP_AND;}
+"or"|"||"					{	return yyparser.LOG_OP_OR;}
+"not"|"!"					{	return yyparser.LOG_OP_NOT;}
+"("					{	return yyparser.LPAREN;}
+")"					{	return yyparser.RPAREN;}
+":"					{	return yyparser.COLON;}
+","					{	return yyparser.COMMA;}
+\.					{	return yyparser.DOT;}
+generation|termination|mutation|mating|selection|organismConstructed|organismKilled|organismMutated|organismMatesWithOrganism|childBorn|organismFitnessChanges	{	yyparser.yylval = new ParserVal(yytext()); return yyparser.EVENT_NAME_IDENTIFIER;}
+[a-zA-Z][a-zA-Z0-9]*			{	yyparser.yylval = new ParserVal(yytext()); return yyparser.IDENTIFIER;}
+\~[a-zA-Z][a-zA-Z0-9]*			{	yyparser.yylval = new ParserVal(yytext()); return yyparser.SYS_IDENTIFIER;}
+\"([^\"]|\\\"|\\n)*\"|\'([^\']|\\\'\\n)*\'	{	yyparser.yylval = new ParserVal(yytext()); return yyparser.STRING;}
+-?{digit}*(\.{digit}+)?			{	yyparser.yylval = new ParserVal(yytext()); return yyparser.NUMERIC;}
+\n					{	yyparser.yylval= new ParserVal("\n"); return yyparser.NEWLINE;}
 [ \t]					{}
-.					{	ECHO; return yytext[0];}
+.					{ return 0;}
