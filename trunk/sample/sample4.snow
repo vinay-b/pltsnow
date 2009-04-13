@@ -59,11 +59,11 @@ to mutate: organismA
 	mutate = organismA
 end
 
-before each generation:
+before generation:
 	print: "average fitness: " + averageFitness
 end
 
-after each termination:
+after termination:
 	print: "The best solution found was:\n"
 	foreach organism in ~population
 		if (evaluateFitness: organism) = ~endFitness then

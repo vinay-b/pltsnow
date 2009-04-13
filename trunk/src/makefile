@@ -1,21 +1,16 @@
 LEXER = snow.l
 PARSER = snow.y
 
-SOURCES = y.tab.c lex.yy.c
-LIB = -ll -ly
-
-gccw = gcc -Wall
-
 all: yacc lex freezeit
 
 yacc:
-	yacc -d $(PARSER)
+	byacc -J $(PARSER)
 
 lex:
-	lex $(LEXER)
+	../dep/jflex-1.4.3/bin/jflex $(LEXER)
 
-freezeit: $(SOURCES)
-	cc -o ../bin/freezeit $(SOURCES) $(LIB)
+freezeit: 
+	javac Parser.java
 
 clean:
 	rm ../bin/freezeit lex.yy.c y.tab.c y.tab.h

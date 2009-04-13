@@ -29,7 +29,7 @@ to construct: organism
   construct=organism
 end
 
-after each generation:
+after generation:
   print: ~generationCount
 end
 
