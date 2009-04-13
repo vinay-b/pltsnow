@@ -1,10 +1,24 @@
 <h1>Top Priority:</h1>
-<h3>add return call: (snow equivalent "slide")</h3>
+
+<h3>
+add return call: (snow equivalent "slide") <br />
+Finish doForEach method 
+</h3>
+
 
 <br>
-<h1>Lower Priority:</h1>
+
+<h1>
+Lower Priority:
+</h1>
 
 <br>
 
-<h1>Other:</h1>
-<h3>Remove Pair</h3>
+<h1>
+Other:
+</h1>
+
+
+<h3>
+Remove Pair
+</h3>
