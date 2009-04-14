@@ -1,10 +1,15 @@
 <h1>Top Priority:</h1>
 
 <h3>
-add return call: (snow equivalent "slide") <br />
+add return call: (snow equivalent "slide") DONE JB<br />
 Finish doForEach method 
 </h3>
 
+<b>BUGS IN GRAMMAR</b>
+<ul>
+<li>Functions currently require a comma in params</li>
+<li>Lazy variable initialization? Need to check.</li>
+</ul>
 
 <br>
 
