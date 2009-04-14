@@ -1094,6 +1094,14 @@ case 37:
 //#line 107 "snow.y"
 {yyval=val_peek(0);}
 break;
+case 38:
+//#line 108 "snow.y"
+{yyval = doOp("minus",new ParserVal(0),val_peek(0));}
+break;
+case 39:
+//#line 109 "snow.y"
+{yyval = doOp("bnot",val_peek(0),null);}
+break;
 case 40:
 //#line 114 "snow.y"
 {yyval=val_peek(0);}
@@ -1166,9 +1174,17 @@ case 57:
 //#line 145 "snow.y"
 {yyval=val_peek(0);}
 break;
+case 58:
+//#line 146 "snow.y"
+{yyval = doOp("band",val_peek(1),null);}
+break;
 case 59:
 //#line 150 "snow.y"
 {yyval=val_peek(0);}
+break;
+case 60:
+//#line 151 "snow.y"
+{yyval = doOp("bor",val_peek(1),null);}
 break;
 case 61:
 //#line 155 "snow.y"
@@ -1221,6 +1237,30 @@ break;
 case 74:
 //#line 182 "snow.y"
 {yyval=val_peek(0);}
+break;
+case 75:
+//#line 186 "snow.y"
+{ yyval = makeFullIfStatement(val_peek(2)); }
+break;
+case 76:
+//#line 190 "snow.y"
+{yyval = makePartialIf(val_peek(2),val_peek(0), null);}
+break;
+case 77:
+//#line 191 "snow.y"
+{yyval = makePartialIf(val_peek(4),val_peek(2), val_peek(0));}
+break;
+case 78:
+//#line 192 "snow.y"
+{yyval = makePartialIf(val_peek(4),val_peek(2), val_peek(0));}
+break;
+case 79:
+//#line 196 "snow.y"
+{ yyval = doWhile(val_peek(3),val_peek(1)); }
+break;
+case 80:
+//#line 197 "snow.y"
+{ yyval = doFor(val_peek(8),val_peek(6),val_peek(4),val_peek(3),val_peek(2)); }
 break;
 case 81:
 //#line 198 "snow.y"
@@ -1296,7 +1336,7 @@ case 105:
 //#line 264 "snow.y"
 { yyval = moleCreateOne(val_peek(1));  }
 break;
-//#line 1221 "Parser.java"
+//#line 1261 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

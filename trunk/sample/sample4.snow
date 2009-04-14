@@ -14,13 +14,16 @@ define chromosome:
 	8 genes
 end
 
+define organism:
+	1 chromosome
+end
 #This defines an organism and how it is initialized
 to construct: newOrganism
 	#Set each gene to have a random value from 0-7
 	foreach gene in newOrganism.chromosome as gene1
 		gene1.num = rand: 0 8
 	end
-	construct = newOrganism
+	return newOrganism
 end
 
 to evaluateFitness: checkOrganism
@@ -44,19 +47,19 @@ to evaluateFitness: checkOrganism
 		end
 	end
 
-	evaluateFitness = 28 - curfit
+	return 28 - curfit
 end
 
 to mate: organismA organismB child
 	#Randomly splice 2 organisms to get the child
 	child.chromosome = splice:(rand: 0 8)  
-	mate = child
+	return child
 end
 
 to mutate: organismA
 	#mutate the organism by randomly changing a gene
 	nth: (rand: 0 8), organism.chromosome  =  rand: 0 8
-	mutate = organismA
+	return organismA
 end
 
 before generation:
@@ -65,13 +68,12 @@ end
 
 after termination:
 	print: "The best solution found was:\n"
-	foreach organism in ~population
+	foreach organism in ~population as org1
 		if (evaluateFitness: organism) = ~endFitness then
 		#this is the optimal solution, print it out
-       			for i from 0 to 7
+       		for i from 0 to 7
  				print: "queen at" + i + ","  + (nth: i, organism.chromsome.gene) + "\n"
 			end
 		end
 	end
 end
-

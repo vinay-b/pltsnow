@@ -1,0 +1,7 @@
+after termination:
+	foreach organism in ~population as org1
+		if (doFunction: toSomething) = 5 then
+		
+		end
+	end
+end
