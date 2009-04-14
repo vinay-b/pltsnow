@@ -17,29 +17,30 @@ define chromosome:
  8 genes
 end
 
-to construct: organism
+to construct: newOrganism
  #Set each gene to have a random num, 0 or 1
- foreach gene in organism.chromosome as gene1
+ foreach gene in newOrganism.chromosome as gene1
   # randI - random, inclusive
   gene1.num = randI: 0, 1
  end
- construct = organism
+ return newOrganism
 end
 
-to evaluateFitness: organism
- var curfit = 0
+to evaluateFitness: checkOrganism
+ var curfit
+ curfit = (100 + 3)
 
     #Loop over each gene except for the last one
-    foreach gene in organism.chromosome as gene1
+    foreach gene in checkOrganism.chromosome as gene1
      curfit = curfit + gene1.num
     end
 
- evaluateFitness = curfit
+ return curfit
 end
 
 to mate: organismA, organismB, newOrganism
-  newOrganism.chromsome = splice: (rand: 0 100) / 100, organismA.chromosome, organismB.chromosome
-  mate=newOrganism
+  newOrganism.chromsome = splice: ((rand: 0 100) / 100), organismA.chromosome, organismB.chromosome
+  return newOrganism
 end
 
 after generation:

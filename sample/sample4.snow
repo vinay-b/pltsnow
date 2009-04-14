@@ -15,24 +15,24 @@ define chromosome:
 end
 
 #This defines an organism and how it is initialized
-to construct: organism
+to construct: newOrganism
 	#Set each gene to have a random value from 0-7
-	foreach gene in organism.chromosome as gene1
+	foreach gene in newOrganism.chromosome as gene1
 		gene1.num = rand: 0 8
 	end
-	construct = organism
+	construct = newOrganism
 end
 
-to evaluateFitness: organism
+to evaluateFitness: checkOrganism
 	var curfit = 28
 	var i,j,gene1,gene2
   
 	for i from 0 to 6
 		# a deep copy. by value
-		gene1 = nth:i, organism.chromosome
+		gene1 = nth:i, checkOrganism.chromosome
  
 		for j from 1 to 7
-			gene2 = nth:j, organism.chromosome
+			gene2 = nth:j, checkOrganism.chromosome
    
 			#Check to see if gene1 and gene2 are in the same row
 			if gene1 = gene2 then

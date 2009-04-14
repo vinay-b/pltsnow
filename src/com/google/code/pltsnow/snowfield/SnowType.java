@@ -4,69 +4,31 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class SnowType implements Iterable<SnowType> {
-	private LinkedList<Object> data;
-	private HashMap<String, SnowType> fields;
+public abstract class SnowType implements Iterable<SnowType>, Cloneable {
+
 	protected String complexTypeName;
-	public static SnowType NIL = new SnowType(null);
-	public void set(Object o)
-	{
-		data.clear();
-		data.add(o);
-	}
-	public SnowType getField(String fieldName)
-	{
-		if(!fields.containsKey(fieldName))
-		{
-			fields.put(fieldName, NIL);
-		}
-		return fields.get(fieldName);
-	}
-	public SnowType setField(String fieldName,SnowType v)
-	{
-		return fields.put(fieldName,v);
-	}
-	public void addField(String fieldName)
-	{
-		fields.put(fieldName, NIL);
-	}
+	
+	public static SnowType NIL = new SnowAtom(null);
+	public abstract void set(Object o);
+	public abstract SnowType getField(String fieldName);
+	
+	public abstract SnowType setField(String fieldName,SnowType v);
+	
+	public abstract void addField(String fieldName);
+	
 	public SnowType(Object s) {
-		data = new LinkedList<Object>();
-		fields = new HashMap<String, SnowType>();
-		data.add(s);
 	}
-	public boolean isInt(Object arg)
-	{
-		//TODO - needs to be done :)
-		return false;
-	}
-	public boolean isString(Object arg)
-	{
-		//TODO - needs to be done :)
-		return false;
-	}
-	public boolean isFloat(Object arg)
-	{
-		//TODO - needs to be done :)
-		return false;
-	}
-	public boolean isChromosome(Object arg)
-	{
-		//TODO - needs to be done :)
-		return false;
-	}
-	public boolean isGene(Object arg)
-	{
-		//TODO - needs to be done :)
-		return false;
-	}
-	public boolean isOrganism(Object arg)
-	{
-		//TODO - needs to be done :)
-		return false;
-	}
-	public Iterator iterator() {
-		// TODO Auto-generated method stub
-		return data.iterator();
-	}
+	public abstract boolean isInt();
+	public abstract boolean isString();
+	public abstract boolean isFloat();
+	public abstract boolean isType(String type);
+	
+	public abstract SnowType plus(SnowType other);
+	public abstract SnowType minus(SnowType other);
+	public abstract SnowType push(SnowType other);
+	public abstract SnowType pop(SnowType other);
+	public abstract SnowType times(SnowType other);
+	public abstract SnowType divide(SnowType other);
+	public abstract SnowType modulo(SnowType other);
+	public abstract SnowType clone();
 }
