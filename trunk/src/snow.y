@@ -9,7 +9,7 @@ import java.util.Scanner;
 %token TO FOR FOREACH WHILE RETURN DO END DEFINE VAR IF THEN ELSE ELSIF FROM AS BY BEFORE AFTER EACH IN
 %token PLUSPLUS MINUSMINUS PLUS MINUS MUL DIV MODULO POWER LIST_OP_PUSH LIST_OP_POP REL_OP_LE REL_OP_GE REL_OP_LT REL_OP_GT REL_OP_NE EQUALS LOG_OP_AND LOG_OP_OR LOG_OP_NOT LPAREN RPAREN COLON COMMA DOT
 %token TRUE FALSE NIL
-%token NEWLINE
+%token NEWLINE SPACE
 %token EVENT_NAME_IDENTIFIER
 %token RESERVED_IDENTIFIER
 %token IDENTIFIER
@@ -71,7 +71,7 @@ primary_expression	:
 				atom {$$=$1;}
 			|	pair {$$=$1;}
 			|	identifier {$$=$1;}
-			|	LPAREN expression RPAREN 
+			|	LPAREN expression RPAREN {$$ = $2;}
 			;
 
 identifier		:
@@ -85,8 +85,8 @@ compound_identifier	:
 			;
 postfix_expression	:
 				primary_expression {$$=$1;}
-			|	postfix_expression PLUSPLUS
-			|	postfix_expression MINUSMINUS
+			|	postfix_expression PLUSPLUS {$$ = doOp("plus",$1,new ParserVal(1)); }
+			|	postfix_expression MINUSMINUS {$$ = doOp("minus",$1,new ParserVal(1)); }
 			|	function_expression {$$=$1;}
 			;
 
@@ -112,33 +112,33 @@ unary_expression	:
 
 additive_expression	:
 				multiplicative_expression {$$=$1;}
-			|	additive_expression PLUS multiplicative_expression
-			|	additive_expression MINUS multiplicative_expression 
+			|	additive_expression PLUS multiplicative_expression {$$ = doOp("plus",$1,$3);}
+			|	additive_expression MINUS multiplicative_expression {$$ = doOp("minus",$1,$3);}
 			;
 
 multiplicative_expression:
-				multiplicative_expression MUL pow_expression
-			|	multiplicative_expression DIV pow_expression
-			|	multiplicative_expression MODULO pow_expression
+				multiplicative_expression MUL pow_expression {$$ = doOp("times",$1,$3);}
+			|	multiplicative_expression DIV pow_expression {$$ = doOp("divide",$1,$3);}
+			|	multiplicative_expression MODULO pow_expression {$$ = doOp("modulo",$1,$3);}
 			|	pow_expression {$$=$1;}
 			;
 pow_expression		:
 				unary_expression {$$=$1;}
-			|	pow_expression POWER unary_expression
+			|	pow_expression POWER unary_expression {$$ = doOp("power",$1,$3);}
 			;
 
 relational_expression	:
 				additive_expression {$$ = $1;}
-			|	relational_expression REL_OP_LT additive_expression
-			|	relational_expression REL_OP_GT additive_expression
-			|	relational_expression REL_OP_LE additive_expression
-			|	relational_expression REL_OP_GE additive_expression
+			|	relational_expression REL_OP_LT additive_expression {$$ = doOp("lt",$1,$3);}
+			|	relational_expression REL_OP_GT additive_expression {$$ = doOp("gt",$1,$3);}
+			|	relational_expression REL_OP_LE additive_expression {$$ = doOp("le",$1,$3);}
+			|	relational_expression REL_OP_GE additive_expression {$$ = doOp("ge",$1,$3);}
 			;
 
 equality_expression	:
 				relational_expression {$$ = $1;}
-			|	equality_expression EQUALS relational_expression
-			|	equality_expression REL_OP_NE relational_expression
+			|	equality_expression EQUALS relational_expression {$$ = doOp("equals",$1,$3);}
+			|	equality_expression REL_OP_NE relational_expression {$$ = doOp("nequals",$1,$3);}
 			;
 
 logical_and_expression:
@@ -156,11 +156,11 @@ assignment_expression	:
 			;
 
 statement		: 
-				expression_statement NEWLINE {$$=$1;}
+				expression_statement NEWLINE {$$=addLineEnding($1);}
 			|	selection_statement NEWLINE {$$=$1;}
 			|	iteration_statement NEWLINE {$$=$1;}
-			|	var_declarator NEWLINE {$$=$1;}
-			|	assignment_statement NEWLINE {$$=$1;}
+			|	var_declarator NEWLINE {$$=addLineEnding($1);}
+			|	assignment_statement NEWLINE {$$=addLineEnding($1);}
 			|	NEWLINE
 			;
 
@@ -176,8 +176,9 @@ assignment_statement	:
 expression_statement	:
 				expression {$$=$1;}
 			;
-
-expression		:
+expression	: expression_t {$$=$1;}
+			| LPAREN expression RPAREN {$$=$2;}
+expression_t		:
 				logical_or_expression {$$=$1;}
 			;
 
@@ -229,11 +230,14 @@ time_seq		:
 			;
 
 function_declarator	:
-				TO IDENTIFIER COLON params NEWLINE statements END { $$ = createFunction($2,$4,$6); }
+				TO IDENTIFIER COLON params NEWLINE statements opt_return END { $$ = createFunction($2,$4,$6,$7); }
 			;
-
+opt_return :
+				RETURN expression NEWLINE {$$ = $2;}
+			|
+			;
 var_declarator		:
-				VAR declaration_list
+				VAR declaration_list { $$ = declareLocalVariable($2); }
 			;
 
 declaration_list	:
@@ -262,9 +266,6 @@ molecule_def		:
 			|	NEWLINE
 			;
 
-identifier_list		:
-				identifier_list commaq IDENTIFIER
-			|	IDENTIFIER;
 
 %%
 

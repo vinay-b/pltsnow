@@ -16,17 +16,17 @@ define organism:
    name
 end
 
-to construct: organism
+to construct: newOrganism
   #fitness set to 1
-  organism.fitness=1
+  newOrganism.fitness=1
   
-  organism.name = ~organismCount
+  newOrganism.name = ~organismCount
   
   #use the foreach loop to iterate through every gene quickly
-  foreach gene in organism.chromosome as gene1
-      gene1.num = organism.name
+  foreach gene in newOrganism.chromosome as gene1
+      gene1.num = newOrganism.name
   end
-  construct=organism
+  construct=newOrganism
 end
 
 after generation:

@@ -28,13 +28,22 @@ public abstract class BaseSnowParser {
 	}
 	protected ParserVal assignVariable(ParserVal id, ParserVal val)
 	{
+		String rval = val.sval;
+		if(rval.contains("getField(") || rval.contains("symbols.get("))
+		{
+			rval = rval + ".clone()";
+		}
 		System.err.println("assign " + id.sval + " to " + val.sval);
 		if(id.sval.charAt(0) == '~')
-			return new ParserVal("protected void set_" + id.sval.substring(1) + "(){\n\tsymbols.put(\"" + id.sval + "\",new SnowType(\"" + val.sval + "\"));\n}\n");
+			return new ParserVal("protected void set_" + id.sval.substring(1) + "(){\n\tsymbols.put(\"" + id.sval + "\",new SnowAtom(\"" + rval+ "\"));\n}\n");
 		else if(id.sval.contains("symbols.get(") || id.sval.contains("getField("))
-			return new ParserVal(id.sval + ".set("+val.sval+");");
+			return new ParserVal(id.sval + ".set("+rval+")");
 		else
-			return new ParserVal(id.sval + "=" + val.sval + ";");
+			return new ParserVal(id.sval + ".set(" + val.sval + ")");
+	}
+	protected ParserVal declareLocalVariable(ParserVal varName)
+	{
+		return new ParserVal("SnowAtom  " + varName.sval + " = new SnowAtom(null);");
 	}
 	protected ParserVal buildCompoundIdentifier(ParserVal left, ParserVal right)
 	{
@@ -51,18 +60,18 @@ public abstract class BaseSnowParser {
 			return new ParserVal(l);
 		}
 	}
-	protected ParserVal createFunction(ParserVal functionName,ParserVal params, ParserVal statements)
+	protected ParserVal createFunction(ParserVal functionName,ParserVal params, ParserVal statements, ParserVal returnExp)
 	{
 		String r = "";
 		String parsedParams = params.sval;
-		System.err.println("cf->"+params.sval);
 		if(parsedParams != "")
 		{
 			parsedParams = "SnowType " + parsedParams;
-			parsedParams.replace(",",", SnowType ");
+			parsedParams = parsedParams.replaceAll(",",", SnowType ");
 		}
 		r += "protected SnowType snw_" + functionName.sval + " (" + parsedParams + "){\n";
-		r += statements.sval.replace(functionName.sval + "=", "return ");
+		r += statements.sval;
+		r += "return " + returnExp.sval + ";\n";
 		//TODO - implement something to make sure there is a return!
 		r += "\n}";
 		return new ParserVal(r);
@@ -75,18 +84,26 @@ public abstract class BaseSnowParser {
 		r += ("}\n");
 		return new ParserVal(r);
 	}
-
+	protected ParserVal doOp(String op, ParserVal l, ParserVal r)
+	{
+		String ret ="";
+		ret += l.sval + "." + op + "(" + r.sval + ")";
+		return new ParserVal(ret);
+	}
 	protected ParserVal executeFunction(ParserVal fname,ParserVal params)
 	{
-		return new ParserVal("snw_"+fname.sval+"("+params.sval+");\n");
+		return new ParserVal("snw_"+fname.sval+"("+params.sval+")");
 	}
-
+	protected ParserVal addLineEnding(ParserVal v)
+	{
+		return new ParserVal(v.sval + ";\n");
+	}
 	protected ParserVal defineMolecule(ParserVal name, ParserVal def)
 	{
 		String r = "";
 		definedGlobalSymbols.add(name.sval);
 		r+="protected void moleDef_" + name.sval + "(){\n";
-		r+="symbols.put(\"" + name.sval + "\",new SnowType(SnowType.NIL));\n";
+		r+="symbols.put(\"" + name.sval + "\",new SnowAtom(SnowType.NIL));\n";
 		r+="String mName = \"" + name.sval + "\";\n";
 		r+=def.sval;
 		r+= "}";

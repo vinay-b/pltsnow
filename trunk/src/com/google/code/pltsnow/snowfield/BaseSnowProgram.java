@@ -18,11 +18,15 @@ public class BaseSnowProgram {
 		symbols = new HashMap<String, SnowType>();
 		
 	}
+	protected final SnowAtom snw_randI(Object a1, Object a2)
+	{
+		return null;
+	}
 	protected final void doSnowLoop()
 	{
 		
 	}
-	protected final void snw_print(SnowType arg)
+	protected final void snw_print(Object arg)
 	{
 		System.out.println(arg.toString());
 	}
@@ -101,27 +105,27 @@ public class BaseSnowProgram {
 	//these are default initializers
 	protected void set_populationSize()
 	{
-		symbols.put("~populationSize", new SnowType(DEFAULT_POPULATION_SIZE));
+		symbols.put("~populationSize", new SnowAtom(DEFAULT_POPULATION_SIZE));
 	}
 	protected void set_topParentPool()
 	{
-		symbols.put("~topParentPool", new SnowType(DEFAULT_TOP_PARENT_POOL));
+		symbols.put("~topParentPool", new SnowAtom(DEFAULT_TOP_PARENT_POOL));
 	}
 	protected void set_bottomParentPool()
 	{
-		symbols.put("~bottomParentPool", new SnowType(DEFAULT_BOTTOM_PARENT_POOL));
+		symbols.put("~bottomParentPool", new SnowAtom(DEFAULT_BOTTOM_PARENT_POOL));
 	}
 	protected void set_organismLifespan()
 	{
-		symbols.put("~organismLifespan", new SnowType(DEFAULT_ORGANISM_LIFESPAN));
+		symbols.put("~organismLifespan", new SnowAtom(DEFAULT_ORGANISM_LIFESPAN));
 	}
 	protected void set_mutationRate()
 	{
-		symbols.put("~mutationRate", new SnowType(DEFAULT_MUTATION_RATE));
+		symbols.put("~mutationRate", new SnowAtom(DEFAULT_MUTATION_RATE));
 	}
 	protected void set_selectMethod()
 	{
-		symbols.put("~selectMethod", new SnowType(DEFAULT_SELECT_METHOD));
+		symbols.put("~selectMethod", new SnowAtom(DEFAULT_SELECT_METHOD));
 	}
 	
 	//These are all of the stub definitions for the debug hooks
