@@ -105,8 +105,8 @@ param			:
 
 unary_expression	:
 				postfix_expression {$$=$1;}
-			|	MINUS unary_expression
-			|	LOG_OP_NOT unary_expression
+			|	MINUS unary_expression {$$ = doOp("minus",new ParserVal(0),$2);}
+			|	LOG_OP_NOT unary_expression {$$ = doOp("bnot",$2,null);}
 			;
 
 
@@ -143,12 +143,12 @@ equality_expression	:
 
 logical_and_expression:
 				equality_expression {$$=$1;}
-			|	logical_and_expression LOG_OP_AND equality_expression 
+			|	logical_and_expression LOG_OP_AND equality_expression  {$$ = doOp("band",$2,null);}
 			;
 
 logical_or_expression	:
 				logical_and_expression {$$=$1;}
-			|	logical_or_expression LOG_OP_OR logical_and_expression
+			|	logical_or_expression LOG_OP_OR logical_and_expression {$$ = doOp("bor",$2,null);}
 			;
 
 assignment_expression	:
@@ -183,18 +183,18 @@ expression_t		:
 			;
 
 selection_statement	:
-				IF partial_selection_statement END
+				IF partial_selection_statement END { $$ = makeFullIfStatement($1); }
 			;
 
 partial_selection_statement:
-				expression THEN statements
-			|	expression THEN statements ELSE statements
-			|	expression THEN statements ELSIF partial_selection_statement
+				expression THEN statements {$$ = makePartialIf($1,$3, null);}
+			|	expression THEN statements ELSE statements {$$ = makePartialIf($1,$3, $5);}
+			|	expression THEN statements ELSIF partial_selection_statement {$$ = makePartialIf($1,$3, $5);}
 			;
 
 iteration_statement	:
-				WHILE expression NEWLINE statements END
-			|	FOR identifier FROM expression TO expression by_statement NEWLINE statements END
+				WHILE expression NEWLINE statements END { $$ = doWhile($2,$4); }
+			|	FOR identifier FROM expression TO expression by_statement NEWLINE statements END { $$ = doFor($2,$4,$6,$7,$8); }
 			|	FOREACH identifier in_statement as_statement from_statement NEWLINE statements END { $$ = doForeach($2,$3,$4,$5,$7); }
 			;
 

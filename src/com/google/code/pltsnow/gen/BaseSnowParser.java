@@ -7,14 +7,28 @@ public abstract class BaseSnowParser {
 	protected HashSet<String> definedGlobalSymbols;
 	protected ParserVal doForeach(ParserVal id,ParserVal in, ParserVal as, ParserVal from, ParserVal stmt)
 	{
+		System.err.println("doaforeach");
 		String r = "";
 		String type = "SnowType";
-		r = " for(" + type +" " + as.sval + " : " + in.sval + "){\n";
+		if(as.sval!= null && in.sval != null)
+			r = " for(" + type +" " + as.sval + " : " + in.sval + "){\n";
 		r += stmt.sval;
 		r += "}\n";
 		return new ParserVal(r);
 	}
-
+	protected ParserVal doWhile(ParserVal cond, ParserVal stmts)
+	{
+		String r = "";
+		r+="while(" + cond.sval + "){\n" + stmts.sval + "\n}\n";
+		return new ParserVal(r);
+	}
+	protected ParserVal doFor(ParserVal id,ParserVal from,ParserVal to,ParserVal by, ParserVal stmt)
+	{
+		System.err.println("doafor");
+		String r= "";
+		r +=  " want for to do  " + stmt;
+		return new ParserVal(r);
+	}
 	protected ParserVal moleLazyCreate(ParserVal num, ParserVal ofWhat)
 	{
 		String r = "";
@@ -89,6 +103,16 @@ public abstract class BaseSnowParser {
 		String ret ="";
 		ret += l.sval + "." + op + "(" + r.sval + ")";
 		return new ParserVal(ret);
+	}
+	protected ParserVal makeFullIfStatement(ParserVal stmt)
+	{
+		String r = "";
+		r += "if(" + stmt.sval + "}";
+		return new ParserVal(r);
+	}
+	protected ParserVal makePartialIf(ParserVal s1, ParserVal s2, ParserVal s3)
+	{
+		return new ParserVal("there is an if here");
 	}
 	protected ParserVal executeFunction(ParserVal fname,ParserVal params)
 	{
