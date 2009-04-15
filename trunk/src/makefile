@@ -23,16 +23,16 @@ freezeit:
 	javac com/google/code/pltsnow/gen/Parser.java
 	
 sample1:
-	java com/google/code/pltsnow/gen/Parser ../sample/sample1.snow
+	java com/google/code/pltsnow/gen/Parser ../sample/sample1.snow > SnowProgramImp.java
 
 sample2:
-	java com/google/code/pltsnow/gen/Parser ../sample/sample2.snow
+	java com/google/code/pltsnow/gen/Parser ../sample/sample2.snow > SnowProgramImp.java
 	
 sample3:
-	java com/google/code/pltsnow/gen/Parser ../sample/sample3.snow
+	java com/google/code/pltsnow/gen/Parser ../sample/sample3.snow > SnowProgramImp.java
 	
 sample4:
-	java com/google/code/pltsnow/gen/Parser ../sample/sample4.snow
+	java com/google/code/pltsnow/gen/Parser ../sample/sample4.snow > SnowProgramImp.java
 	
 test:
 	javac SnowProgramImp.java
