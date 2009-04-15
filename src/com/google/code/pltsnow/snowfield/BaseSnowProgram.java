@@ -5,8 +5,8 @@ import java.util.List;
 
 
 public class BaseSnowProgram {
-	private static final int DEFAULT_POPULATION_SIZE  = 100;
-	private static final int DEFAULT_TOP_PARENT_POOL  = 10;
+	private static final int DEFAULT_POPULATION_SIZE   = 100;
+	private static final int DEFAULT_TOP_PARENT_POOL   = 10;
 	private static final int DEFAULT_BOTTOM_PARENT_POOL = 10;
 	private static final int DEFAULT_ORGANISM_LIFESPAN = 30;
 	private static final double DEFAULT_MUTATION_RATE  = 0.50;
@@ -42,8 +42,26 @@ public class BaseSnowProgram {
 		
 		//TODO: call all of the defMole_ functions now!
 		
+		dbg_beforeINITIALIZATION();
 		initializePopulation();
+		dbg_afterINITIALIZATION();
+	}
+
+	protected final void initializePopulation()
+	{
+		SnowList population = new SnowList();
+		for (int i = 0; i < (Integer)symbols.get("~populationSize").get(); i++) 
+		{
+			SnowType organism = types.get("organism").clone();
+			organism = snw_toConstructOrganism(organism);
+			population.push(organism);
+		}
 		
+		symbols.put("population", population);
+	}
+	
+	protected final void startProgram()
+	{
 		while(! terminationMet())
 			doSnowLoop();
 		
@@ -58,25 +76,13 @@ public class BaseSnowProgram {
 	private final boolean terminationMet()
 	{
 		
-		if ((Float)symbols.get("~maxFitness") > (Float)symbols.get("~endFitness"))
+		if ((Float)symbols.get("~maxFitness").get() > (Float)symbols.get("~endFitness").get())
 			return true;
-		if ((Integer)symbols.get("~generationCount") > (Integer)symbols.get("~endGeneration"))
+		if ((Integer)symbols.get("~generationCount").get() > (Integer)symbols.get("~endGeneration").get())
 			return true;
 		return false;
 	}
-	
-	protected final void initializePopulation()
-	{
-		SnowList population = new SnowList();
-		for (int i = 0; i < symbols.get("~populationSize"); i++) 
-		{
-			SnowType organism = types.get("organism").clone();
-			organism = snw_toConstructOrganism(organism);
-			population.push(organism);
-		}
-		
-		symbols.put("population", population);
-	}
+
 	
 	protected final SnowAtom snw_randI(Object a1, Object a2)
 	{
@@ -97,7 +103,7 @@ public class BaseSnowProgram {
 		snw_evaluateFitness();
 		
 		dbg_beforeSELECTION();
-		snw_doSelection();
+		doTheSelection();
 		dbg_afterSELECTION();
 		
 		dbg_beforeMATING();
@@ -112,14 +118,8 @@ public class BaseSnowProgram {
 	}
 	
 	private void doTheMutating() {
-			//find the people to mutate, then
-		snw_mutate(null);
-	}
-	
-	// TODO: make this do something real
-	// this should also be passed off to the user subclass
-	private SnowType snw_toConstruct() {
-		return new SnowAtom(new Integer(0));
+		//find the people to mutate, then
+		//snw_mutate(null);
 	}
 	
 	protected void snw_mutate(SnowType object) {
@@ -138,7 +138,7 @@ public class BaseSnowProgram {
 		
 	}
 	
-	protected void snw_doSelection() {
+	protected void doTheSelection() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -273,6 +273,15 @@ public class BaseSnowProgram {
 	
 	//These are all of the stub definitions for the debug hooks
 	
+	protected void dbg_beforeINITIALIZATION(){
+		//User Implemented
+	}
+	
+	
+	protected void dbg_afterINITIALIZATION(){
+		//User Implemented
+	}
+	
 	protected void dbg_beforeGENERATION(){
 		//User Implemented
 	}
@@ -359,5 +368,6 @@ public class BaseSnowProgram {
 	protected void dbg_afterORGANISMFITNESSCHANGES(){
 		//User Implemented
 	}
-
 }
+
+

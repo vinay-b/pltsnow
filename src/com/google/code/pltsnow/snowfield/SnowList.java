@@ -20,10 +20,23 @@ public class SnowList extends SnowType {
 		data.add(new SnowAtom(s));
 	}
 	
+	/**
+	 * @author willi
+	 * basic default constructor?
+	 */
 	public SnowList() {
 		super(null);
 		data = new LinkedList<SnowType>();
-		
+	}
+	
+	
+	/**
+	 * @author willi
+	 * implemented just so that it conforms to snowtype
+	 */
+	public Object get()
+	{
+		return null;
 	}
 
 	public SnowList sort()

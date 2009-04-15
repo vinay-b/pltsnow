@@ -10,6 +10,7 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	
 	public static SnowType NIL = new SnowAtom(null);
 	public abstract void set(Object o);
+	public abstract Object get();
 	public abstract SnowType getField(String fieldName);
 	
 	public abstract SnowType setField(String fieldName,SnowType v);
