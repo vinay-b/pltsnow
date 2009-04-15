@@ -152,5 +152,10 @@ public class SnowList extends SnowType {
 		// TODO Auto-generated method stub
 		return new SnowList(null);
 	}
-
+	public static SnowList makeNilList(int len)
+	{
+		SnowList r = new SnowList(null);
+		r.setSize(len);
+		return r;
+	}
 }
