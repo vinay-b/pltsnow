@@ -58,6 +58,12 @@ public class SnowAtom extends SnowType {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//TODO: is this correct? is there a getter?
+	public Object get() {
+		
+		return data;
+	}
 
 	@Override
 	public SnowType divide(SnowType other) {
