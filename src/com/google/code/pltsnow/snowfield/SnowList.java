@@ -19,6 +19,12 @@ public class SnowList extends SnowType {
 		data = new LinkedList<SnowType>();
 		data.add(new SnowAtom(s));
 	}
+	
+	public SnowList() {
+		super(null);
+		data = new LinkedList<SnowType>();
+		
+	}
 
 	public SnowList sort()
 	{
