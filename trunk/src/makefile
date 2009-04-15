@@ -1,10 +1,12 @@
 LEXER = snow.l
 PARSER = snow.y
+BYACC = byacc
+
 
 all: yacc lex freezeit
 
 yacc:
-	byacc -J -Jextends=BaseSnowParser -Jpackage=com.google.code.pltsnow.gen $(PARSER)
+	$(BYACC) -J -Jextends=BaseSnowParser -Jpackage=com.google.code.pltsnow.gen $(PARSER)
 	mv Parser.java com/google/code/pltsnow/gen
 	mv ParserVal.java com/google/code/pltsnow/gen
 
