@@ -807,7 +807,7 @@ final static String yyrule[] = {
 "molecule_def : NEWLINE",
 };
 
-//#line 269 "snow.y"
+//#line 270 "snow.y"
 
 	protected Parser(Reader r) {
 	    lexer = new Yylex(r, this);
@@ -979,368 +979,369 @@ System.out.println("import java.util.ArrayList;");
 
 System.out.println("public class SnowProgramImp extends BaseSnowProgram {\n");
 System.out.println(val_peek(0).sval);
+System.out.println("public static void main(String[] args) {	SnowProgramImp this_prog = new SnowProgramImp(); this_prog.startProgram();}");
 System.out.println("}");
 }
 break;
 case 2:
-//#line 30 "snow.y"
+//#line 31 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 3:
-//#line 31 "snow.y"
+//#line 32 "snow.y"
 {yyval = new ParserVal(val_peek(1).sval + val_peek(0).sval);}
 break;
 case 4:
-//#line 35 "snow.y"
-{yyval=val_peek(0);}
-break;
-case 5:
 //#line 36 "snow.y"
 {yyval=val_peek(0);}
 break;
-case 6:
+case 5:
 //#line 37 "snow.y"
 {yyval=val_peek(0);}
 break;
-case 7:
+case 6:
 //#line 38 "snow.y"
 {yyval=val_peek(0);}
 break;
-case 8:
+case 7:
 //#line 39 "snow.y"
 {yyval=val_peek(0);}
 break;
-case 9:
+case 8:
 //#line 40 "snow.y"
 {yyval=val_peek(0);}
 break;
+case 9:
+//#line 41 "snow.y"
+{yyval=val_peek(0);}
+break;
 case 10:
-//#line 44 "snow.y"
+//#line 45 "snow.y"
 { yyval = assignVariable(val_peek(2),val_peek(0)); }
 break;
 case 11:
-//#line 48 "snow.y"
-{yyval=val_peek(0);}
-break;
-case 12:
 //#line 49 "snow.y"
 {yyval=val_peek(0);}
 break;
+case 12:
+//#line 50 "snow.y"
+{yyval=val_peek(0);}
+break;
 case 13:
-//#line 53 "snow.y"
+//#line 54 "snow.y"
 {yyval= new ParserVal(",");}
 break;
 case 14:
-//#line 54 "snow.y"
+//#line 55 "snow.y"
 {yyval=new ParserVal("");}
 break;
 case 21:
-//#line 71 "snow.y"
-{yyval=val_peek(0);}
-break;
-case 22:
 //#line 72 "snow.y"
 {yyval=val_peek(0);}
 break;
-case 23:
+case 22:
 //#line 73 "snow.y"
 {yyval=val_peek(0);}
 break;
-case 24:
+case 23:
 //#line 74 "snow.y"
+{yyval=val_peek(0);}
+break;
+case 24:
+//#line 75 "snow.y"
 {yyval.sval = "(" + val_peek(1).sval + ")";}
 break;
 case 25:
-//#line 78 "snow.y"
+//#line 79 "snow.y"
 {yyval= val_peek(0);}
 break;
 case 26:
-//#line 79 "snow.y"
+//#line 80 "snow.y"
 { yyval = new ParserVal("symbols.get(\""+val_peek(0).sval+"\")");}
 break;
 case 27:
-//#line 83 "snow.y"
+//#line 84 "snow.y"
 { yyval = buildCompoundIdentifier(val_peek(2),val_peek(0)); }
 break;
 case 28:
-//#line 84 "snow.y"
+//#line 85 "snow.y"
 {yyval = val_peek(0);}
 break;
 case 29:
-//#line 87 "snow.y"
+//#line 88 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 30:
-//#line 88 "snow.y"
+//#line 89 "snow.y"
 {yyval = doOp("plus",val_peek(1),new ParserVal(1)); }
 break;
 case 31:
-//#line 89 "snow.y"
+//#line 90 "snow.y"
 {yyval = doOp("minus",val_peek(1),new ParserVal(1)); }
 break;
 case 32:
-//#line 90 "snow.y"
+//#line 91 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 33:
-//#line 94 "snow.y"
+//#line 95 "snow.y"
 { yyval = executeFunction(val_peek(2),val_peek(0)); }
 break;
 case 34:
-//#line 98 "snow.y"
+//#line 99 "snow.y"
 {yyval = new ParserVal(val_peek(2).sval+","+val_peek(0).sval);}
 break;
 case 35:
-//#line 99 "snow.y"
+//#line 100 "snow.y"
 {yyval = new ParserVal("");}
 break;
 case 36:
-//#line 103 "snow.y"
+//#line 104 "snow.y"
 {yyval = val_peek(0); }
 break;
 case 37:
-//#line 107 "snow.y"
+//#line 108 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 38:
-//#line 108 "snow.y"
+//#line 109 "snow.y"
 {yyval = doOp("minus",new ParserVal(0),val_peek(0));}
 break;
 case 39:
-//#line 109 "snow.y"
+//#line 110 "snow.y"
 {yyval = doOp("bnot",val_peek(0),null);}
 break;
 case 40:
-//#line 114 "snow.y"
+//#line 115 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 41:
-//#line 115 "snow.y"
+//#line 116 "snow.y"
 {yyval = doOp("plus",val_peek(2),val_peek(0));}
 break;
 case 42:
-//#line 116 "snow.y"
+//#line 117 "snow.y"
 {yyval = doOp("minus",val_peek(2),val_peek(0));}
 break;
 case 43:
-//#line 120 "snow.y"
+//#line 121 "snow.y"
 {yyval = doOp("times",val_peek(2),val_peek(0));}
 break;
 case 44:
-//#line 121 "snow.y"
+//#line 122 "snow.y"
 {yyval = doOp("divide",val_peek(2),val_peek(0));}
 break;
 case 45:
-//#line 122 "snow.y"
+//#line 123 "snow.y"
 {yyval = doOp("modulo",val_peek(2),val_peek(0));}
 break;
 case 46:
-//#line 123 "snow.y"
+//#line 124 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 47:
-//#line 126 "snow.y"
+//#line 127 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 48:
-//#line 127 "snow.y"
+//#line 128 "snow.y"
 {yyval = doOp("power",val_peek(2),val_peek(0));}
 break;
 case 49:
-//#line 131 "snow.y"
+//#line 132 "snow.y"
 {yyval = val_peek(0);}
 break;
 case 50:
-//#line 132 "snow.y"
+//#line 133 "snow.y"
 {yyval = doOp("lt",val_peek(2),val_peek(0));}
 break;
 case 51:
-//#line 133 "snow.y"
+//#line 134 "snow.y"
 {yyval = doOp("gt",val_peek(2),val_peek(0));}
 break;
 case 52:
-//#line 134 "snow.y"
+//#line 135 "snow.y"
 {yyval = doOp("le",val_peek(2),val_peek(0));}
 break;
 case 53:
-//#line 135 "snow.y"
+//#line 136 "snow.y"
 {yyval = doOp("ge",val_peek(2),val_peek(0));}
 break;
 case 54:
-//#line 139 "snow.y"
+//#line 140 "snow.y"
 {yyval = val_peek(0);}
 break;
 case 55:
-//#line 140 "snow.y"
+//#line 141 "snow.y"
 {yyval = doOp("equals",val_peek(2),val_peek(0));}
 break;
 case 56:
-//#line 141 "snow.y"
+//#line 142 "snow.y"
 {yyval = doOp("nequals",val_peek(2),val_peek(0));}
 break;
 case 57:
-//#line 145 "snow.y"
+//#line 146 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 58:
-//#line 146 "snow.y"
+//#line 147 "snow.y"
 {yyval = doOp("band",val_peek(1),null);}
 break;
 case 59:
-//#line 150 "snow.y"
+//#line 151 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 60:
-//#line 151 "snow.y"
+//#line 152 "snow.y"
 {yyval = doOp("bor",val_peek(1),null);}
 break;
 case 61:
-//#line 155 "snow.y"
+//#line 156 "snow.y"
 { yyval = assignVariable(val_peek(2),val_peek(0)); }
 break;
 case 62:
-//#line 159 "snow.y"
+//#line 160 "snow.y"
 {yyval=addLineEnding(val_peek(1));}
 break;
 case 63:
-//#line 160 "snow.y"
-{yyval=val_peek(1);}
-break;
-case 64:
 //#line 161 "snow.y"
 {yyval=val_peek(1);}
 break;
-case 65:
+case 64:
 //#line 162 "snow.y"
-{yyval=addLineEnding(val_peek(1));}
+{yyval=val_peek(1);}
 break;
-case 66:
+case 65:
 //#line 163 "snow.y"
 {yyval=addLineEnding(val_peek(1));}
 break;
-case 67:
+case 66:
 //#line 164 "snow.y"
+{yyval=addLineEnding(val_peek(1));}
+break;
+case 67:
+//#line 165 "snow.y"
 {yyval=val_peek(1);}
 break;
 case 69:
-//#line 168 "snow.y"
+//#line 169 "snow.y"
 {yyval.sval = "return " +  val_peek(0).sval + ";\n";}
 break;
 case 70:
-//#line 171 "snow.y"
+//#line 172 "snow.y"
 { yyval=val_peek(0); }
 break;
 case 71:
-//#line 172 "snow.y"
+//#line 173 "snow.y"
 {yyval =new ParserVal(val_peek(1).sval+val_peek(0).sval);}
 break;
 case 72:
-//#line 176 "snow.y"
+//#line 177 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 73:
-//#line 180 "snow.y"
+//#line 181 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 74:
-//#line 184 "snow.y"
+//#line 185 "snow.y"
 {yyval=val_peek(0);}
 break;
 case 75:
-//#line 188 "snow.y"
+//#line 189 "snow.y"
 { yyval = makeFullIfStatement(val_peek(2)); }
 break;
 case 76:
-//#line 192 "snow.y"
+//#line 193 "snow.y"
 {yyval = makePartialIf(val_peek(2),val_peek(0), null);}
 break;
 case 77:
-//#line 193 "snow.y"
-{yyval = makePartialIf(val_peek(4),val_peek(2), val_peek(0));}
-break;
-case 78:
 //#line 194 "snow.y"
 {yyval = makePartialIf(val_peek(4),val_peek(2), val_peek(0));}
 break;
+case 78:
+//#line 195 "snow.y"
+{yyval = makePartialIf(val_peek(4),val_peek(2), val_peek(0));}
+break;
 case 79:
-//#line 198 "snow.y"
+//#line 199 "snow.y"
 { yyval = doWhile(val_peek(3),val_peek(1)); }
 break;
 case 80:
-//#line 199 "snow.y"
+//#line 200 "snow.y"
 { yyval = doFor(val_peek(8),val_peek(6),val_peek(4),val_peek(3),val_peek(2)); }
 break;
 case 81:
-//#line 200 "snow.y"
+//#line 201 "snow.y"
 { yyval = doForeach(val_peek(6),val_peek(5),val_peek(4),val_peek(3),val_peek(1)); }
 break;
 case 82:
-//#line 204 "snow.y"
+//#line 205 "snow.y"
 { yyval = val_peek(0); }
 break;
 case 83:
-//#line 205 "snow.y"
+//#line 206 "snow.y"
 {yyval = null; }
 break;
 case 84:
-//#line 209 "snow.y"
+//#line 210 "snow.y"
 { yyval = val_peek(0); }
 break;
 case 85:
-//#line 210 "snow.y"
+//#line 211 "snow.y"
 {yyval = null; }
 break;
 case 86:
-//#line 214 "snow.y"
+//#line 215 "snow.y"
 { yyval = new ParserVal(val_peek(2).sval + ":" + val_peek(0).sval); }
 break;
 case 87:
-//#line 215 "snow.y"
+//#line 216 "snow.y"
 {yyval = null; }
 break;
 case 90:
-//#line 224 "snow.y"
+//#line 225 "snow.y"
 { 
 				yyval = createDebugHook(val_peek(5),val_peek(4),val_peek(1));
 				}
 break;
 case 91:
-//#line 230 "snow.y"
+//#line 231 "snow.y"
 {yyval = new ParserVal("before"); }
 break;
 case 92:
-//#line 231 "snow.y"
+//#line 232 "snow.y"
 {yyval = new ParserVal("after"); }
 break;
 case 93:
-//#line 235 "snow.y"
+//#line 236 "snow.y"
 { yyval = createFunction(val_peek(5),val_peek(3),val_peek(1)); }
 break;
 case 94:
-//#line 238 "snow.y"
+//#line 239 "snow.y"
 { yyval = declareLocalVariable(val_peek(0)); }
 break;
 case 99:
-//#line 252 "snow.y"
+//#line 253 "snow.y"
 { yyval = defineMolecule(val_peek(4),val_peek(1)); }
 break;
 case 100:
-//#line 256 "snow.y"
+//#line 257 "snow.y"
 {yyval = val_peek(0);}
 break;
 case 101:
-//#line 257 "snow.y"
+//#line 258 "snow.y"
 { yyval= new ParserVal(val_peek(1).sval +val_peek(0).sval); }
 break;
 case 102:
-//#line 261 "snow.y"
+//#line 262 "snow.y"
 { yyval = moleLazyCreate(val_peek(2),val_peek(1));}
 break;
 case 103:
-//#line 262 "snow.y"
+//#line 263 "snow.y"
 { yyval = moleCreateOne(val_peek(1));  }
 break;
-//#line 1265 "Parser.java"
+//#line 1266 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

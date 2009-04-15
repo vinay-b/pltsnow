@@ -30,4 +30,10 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public abstract SnowType divide(SnowType other);
 	public abstract SnowType modulo(SnowType other);
 	public abstract SnowType clone();
+	public void addField(String string) {
+		setField(string,SnowAtom.makeNil());
+	}
+	public void addList(String string, int len) {
+		setField(string,SnowList.makeNilList(len));
+	}
 }
