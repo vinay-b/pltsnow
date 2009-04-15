@@ -128,7 +128,10 @@ public class BaseSnowProgram {
 		return false;
 	}
 
-	
+	protected final SnowAtom snw_rand(SnowType a1, SnowType a2)
+	{
+		return null;
+	}
 	protected final SnowAtom snw_randI(Object a1, Object a2)
 	{
 		return null;
@@ -277,7 +280,7 @@ public class BaseSnowProgram {
 		return null;
 	}
 	
-	protected final SnowType splice(SnowType o1, SnowType o2, SnowType r)
+	protected final SnowType snw_splice(SnowType o1, SnowType o2, SnowType r)
 	{
 		return null;
 	}
