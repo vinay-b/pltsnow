@@ -3,53 +3,65 @@ import com.google.code.pltsnow.gen.*;
 import java.util.ArrayList;
 public class SnowProgramImp extends BaseSnowProgram {
 
-protected void set_endGenerations(){
-	symbols.put("~endGenerations",new SnowAtom("800"));
+
+public void set_endGenerations(){
+	symbols.put("~endGenerations",new SnowAtom(-1));
 }
 
-protected void set_endFitness(){
-	symbols.put("~endFitness",new SnowAtom("-1"));
+public void set_endFitness(){
+	symbols.put("~endFitness",new SnowAtom(8));
 }
 
-protected void set_populationSize(){
-	symbols.put("~populationSize",new SnowAtom("100"));
+public void set_populationSize(){
+	symbols.put("~populationSize",new SnowAtom(10));
 }
 
 
-protected void moleDef_gene(){
-symbols.put("gene",new SnowAtom(SnowType.NIL));
+public void moleDef_gene(){
+types.put("gene",new SnowAtom(SnowType.NIL));
 String mName = "gene";
 	types.get(mName).addField("num");
 }
 
-protected void moleDef_chromosome(){
-symbols.put("chromosome",new SnowAtom(SnowType.NIL));
+public void moleDef_chromosome(){
+types.put("chromosome",new SnowAtom(SnowType.NIL));
 String mName = "chromosome";
-	types.get(mName).addList("genes", 2);
+	types.get(mName).addList("genes", 8);
 }
 
-protected void moleDef_organism(){
-symbols.put("organism",new SnowAtom(SnowType.NIL));
-String mName = "organism";
-	types.get(mName).addList("chromosome", 1);
-	types.get(mName).addField("fitness");
-	types.get(mName).addField("name");
-}
-
-protected SnowType snw_construct (SnowType newOrganism){
-newOrganism.getField("fitness").set(1);
-
-newOrganism.getField("name").set(symbols.get("~organismCount").clone());
-
+public SnowType snw_construct (SnowType newOrganism){
  for(SnowType gene1 : newOrganism.getField("chromosome")){
-gene1.getField("num").set(newOrganism.getField("name").clone());
+gene1.getField("num").set(snw_randI(new SnowAtom(0),new SnowAtom(1)));
 }
 return newOrganism;
 
 }
 
-protected void dbg_afterGENERATION(){
-snw_print(symbols.get("~generationCount"));
+public SnowType snw_evaluateFitness (SnowType organism){
+SnowAtom  curfit = new SnowAtom(null);;
+curfit.set((new SnowAtom(100).plus(new SnowAtom(3))));
+
+ for(SnowType gene1 : organism.getField("chromosome")){
+curfit.set(curfit.plus(gene1.getField("num")));
+}
+
+return curfit;
+
+}
+
+public SnowType snw_mate (SnowType organismA, SnowType organismB, SnowType newOrganism){
+newOrganism.getField("chromsome").set(snw_splice(((snw_rand(new SnowAtom(0),new SnowAtom(100))).divide(new SnowAtom(100))),organismA.getField("chromosome"),organismB.getField("chromosome")).clone());
+return newOrganism;
+
+}
+
+public void dbg_afterGENERATION(){
+snw_print(new SnowAtom("average fitness: ").plus(symbols.get("~averageFitness")));
+}
+
+
+public void dbg_beforeTERMINATION(){
+snw_print(symbols.get("~endFitness"));
 }
 
 

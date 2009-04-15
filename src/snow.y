@@ -46,8 +46,8 @@ global_variable_assignment	:
 			;
 
 atom			:
-				NUMERIC {$$=$1;}
-			|	STRING {$$=$1;}
+				NUMERIC {$$.sval= "new SnowAtom("+$1.sval+")";}
+			|	STRING {$$.sval= "new SnowAtom("+$1.sval+")";}
 			;
 
 commaq			:
