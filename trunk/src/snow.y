@@ -51,7 +51,7 @@ atom			:
 
 commaq			:
 				COMMA {$$= new ParserVal(",");}
-			| {$$=new ParserVal(",");}
+			| {$$=new ParserVal("");}
 			;
 
 pair			:
@@ -95,7 +95,7 @@ function_expression	:
 			;
 
 params			:
-				params commaq param {$$ = new ParserVal($1.sval+$2.sval+$3.sval);}
+				params commaq param {$$ = new ParserVal($1.sval+","+$3.sval);}
 			| {$$ = new ParserVal("");}
 			;
 

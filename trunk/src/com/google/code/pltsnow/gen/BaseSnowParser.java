@@ -115,7 +115,7 @@ public abstract class BaseSnowParser {
 	}
 	protected ParserVal executeFunction(ParserVal fname,ParserVal params)
 	{
-		return new ParserVal("snw_"+fname.sval+"("+params.sval+")");
+		return new ParserVal("snw_"+fname.sval+"("+params.sval.substring(1)+")");
 	}
 	protected ParserVal addLineEnding(ParserVal v)
 	{
