@@ -2,6 +2,6 @@
 a simple hello world program would allow an empty simulation to run, by de-fining nothing, and then specifying that when the machine finishes .simulat-ing. to print out .Hello World.
 |#
 after termination:
-	print: "Hello Word\n", "somethign else"
+	print: "Hello Word\n"
 end
 

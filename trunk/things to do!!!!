@@ -1,0 +1,87 @@
+Tasks:
+
+Testing & Verification Plan
+Implement binary operators
+Implement Control structures
+Implement exceptions
+
+-Allow for function calls w/o commas
+-Fix this case:
+after termination:
+	foreach organism in ~population as org1
+		if (doFunction: toSomething) = 5 then
+		
+		end
+	end
+end
+
+
+EXCEPTIONS:
+UnsupportedOperation
+InvalidArguments
+
+
+class foo {
+	public List<SnowType> bar = SnowList.makeNil(4);
+	public SnowType name = SnowAtom.makeNil();
+	public SnowType value = SnowAtom.makeNil();
+}
+
+class bar {
+	
+}
+
+define organism
+	2 chromosome
+end
+
+define chromosome
+	8 genes
+end
+
+define gene
+	value
+end
+
+foreach organism in population as o1
+	foreach chromosome in o1.
+	foreach gene in o1.chromosome
+	end
+end
+
+
+define foo
+	4 bar
+	name
+	value
+end
+define bar
+	name
+	value
+end
+protected SnowAtom moleDef_gene(){
+	SnowAtom r = new SnowAtom();
+	symbols.put("gene",new SnowAtom(SnowType.NIL));
+	String mName = "gene";
+	
+	symbols.get(mName).addField("num");
+	symbols.get(mName).addList("bar",4);
+}
+
+for each bar in myFoo
+	bar.name = "x"
+end
+
+for(SnowType bar : myFoo.bar)
+{
+	try
+	{
+		bar.setField("name","x");
+		
+	}
+	catch(ClassCastException e)
+	{
+	
+	}
+}
+

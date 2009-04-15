@@ -5,18 +5,13 @@ import java.util.Iterator;
 
 public class SnowAtom extends SnowType {
 	protected HashMap<String, SnowType> fields;
-
+	private Object data;
+	
 	public SnowAtom(Object s) {
 		super(s);
 		// TODO Auto-generated constructor stub
 	}
-
-	@Override
-	public void addField(String fieldName) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public SnowType getField(String fieldName) {
 		// TODO Auto-generated method stub

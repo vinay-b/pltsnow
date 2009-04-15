@@ -5,26 +5,25 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class SnowList extends SnowType {
-	protected LinkedList<SnowAtom> data;
-	protected HashMap<String, SnowType> fields;
+		
+	protected LinkedList<SnowType> data;
+	private int size;
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
 	public SnowList(Object s) {
 		super(s);
-		data = new LinkedList<SnowAtom>();
+		data = new LinkedList<SnowType>();
 		data.add(new SnowAtom(s));
-		fields = new HashMap<String, SnowType>();
 	}
 
 	public SnowList sort()
 	{
 		return null;
 	}
-	@Override
-	public void addField(String fieldName) {
-		for(SnowAtom a : data)
-			a.addField(fieldName);
-		fields.put(fieldName, NIL);
-	}
-
 	@Override
 	public SnowType getField(String fieldName) {
 		if(data.size() == 0)
@@ -67,7 +66,7 @@ public class SnowList extends SnowType {
 
 	@Override
 	public SnowType setField(String fieldName, SnowType v) {
-		for(SnowAtom a : data)
+		for(SnowType a : data)
 			a.setField(fieldName, v);
 		return v;
 	}

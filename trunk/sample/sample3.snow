@@ -26,12 +26,12 @@ to construct: newOrganism
  return newOrganism
 end
 
-to evaluateFitness: checkOrganism
+to evaluateFitness: organism
  var curfit
  curfit = (100 + 3)
 
     #Loop over each gene except for the last one
-    foreach gene in checkOrganism.chromosome as gene1
+    foreach gene in organism.chromosome as gene1
      curfit = curfit + gene1.num
     end
 
