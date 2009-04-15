@@ -77,7 +77,7 @@ public abstract class BaseSnowParser {
 	protected ParserVal createFunction(ParserVal functionName,ParserVal params, ParserVal statements)
 	{
 		String r = "";
-		String parsedParams = params.sval;
+		String parsedParams = params.sval.substring(1);
 		if(parsedParams != "")
 		{
 			parsedParams = "SnowType " + parsedParams;
