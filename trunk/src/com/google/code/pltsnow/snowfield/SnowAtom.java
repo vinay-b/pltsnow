@@ -107,4 +107,9 @@ public class SnowAtom extends SnowType {
 		return null;
 	}
 
+	public static SnowType makeNil() {
+		// TODO Auto-generated method stub
+		return new SnowAtom(null);
+	}
+
 }
