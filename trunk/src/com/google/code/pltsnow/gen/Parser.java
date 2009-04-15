@@ -1088,7 +1088,7 @@ case 33:
 break;
 case 34:
 //#line 98 "snow.y"
-{yyval = new ParserVal(val_peek(2).sval+val_peek(1).sval+val_peek(0).sval);}
+{yyval = new ParserVal(val_peek(2).sval+","+val_peek(0).sval);}
 break;
 case 35:
 //#line 99 "snow.y"

@@ -1,6 +1,6 @@
 LEXER = snow.l
 PARSER = snow.y
-BYACC = byacc
+BYACC = ./yacc.linux
 
 
 all: yacc lex freezeit
