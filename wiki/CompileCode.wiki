@@ -3,7 +3,7 @@
 
 2. next once your get the binaries you need to add them somewhere on your
 path so that the make finds it.
-     make mac
+     make mac<br>
      make all (for linux) 
 
 3. now you can go to SVNPATH/src/
