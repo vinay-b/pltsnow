@@ -30,6 +30,6 @@ to construct: newOrganism
 end
 
 after generation:
-  print: ~generationCount
+  print: "Number of generations: " + ~generationCount
 end
 

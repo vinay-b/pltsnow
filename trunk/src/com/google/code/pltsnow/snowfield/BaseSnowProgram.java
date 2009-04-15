@@ -1,8 +1,9 @@
 package com.google.code.pltsnow.snowfield;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
-
 
 public class BaseSnowProgram {
 	private static final int DEFAULT_POPULATION_SIZE   = 100;
@@ -26,31 +27,71 @@ public class BaseSnowProgram {
 		symbols = new HashMap<String, SnowType>();
 		types   = new HashMap<String, SnowType>();	
 		
-		symbols.put("~populationSize",   new SnowAtom(new Integer(DEFAULT_POPULATION_SIZE)));
-		symbols.put("~topParentPool",    new SnowAtom(new Integer(DEFAULT_TOP_PARENT_POOL)));
-		symbols.put("~bottomParentPool", new SnowAtom(new Integer(DEFAULT_BOTTOM_PARENT_POOL)));
-		symbols.put("~organismLifespan", new SnowAtom(new Integer(DEFAULT_ORGANISM_LIFESPAN)));
-		symbols.put("~mutationRate",     new SnowAtom(new Double(DEFAULT_MUTATION_RATE)));
-		symbols.put("~selectionMethod",  new SnowAtom(new String(DEFAULT_SELECT_METHOD)));
-		symbols.put("~endGeneration",    new SnowAtom(new Integer(DEFAULT_END_GENERATION)));
-		symbols.put("~endFitness",       new SnowAtom(new Float(DEFAULT_END_FITNESS)));
-
 		// TODO: create readonly sybil, suchas '@'
 		symbols.put("~maxFitness", new SnowAtom(-1f));
 		symbols.put("~minFitness",       SnowAtom.makeNil());
 		symbols.put("~avgFitness",       SnowAtom.makeNil());
 		symbols.put("~generationCount",  new SnowAtom(new Integer(0)));
 		
+		set_bottomParentPool();
+		set_mutationRate();
+		set_organismLifespan();
+		set_populationSize();
+		set_selectMethod();
+		set_topParentPool();
+		set_endGenerations();
+		set_endFitness();
+		
 		types.put("organism", SnowList.makeNil());
 		//TODO: add default types to the table
 		
 		//TODO: call all of the defMole_ functions now!
+		callAllDefMoles();
 		
 		dbg_beforeINITIALIZATION();
 		initializePopulation();
 		dbg_afterINITIALIZATION();
 	}
+	protected void set_endFitness()
+	{
+		symbols.put("~endFitness",       new SnowAtom(new Float(DEFAULT_END_FITNESS)));
+	}
+	protected void set_endGenerations() {
+		symbols.put("~endGenerations",    new SnowAtom(new Integer(DEFAULT_END_GENERATION)));
+		
+	}
+	private void callAllDefMoles() {
+		try {
+			for(Method m : Class.forName("SnowProgramImp").getMethods())
+			{
 
+				if(m.getName().contains("moleDef"))
+				{
+					System.out.println("Invoking " + m.getName());
+
+					try {
+						m.invoke(this);
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvocationTargetException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	protected final void initializePopulation()
 	{
 		SnowList population = new SnowList();
@@ -80,9 +121,9 @@ public class BaseSnowProgram {
 	 */
 	private final boolean terminationMet()
 	{
-		if ((Float)symbols.get("~maxFitness").get() > (Float)symbols.get("~endFitness").get())
+		if (symbols.get("~maxFitness").getFloat() > symbols.get("~endFitness").getFloat() && symbols.get("~endFitness").getFloat() > 0)
 			return true;
-		if ((Integer)symbols.get("~generationCount").get() > (Integer)symbols.get("~endGeneration").get())
+		if ((Integer)symbols.get("~generationCount").get() > (Integer)symbols.get("~endGenerations").get())
 			return true;
 		return false;
 	}
@@ -119,6 +160,9 @@ public class BaseSnowProgram {
 		dbg_afterMUTATION();
 		
 		dbg_afterGENERATION();
+		
+		//INCREASE THE GENERATION COUNT
+		symbols.put("~generationCount", symbols.get("~generationCount").plus(new SnowAtom(1)));
 	}
 	
 	private void doTheMutating() {

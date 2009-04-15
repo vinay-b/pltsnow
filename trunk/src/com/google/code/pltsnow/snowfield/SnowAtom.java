@@ -10,30 +10,32 @@ public class SnowAtom extends SnowType {
 	public SnowAtom(Object s) {
 		super(s);
 		data = s;
-		// TODO Auto-generated constructor stub
+		fields = new HashMap<String, SnowType>();
 	}
 	
 	@Override
 	public SnowType getField(String fieldName) {
-		// TODO Auto-generated method stub
-		return null;
+		return fields.get(fieldName);
 	}
 
 	@Override
 	public boolean isFloat() {
-		// TODO Auto-generated method stub
+		if(data instanceof Float)
+			return true;
 		return false;
 	}
 
 	@Override
 	public boolean isInt() {
-		// TODO Auto-generated method stub
+		if(data instanceof Integer)
+			return true;
 		return false;
 	}
 
 	@Override
 	public boolean isString() {
-		// TODO Auto-generated method stub
+		if(data instanceof String)
+			return true;
 		return false;
 	}
 
@@ -45,8 +47,8 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public SnowType setField(String fieldName, SnowType v) {
-		// TODO Auto-generated method stub
-		return null;
+		fields.put(fieldName, v);
+		return v;
 	}
 
 	public Iterator<SnowType> iterator() {
@@ -56,11 +58,9 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public void set(Object o) {
-		// TODO Auto-generated method stub
-		
+		data = o;
 	}
 	
-	//TODO: is this correct? is there a getter?
 	public Object get() {
 		
 		return data;
@@ -87,6 +87,10 @@ public class SnowAtom extends SnowType {
 	@Override
 	public SnowType plus(SnowType other) {
 		// TODO Auto-generated method stub
+		if(isString())
+			return new SnowAtom(((String) data).concat(other.toString()));
+		if(isInt() && other.isInt())
+			return new SnowAtom(((Integer) data) + ((Integer) other.get()));
 		return null;
 	}
 
@@ -119,4 +123,14 @@ public class SnowAtom extends SnowType {
 		return new SnowAtom(null);
 	}
 
+	@Override
+	public String toString() {
+		if(isFloat())
+			return ((Float) data).toString();
+		else if(isInt())
+			return ((Integer) data).toString();
+		else if(isString())
+			return ((String) data);
+		return "Unknown data typed SnowAtom";
+	}
 }

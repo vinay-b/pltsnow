@@ -49,7 +49,7 @@ public abstract class BaseSnowParser {
 		}
 		System.err.println("assign " + id.sval + " to " + val.sval);
 		if(id.sval.charAt(0) == '~')
-			return new ParserVal("protected void set_" + id.sval.substring(1) + "(){\n\tsymbols.put(\"" + id.sval + "\",new SnowAtom(\"" + rval+ "\"));\n}\n");
+			return new ParserVal("public void set_" + id.sval.substring(1) + "(){\n\tsymbols.put(\"" + id.sval + "\"," + rval+ ");\n}\n");
 		else if(id.sval.contains("symbols.get(") || id.sval.contains("getField("))
 			return new ParserVal(id.sval + ".set("+rval+")");
 		else
@@ -83,7 +83,7 @@ public abstract class BaseSnowParser {
 			parsedParams = "SnowType " + parsedParams;
 			parsedParams = parsedParams.replaceAll(",",", SnowType ");
 		}
-		r += "protected SnowType snw_" + functionName.sval + " (" + parsedParams + "){\n";
+		r += "public SnowType snw_" + functionName.sval + " (" + parsedParams + "){\n";
 		r += statements.sval;
 		//TODO - implement something to make sure there is a return!
 		r += "\n}";
@@ -92,7 +92,7 @@ public abstract class BaseSnowParser {
 	protected ParserVal createDebugHook(ParserVal timeSeq,ParserVal event,ParserVal statements)
 	{
 		String r = new String();
-		r += ("protected void dbg_" + timeSeq.sval.toLowerCase() + event.sval.toUpperCase() + "(){" + "\n");
+		r += ("public void dbg_" + timeSeq.sval.toLowerCase() + event.sval.toUpperCase() + "(){" + "\n");
 		r += (statements.sval);
 		r += ("}\n");
 		return new ParserVal(r);
@@ -125,8 +125,8 @@ public abstract class BaseSnowParser {
 	{
 		String r = "";
 		definedGlobalSymbols.add(name.sval);
-		r+="protected void moleDef_" + name.sval + "(){\n";
-		r+="symbols.put(\"" + name.sval + "\",new SnowAtom(SnowType.NIL));\n";
+		r+="public void moleDef_" + name.sval + "(){\n";
+		r+="types.put(\"" + name.sval + "\",new SnowAtom(SnowType.NIL));\n";
 		r+="String mName = \"" + name.sval + "\";\n";
 		r+=def.sval;
 		r+= "}";

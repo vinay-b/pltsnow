@@ -36,4 +36,12 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public void addList(String string, int len) {
 		setField(string,SnowList.makeNilList(len));
 	}
+	public float getFloat() {
+		if(isFloat())
+			return (Float) get();
+		else if(isInt())
+			return Float.parseFloat(get().toString());
+		else
+			throw new ClassCastException("Can not make a float out of this type");
+	}
 }

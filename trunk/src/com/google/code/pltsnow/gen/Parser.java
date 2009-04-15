@@ -1021,11 +1021,11 @@ case 10:
 break;
 case 11:
 //#line 49 "snow.y"
-{yyval=val_peek(0);}
+{yyval.sval= "new SnowAtom("+val_peek(0).sval+")";}
 break;
 case 12:
 //#line 50 "snow.y"
-{yyval=val_peek(0);}
+{yyval.sval= "new SnowAtom("+val_peek(0).sval+")";}
 break;
 case 13:
 //#line 54 "snow.y"
