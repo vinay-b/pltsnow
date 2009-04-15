@@ -148,5 +148,9 @@ public class SnowList extends SnowType {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public static SnowType makeNil() {
+		// TODO Auto-generated method stub
+		return new SnowList(null);
+	}
 
 }

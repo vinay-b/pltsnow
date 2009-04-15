@@ -4,6 +4,11 @@ BYACC = ./yacc.linux
 
 
 all: yacc lex freezeit
+mac: macyacc lex freezeit
+macyacc:
+	byacc -J -Jextends=BaseSnowParser -Jpackage=com.google.code.pltsnow.gen $(PARSER)
+	mv Parser.java com/google/code/pltsnow/gen
+	mv ParserVal.java com/google/code/pltsnow/gen
 
 yacc:
 	$(BYACC) -J -Jextends=BaseSnowParser -Jpackage=com.google.code.pltsnow.gen $(PARSER)
