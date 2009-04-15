@@ -9,6 +9,7 @@ public class SnowAtom extends SnowType {
 	
 	public SnowAtom(Object s) {
 		super(s);
+		data = s;
 		// TODO Auto-generated constructor stub
 	}
 	

@@ -16,7 +16,11 @@ public class BaseSnowProgram {
 	
 	protected HashMap<String, SnowType> symbols;
 	protected HashMap<String, SnowType> types;
-	
+	public BaseSnowProgram() {
+		// TODO Auto-generated constructor stub
+		initProgram();
+		
+	}
 	protected final void initProgram()
 	{
 		symbols = new HashMap<String, SnowType>();
@@ -31,13 +35,13 @@ public class BaseSnowProgram {
 		symbols.put("~endGeneration",    new SnowAtom(new Integer(DEFAULT_END_GENERATION)));
 		symbols.put("~endFitness",       new SnowAtom(new Float(DEFAULT_END_FITNESS)));
 
-
 		// TODO: create readonly sybil, suchas '@'
-		symbols.put("~maxFitness",       SnowAtom.makeNil());
+		symbols.put("~maxFitness", new SnowAtom(-1f));
 		symbols.put("~minFitness",       SnowAtom.makeNil());
 		symbols.put("~avgFitness",       SnowAtom.makeNil());
 		symbols.put("~generationCount",  new SnowAtom(new Integer(0)));
 		
+		types.put("organism", SnowList.makeNil());
 		//TODO: add default types to the table
 		
 		//TODO: call all of the defMole_ functions now!
@@ -50,7 +54,8 @@ public class BaseSnowProgram {
 	protected final void initializePopulation()
 	{
 		SnowList population = new SnowList();
-		for (int i = 0; i < (Integer)symbols.get("~populationSize").get(); i++) 
+		
+		for (int i = 0; i < (Integer) (symbols.get("~populationSize").get()); i++) 
 		{
 			SnowType organism = types.get("organism").clone();
 			organism = snw_toConstructOrganism(organism);
@@ -75,7 +80,6 @@ public class BaseSnowProgram {
 	 */
 	private final boolean terminationMet()
 	{
-		
 		if ((Float)symbols.get("~maxFitness").get() > (Float)symbols.get("~endFitness").get())
 			return true;
 		if ((Integer)symbols.get("~generationCount").get() > (Integer)symbols.get("~endGeneration").get())
@@ -144,8 +148,8 @@ public class BaseSnowProgram {
 	}
 	
 	protected void snw_evaluateFitness() {
-		// TODO Auto-generated method stub
-		
+		//TODO WRITE IT! lol
+		symbols.put("~maxFitness", new SnowAtom(100f));
 	}
 	
 	protected final void snw_print(Object arg)

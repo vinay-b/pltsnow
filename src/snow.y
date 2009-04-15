@@ -25,6 +25,7 @@ System.out.println("import java.util.ArrayList;");
 
 System.out.println("public class SnowProgramImp extends BaseSnowProgram {\n");
 System.out.println($1.sval);
+System.out.println("public static void main(String[] args) {	SnowProgramImp this_prog = new SnowProgramImp(); this_prog.startProgram();}");
 System.out.println("}");
 }
 program_unit		:	external_declaration {$$=$1;}
