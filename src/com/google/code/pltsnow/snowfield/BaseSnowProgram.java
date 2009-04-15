@@ -13,9 +13,25 @@ public class BaseSnowProgram {
 	private static final String DEFAULT_SELECT_METHOD = "top_half";
 	
 	protected HashMap<String, SnowType> symbols;
+	protected HashMap<String, SnowType> types;
+
 	protected final void initProgram()
 	{
 		symbols = new HashMap<String, SnowType>();
+		types = new HashMap<String, SnowType>();
+		
+		//call all of the defMole_ functions now!
+		
+		initializePopulation();
+		while(! terminationMet())
+			doSnowLoop();
+	}
+	private final boolean terminationMet()
+	{
+		return false;
+	}
+	protected final void initializePopulation()
+	{
 		
 	}
 	protected final SnowAtom snw_randI(Object a1, Object a2)
@@ -24,6 +40,35 @@ public class BaseSnowProgram {
 	}
 	protected final void doSnowLoop()
 	{
+		snw_evaluateFitness();
+		snw_doSelection();
+		doTheMating();
+		doTheMutating();
+	}
+	
+	private void doTheMutating() {
+			//find the people to mutate, then
+		snw_mutate(null);
+	}
+	protected void snw_mutate(SnowType object) {
+		// TODO Auto-generated method stub
+		
+	}
+	private void doTheMating() {
+		// TODO Auto-generated method stub
+		//find the parents to mate then
+		snw_mate(null,null);
+	}
+	protected void snw_mate(SnowType object, SnowType object2) {
+		// TODO Auto-generated method stub
+		
+	}
+	protected void snw_doSelection() {
+		// TODO Auto-generated method stub
+		
+	}
+	protected void snw_evaluateFitness() {
+		// TODO Auto-generated method stub
 		
 	}
 	protected final void snw_print(Object arg)

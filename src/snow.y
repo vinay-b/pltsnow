@@ -71,7 +71,7 @@ primary_expression	:
 				atom {$$=$1;}
 			|	pair {$$=$1;}
 			|	identifier {$$=$1;}
-			|	LPAREN expression RPAREN {$$ = $2;}
+			|	LPAREN expression RPAREN {$$.sval = "(" + $2.sval + ")";}
 			;
 
 identifier		:
@@ -161,9 +161,12 @@ statement		:
 			|	iteration_statement NEWLINE {$$=$1;}
 			|	var_declarator NEWLINE {$$=addLineEnding($1);}
 			|	assignment_statement NEWLINE {$$=addLineEnding($1);}
+			|	return_statement NEWLINE {$$=$1;}
 			|	NEWLINE
 			;
-
+return_statement:
+					RETURN expression {$$.sval = "return " +  $2.sval + ";\n";}
+			;
 statements		:
 				statement { $$=$1; }
 			|	statements statement {$$ =new ParserVal($1.sval+$2.sval);} 
@@ -176,9 +179,8 @@ assignment_statement	:
 expression_statement	:
 				expression {$$=$1;}
 			;
-expression	: expression_t {$$=$1;}
-			| LPAREN expression RPAREN {$$=$2;}
-expression_t		:
+
+expression		:
 				logical_or_expression {$$=$1;}
 			;
 
@@ -230,11 +232,7 @@ time_seq		:
 			;
 
 function_declarator	:
-				TO IDENTIFIER COLON params NEWLINE statements opt_return END { $$ = createFunction($2,$4,$6,$7); }
-			;
-opt_return :
-				RETURN expression NEWLINE {$$ = $2;}
-			|
+				TO IDENTIFIER COLON params NEWLINE statements END { $$ = createFunction($2,$4,$6); }
 			;
 var_declarator		:
 				VAR declaration_list { $$ = declareLocalVariable($2); }

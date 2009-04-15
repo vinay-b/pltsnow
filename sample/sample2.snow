@@ -26,7 +26,7 @@ to construct: newOrganism
   foreach gene in newOrganism.chromosome as gene1
       gene1.num = newOrganism.name
   end
-  construct=newOrganism
+  return newOrganism
 end
 
 after generation:

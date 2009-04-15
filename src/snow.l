@@ -18,8 +18,8 @@ digit=		[0-9]
 ncc=		[^#|]|\n
 %%
 
-\#.*\n						{return yyparser.NEWLINE;}
-#\|(#|{ncc})*\|\|*({ncc}(#|{ncc})*\|\|*)*#	{return yyparser.NEWLINE;}
+\#.*\n						{yyparser.yylval = new ParserVal(""); return yyparser.NEWLINE;}
+#\|(#|{ncc})*\|\|*({ncc}(#|{ncc})*\|\|*)*#	{yyparser.yylval = new ParserVal(""); return yyparser.NEWLINE;}
 to					{	return yyparser.TO;}
 for				{	return yyparser.FOR;}
 foreach				{	return yyparser.FOREACH;}

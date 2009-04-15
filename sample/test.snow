@@ -1,7 +1,9 @@
 after termination:
 	foreach organism in ~population as org1
 		if (doFunction: toSomething) = 5 then
-		
+			var x = "sdf"
+			var y = "asdfasdf"
+			var z = y * x
 		end
 	end
 end

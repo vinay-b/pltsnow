@@ -32,13 +32,13 @@ public abstract class BaseSnowParser {
 	protected ParserVal moleLazyCreate(ParserVal num, ParserVal ofWhat)
 	{
 		String r = "";
-		r += "\tsymbols.get(mName).addField(\""+ofWhat.sval+"\");\n";
+		r += "\ttypes.get(mName).addList(\""+ofWhat.sval+"\", "+num.sval+");\n";
 		return new ParserVal(r);
 	}
 
 	protected ParserVal moleCreateOne(ParserVal thingToMake)
 	{
-		return new ParserVal("\tsymbols.get(mName).addField(\""+thingToMake	.sval+"\");\n");
+		return new ParserVal("\ttypes.get(mName).addField(\""+thingToMake	.sval+"\");\n");
 	}
 	protected ParserVal assignVariable(ParserVal id, ParserVal val)
 	{
@@ -74,7 +74,7 @@ public abstract class BaseSnowParser {
 			return new ParserVal(l);
 		}
 	}
-	protected ParserVal createFunction(ParserVal functionName,ParserVal params, ParserVal statements, ParserVal returnExp)
+	protected ParserVal createFunction(ParserVal functionName,ParserVal params, ParserVal statements)
 	{
 		String r = "";
 		String parsedParams = params.sval;
@@ -85,7 +85,6 @@ public abstract class BaseSnowParser {
 		}
 		r += "protected SnowType snw_" + functionName.sval + " (" + parsedParams + "){\n";
 		r += statements.sval;
-		r += "return " + returnExp.sval + ";\n";
 		//TODO - implement something to make sure there is a return!
 		r += "\n}";
 		return new ParserVal(r);
@@ -112,7 +111,7 @@ public abstract class BaseSnowParser {
 	}
 	protected ParserVal makePartialIf(ParserVal s1, ParserVal s2, ParserVal s3)
 	{
-		return new ParserVal("there is an if here");
+		return new ParserVal("there is an if here" + s1.sval);
 	}
 	protected ParserVal executeFunction(ParserVal fname,ParserVal params)
 	{

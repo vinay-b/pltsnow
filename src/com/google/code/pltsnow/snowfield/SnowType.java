@@ -3,7 +3,7 @@ package com.google.code.pltsnow.snowfield;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-
+				
 public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 
 	protected String complexTypeName;
@@ -13,8 +13,6 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public abstract SnowType getField(String fieldName);
 	
 	public abstract SnowType setField(String fieldName,SnowType v);
-	
-	public abstract void addField(String fieldName);
 	
 	public SnowType(Object s) {
 	}
