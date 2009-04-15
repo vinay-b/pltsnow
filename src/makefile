@@ -5,6 +5,7 @@ BYACC = ./yacc.linux
 
 all: yacc lex freezeit
 mac: macyacc lex freezeit
+
 macyacc:
 	byacc -J -Jextends=BaseSnowParser -Jpackage=com.google.code.pltsnow.gen $(PARSER)
 	mv Parser.java com/google/code/pltsnow/gen
@@ -20,6 +21,24 @@ lex:
 
 freezeit: 
 	javac com/google/code/pltsnow/gen/Parser.java
+	
+sample1:
+	java com/google/code/pltsnow/gen/Parser ../sample/sample1.snow
+
+sample2:
+	java com/google/code/pltsnow/gen/Parser ../sample/sample2.snow
+	
+sample3:
+	java com/google/code/pltsnow/gen/Parser ../sample/sample3.snow
+	
+sample4:
+	java com/google/code/pltsnow/gen/Parser ../sample/sample4.snow
+	
+test:
+	javac SnowProgramImp.java
+	
+run:
+	java SnowProgramImp
 
 clean:
 	rm ../bin/freezeit lex.yy.c y.tab.c y.tab.h
