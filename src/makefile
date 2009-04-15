@@ -41,4 +41,4 @@ run:
 	java SnowProgramImp
 
 clean:
-	rm ../bin/freezeit lex.yy.c y.tab.c y.tab.h
+	rm *.class com/google/code/pltsnow/snowfield/*.class com/google/code/pltsnow/gen/*.class
