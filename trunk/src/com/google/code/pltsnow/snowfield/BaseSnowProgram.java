@@ -22,32 +22,60 @@ public class BaseSnowProgram {
 		symbols = new HashMap<String, SnowType>();
 		types   = new HashMap<String, SnowType>();	
 		
-		symbols.put("~populationSize", new SnowAtom(new Integer(DEFAULT_POPULATION_SIZE)));
-		symbols.put("~topParentPool", new SnowAtom(new Integer(DEFAULT_TOP_PARENT_POOL)));
+		symbols.put("~populationSize",   new SnowAtom(new Integer(DEFAULT_POPULATION_SIZE)));
+		symbols.put("~topParentPool",    new SnowAtom(new Integer(DEFAULT_TOP_PARENT_POOL)));
 		symbols.put("~bottomParentPool", new SnowAtom(new Integer(DEFAULT_BOTTOM_PARENT_POOL)));
 		symbols.put("~organismLifespan", new SnowAtom(new Integer(DEFAULT_ORGANISM_LIFESPAN)));
-		symbols.put("~mutationRate", new SnowAtom(new Double(DEFAULT_MUTATION_RATE)));
-		symbols.put("~selectionMethod", new SnowAtom(new String(DEFAULT_SELECT_METHOD)));
-		symbols.put("~maxFitness", SnowAtom.makeNil());
-		symbols.put("~minFitness", SnowAtom.makeNil());
-		symbols.put("~avgFitness", SnowAtom.makeNil());
-		symbols.put("~generationCount", new SnowAtom(new Integer(0)));
+		symbols.put("~mutationRate",     new SnowAtom(new Double(DEFAULT_MUTATION_RATE)));
+		symbols.put("~selectionMethod",  new SnowAtom(new String(DEFAULT_SELECT_METHOD)));
+		symbols.put("~endGeneration",    new SnowAtom(new Integer(DEFAULT_END_GENERATION)));
+		symbols.put("~endFitness",       new SnowAtom(new Float(DEFAULT_END_FITNESS)));
+
+
+		// TODO: create readonly sybil, suchas '@'
+		symbols.put("~maxFitness",       SnowAtom.makeNil());
+		symbols.put("~minFitness",       SnowAtom.makeNil());
+		symbols.put("~avgFitness",       SnowAtom.makeNil());
+		symbols.put("~generationCount",  new SnowAtom(new Integer(0)));
 		
-		//call all of the defMole_ functions now!
+		//TODO: add default types to the table
+		
+		//TODO: call all of the defMole_ functions now!
 		
 		initializePopulation();
+		
 		while(! terminationMet())
 			doSnowLoop();
+		
+		dbg_beforeTERMINATION();
+		dbg_afterTERMINATION();
 	}
 	
+	/**
+	 * @return true if termination conditions met
+	 * such as maxFitness and generationCount
+	 */
 	private final boolean terminationMet()
 	{
+		
+		if ((Float)symbols.get("~maxFitness") > (Float)symbols.get("~endFitness"))
+			return true;
+		if ((Integer)symbols.get("~generationCount") > (Integer)symbols.get("~endGeneration"))
+			return true;
 		return false;
 	}
 	
 	protected final void initializePopulation()
 	{
+		SnowList population = new SnowList();
+		for (int i = 0; i < symbols.get("~populationSize"); i++) 
+		{
+			SnowType organism = types.get("organism").clone();
+			organism = snw_toConstructOrganism(organism);
+			population.push(organism);
+		}
 		
+		symbols.put("population", population);
 	}
 	
 	protected final SnowAtom snw_randI(Object a1, Object a2)
@@ -55,17 +83,43 @@ public class BaseSnowProgram {
 		return null;
 	}
 	
+	protected final SnowType snw_toConstructOrganism(SnowType organism) 
+	{
+		// user does this?
+		return organism;
+	}
+
+	
 	protected final void doSnowLoop()
 	{
+		dbg_beforeGENERATION();
+		
 		snw_evaluateFitness();
+		
+		dbg_beforeSELECTION();
 		snw_doSelection();
+		dbg_afterSELECTION();
+		
+		dbg_beforeMATING();
 		doTheMating();
+		dbg_afterMATING();
+		
+		dbg_beforeMUTATION();
 		doTheMutating();
+		dbg_afterMUTATION();
+		
+		dbg_afterGENERATION();
 	}
 	
 	private void doTheMutating() {
 			//find the people to mutate, then
 		snw_mutate(null);
+	}
+	
+	// TODO: make this do something real
+	// this should also be passed off to the user subclass
+	private SnowType snw_toConstruct() {
+		return new SnowAtom(new Integer(0));
 	}
 	
 	protected void snw_mutate(SnowType object) {
