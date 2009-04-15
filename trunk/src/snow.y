@@ -51,7 +51,7 @@ atom			:
 
 commaq			:
 				COMMA {$$= new ParserVal(",");}
-			| {$$=new ParserVal("");}
+			| {$$=new ParserVal(",");}
 			;
 
 pair			:
