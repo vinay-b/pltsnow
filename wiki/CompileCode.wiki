@@ -1,0 +1,18 @@
+1. first you need byacc for java
+     <a href="http://byaccj.sourceforge.net/#download">Link here</a>
+
+2. next once your get the binaries you need to add them somewhere on your
+path so that the make finds it.
+
+3. now you can go to SVNPATH/src/
+and run the makefile
+
+4. finally to run parser you run the following from the src directory in the svn
+     java com/google/code/pltsnow/gen/Parser ../sample/sample#.snow
+
+     ex:  java com/google/code/pltsnow/gen/Parser ../sample/sample3.snow
+
+     and you can send it to SnowProgramImp.java with ">" to refresh the SnowProgramImp.java in the editor if you have it open.
+
+
+Note: i will edit makefile to make this command shorter.
