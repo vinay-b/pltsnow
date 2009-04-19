@@ -96,7 +96,7 @@ function_expression	:
 			;
 
 params_opt		:	params {$$ = $1;}
-			|		{$$ = "";}
+			|		{$$.sval = "";}
 			;
 
 params			:
