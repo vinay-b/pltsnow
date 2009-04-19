@@ -201,13 +201,13 @@ partial_selection_statement:
 
 iteration_statement	:
 				WHILE expression NEWLINE statements END { $$ = doWhile($2,$4); }
-			|	FOR identifier FROM expression TO expression by_statement NEWLINE statements END { $$ = doFor($2,$4,$6,$7,$8); }
+			|	FOR identifier FROM expression TO expression by_statement NEWLINE statements END { $$ = doFor($2,$4,$6,$7,$9); }
 			|	FOREACH identifier in_statement as_statement from_statement NEWLINE statements END { $$ = doForeach($2,$3,$4,$5,$7); }
 			;
 
 as_statement		:
-				AS identifier { $$ = $2; }
-			| {$$ = null; }
+				AS identifier 	{ $$ = $2; }
+			| 			{$$ = null; }
 			;
 
 in_statement		:
@@ -221,8 +221,8 @@ from_statement		:
 			;
 
 by_statement		:
-				BY expression
-			|
+				BY expression	{ $$ = $2;}
+			|	{ $$ = new ParserVal(1);}
 			;
 
 debug_hook_declarator	:
