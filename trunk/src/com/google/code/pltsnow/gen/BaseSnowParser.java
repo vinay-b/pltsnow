@@ -138,15 +138,26 @@ public abstract class BaseSnowParser {
 		return new ParserVal(r);
 	}
 
-	protected ParserVal makePartialIf(ParserVal s1, ParserVal s2, ParserVal s3) {
+	protected ParserVal makePartiaIfElse(ParserVal s1, ParserVal s2, ParserVal s3) {
 		String r = "";
-		r += "(" + s1.sval + ")";
-		r += "{" + s2.sval + "}";
+		r += "(" + s1.sval + "){\n";
+		r += "" + s2.sval + "\n}\n";
 		if (s3 != null) {
-			r += "else " + "{" + s3.sval + "}";
+			r += "else " + "{\n" + s3.sval + "\n}\n";
 		}
 		return new ParserVal(r);
 	}
+	
+	protected ParserVal makePartialIfElseIf(ParserVal s1, ParserVal s2, ParserVal s3) {
+		String r = "";
+		r += "(" + s1.sval + "){\n";
+		r += "" + s2.sval + "\n}\n";
+		if (s3 != null) {
+			r += "else if " + s3.sval;
+		}
+		return new ParserVal(r);
+	}
+
 
 	protected ParserVal executeFunction(ParserVal fname, ParserVal params) {
 		return new ParserVal("snw_" + fname.sval + "(" + params.sval + ")");
