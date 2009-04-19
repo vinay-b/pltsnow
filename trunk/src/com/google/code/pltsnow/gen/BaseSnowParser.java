@@ -25,8 +25,12 @@ public abstract class BaseSnowParser {
 	protected ParserVal doFor(ParserVal id,ParserVal from,ParserVal to,ParserVal by, ParserVal stmt)
 	{
 		System.err.println("doafor");
-		String r= "";
-		r +=  " want for to do  " + stmt;
+		String r = "";
+		r += "for(SnowAtom " + id + " = new SnowAtom( " + from.sval + "); "
+				+ id + ".getFloat() <= " + to.sval + "; id.plus(" + by.sval
+				+ ")){";
+		r += stmt;
+		r += "\n}";
 		return new ParserVal(r);
 	}
 	protected ParserVal moleLazyCreate(ParserVal num, ParserVal ofWhat)
