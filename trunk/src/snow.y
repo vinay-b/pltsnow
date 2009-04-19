@@ -190,13 +190,13 @@ expression		:
 			;
 
 selection_statement	:
-				IF partial_selection_statement END { $$ = makeFullIfStatement($1); }
+				IF partial_selection_statement END { $$ = makeFullIfStatement($2); }
 			;
 
 partial_selection_statement:
-				expression THEN statements {$$ = makePartialIf($1,$3, null);}
-			|	expression THEN statements ELSE statements {$$ = makePartialIf($1,$3, $5);}
-			|	expression THEN statements ELSIF partial_selection_statement {$$ = makePartialIf($1,$3, $5);}
+				expression THEN statements {$$ = makePartialIfElse($1,$3, null);}
+			|	expression THEN statements ELSE statements {$$ = makePartialIfElse($1,$3, $5);}
+			|	expression THEN statements ELSIF partial_selection_statement {$$ = makePartialIfElseIf($1,$3, $5);}
 			;
 
 iteration_statement	:
