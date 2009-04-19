@@ -3,16 +3,18 @@ package com.google.code.pltsnow.snowfield;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.google.code.pltsnow.exception.InvalidArgumentException;
+
 public class SnowAtom extends SnowType {
 	protected HashMap<String, SnowType> fields;
 	private Object data;
-	
+
 	public SnowAtom(Object s) {
 		super(s);
 		data = s;
 		fields = new HashMap<String, SnowType>();
 	}
-	
+
 	@Override
 	public SnowType getField(String fieldName) {
 		return fields.get(fieldName);
@@ -20,29 +22,49 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public boolean isFloat() {
-		if(data instanceof Float)
+		if (data instanceof Float) {
 			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean isInt() {
-		if(data instanceof Integer)
+		if (data instanceof Integer) {
 			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean isString() {
-		if(data instanceof String)
+		if (data instanceof String) {
 			return true;
+		}
 		return false;
 	}
 
 	@Override
-	public boolean isType(String type) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isNumeric() {
+		return isInt() || isFloat();
+	}
+
+	@Override
+	public boolean isType(String type) throws InvalidArgumentException {
+		if (type.equals("String")) {
+			return isString();
+		}
+
+		if (type.equals("Float")) {
+			return isFloat();
+		}
+
+		if (type.equals("Integer")) {
+			return isInt();
+		}
+
+		throw new InvalidArgumentException("Unknown Type : " + type);
+
 	}
 
 	@Override
@@ -60,42 +82,110 @@ public class SnowAtom extends SnowType {
 	public void set(Object o) {
 		data = o;
 	}
-	
+
 	public Object get() {
-		
+
 		return data;
 	}
 
-	@Override
-	public SnowType divide(SnowType other) {
-		// TODO Auto-generated method stub
+	private SnowType doMathOp(SnowType other, char op) {
+		Float f1 = (isInt()) ? ((Integer) data).floatValue() : ((Float) data);
+
+		Float f2 = (isInt()) ? ((Integer) other.get()).floatValue()
+				: ((Float) other.get());
+
+		switch (op) {
+		case '+':
+			return new SnowAtom(f1 + f2);
+		case '-':
+			return new SnowAtom(f1 - f2);
+		case '*':
+			return new SnowAtom(f1 * f2);
+		case '/':
+			return new SnowAtom(f1 / f2);
+		case '%':
+			return new SnowAtom(f1 % f2);
+		case '^':
+			return new SnowAtom(Math.pow(f1, f2));
+		}
+
 		return null;
+
+	}
+
+	private boolean doRelOp(SnowType other, int choice) {
+		Float f1 = (isInt()) ? ((Integer) data).floatValue() : ((Float) data);
+
+		Float f2 = (isInt()) ? ((Integer) other.get()).floatValue()
+				: ((Float) other.get());
+
+		switch (choice) {
+		case 1:
+			return f1 == f2;
+		case 2:
+			return f1 != f2;
+		case 3:
+			return f1 <= f2;
+		case 4:
+			return f1 < f2;
+		case 5:
+			return f1 >= f2;
+		case 6:
+			return f1 > f2;
+		}
+
+		return false;
+
 	}
 
 	@Override
-	public SnowType minus(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
+	public SnowType divide(SnowType other) throws UnsupportedOperationException {
+		if (isNumeric() && other.isNumeric()) {
+			return doMathOp(other, '/');
+		}
+
+		throw new UnsupportedOperationException(
+				"Division operator applied on incompatible types.");
 	}
 
 	@Override
-	public SnowType modulo(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
+	public SnowType minus(SnowType other) throws UnsupportedOperationException {
+		if (isNumeric() && other.isNumeric()) {
+			return doMathOp(other, '-');
+		}
+
+		throw new UnsupportedOperationException(
+				"Minus operator applied on incompatible types.");
 	}
 
 	@Override
-	public SnowType plus(SnowType other) {
-		// TODO Auto-generated method stub
-		if(isString())
+	public SnowType modulo(SnowType other) throws UnsupportedOperationException {
+		if (isNumeric() && other.isNumeric()) {
+			return doMathOp(other, '%');
+		}
+
+		throw new UnsupportedOperationException(
+				"Modulo operator applied on incompatible types.");
+
+	}
+
+	@Override
+	public SnowType plus(SnowType other) throws UnsupportedOperationException {
+		if (isNumeric() && other.isNumeric()) {
+			return doMathOp(other, '+');
+		}
+
+		if (isString()) {
 			return new SnowAtom(((String) data).concat(other.toString()));
-		if(isInt() && other.isInt())
-			return new SnowAtom(((Integer) data) + ((Integer) other.get()));
-		return null;
+		}
+
+		throw new UnsupportedOperationException(
+				"Addition operator applied on incompatible types.");
+
 	}
 
 	@Override
-	public SnowType pop(SnowType other) {
+	public SnowType pop(SnowType other) throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -108,8 +198,12 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public SnowType times(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
+		if (isNumeric() && other.isNumeric()) {
+			return doMathOp(other, '*');
+		}
+
+		throw new UnsupportedOperationException(
+				"Multiplication operator applied on incompatible types.");
 	}
 
 	@Override
@@ -125,12 +219,114 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public String toString() {
-		if(isFloat())
+		if (isFloat())
 			return ((Float) data).toString();
-		else if(isInt())
+		else if (isInt())
 			return ((Integer) data).toString();
-		else if(isString())
+		else if (isString())
 			return ((String) data);
 		return "Unknown data typed SnowAtom";
+	}
+
+	@Override
+	public boolean equals(SnowType other)
+			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+
+		if (isNumeric() && other.isNumeric()) {
+			return doRelOp(other, 1);
+		}
+
+		if (isString()) {
+			return ((String) data).compareTo(other.toString()) == 0;
+		}
+
+		throw new UnsupportedOperationException(
+				"Equals operator applied on incompatible types.");
+	}
+
+	@Override
+	public boolean ge(SnowType other)
+			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+
+		if (isNumeric() && other.isNumeric()) {
+			return doRelOp(other, 5);
+		}
+
+		if (isString()) {
+			return ((String) data).compareTo(other.toString()) != -1;
+		}
+		throw new UnsupportedOperationException(
+				"Greater Than Or Equals operator applied on incompatible types.");
+	}
+
+	@Override
+	public boolean gt(SnowType other)
+			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+
+		if (isNumeric() && other.isNumeric()) {
+			return doRelOp(other, 6);
+		}
+
+		if (isString()) {
+			return ((String) data).compareTo(other.toString()) == 1;
+		}
+		throw new UnsupportedOperationException(
+				"Greater Than operator applied on incompatible types.");
+	}
+
+	@Override
+	public boolean le(SnowType other)
+			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+
+		if (isNumeric() && other.isNumeric()) {
+			return doRelOp(other, 3);
+		}
+
+		if (isString()) {
+			return ((String) data).compareTo(other.toString()) != 1;
+		}
+		throw new UnsupportedOperationException(
+				"Less Than Or Equals operator applied on incompatible types.");
+	}
+
+	@Override
+	public boolean lt(SnowType other)
+			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+
+		if (isNumeric() && other.isNumeric()) {
+			return doRelOp(other, 4);
+		}
+
+		if (isString()) {
+			return ((String) data).compareTo(other.toString()) == -1;
+		}
+		throw new UnsupportedOperationException(
+				"Less Than operator applied on incompatible types.");
+	}
+
+	@Override
+	public boolean nequals(SnowType other)
+			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+
+		if (isNumeric() && other.isNumeric()) {
+			return doRelOp(other, 2);
+		}
+
+		if (isString()) {
+			return ((String) data).compareTo(other.toString()) != 0;
+		}
+		throw new UnsupportedOperationException(
+				"Not Equals operator applied on incompatible types.");
+	}
+
+	@Override
+	public SnowType power(SnowType other)
+			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+		if (isNumeric() && other.isNumeric()) {
+			return doMathOp(other, '^');
+		}
+
+		throw new UnsupportedOperationException(
+				"Powed operator applied on incompatible types.");
 	}
 }

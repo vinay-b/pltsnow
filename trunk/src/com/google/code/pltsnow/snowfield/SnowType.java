@@ -3,7 +3,10 @@ package com.google.code.pltsnow.snowfield;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-				
+
+import com.google.code.pltsnow.exception.InvalidArgumentException;
+import com.google.code.pltsnow.exception.UnsupportedOperationException;
+
 public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 
 	protected String complexTypeName;
@@ -20,15 +23,27 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public abstract boolean isInt();
 	public abstract boolean isString();
 	public abstract boolean isFloat();
-	public abstract boolean isType(String type);
+	public abstract boolean isNumeric();
+	public abstract boolean isType(String type) throws InvalidArgumentException;
 	
-	public abstract SnowType plus(SnowType other);
-	public abstract SnowType minus(SnowType other);
-	public abstract SnowType push(SnowType other);
-	public abstract SnowType pop(SnowType other);
-	public abstract SnowType times(SnowType other);
-	public abstract SnowType divide(SnowType other);
-	public abstract SnowType modulo(SnowType other);
+	public abstract SnowType plus(SnowType other) throws UnsupportedOperationException;
+	public abstract SnowType minus(SnowType other) throws UnsupportedOperationException;
+	public abstract SnowType push(SnowType other) throws UnsupportedOperationException;
+	public abstract SnowType pop(SnowType other) throws UnsupportedOperationException;
+	public abstract SnowType times(SnowType other) throws UnsupportedOperationException;
+	public abstract SnowType divide(SnowType other) throws UnsupportedOperationException;
+	public abstract SnowType modulo(SnowType other) throws UnsupportedOperationException;
+
+	public abstract SnowType power(SnowType other) throws UnsupportedOperationException;
+	
+	
+	public abstract boolean lt(SnowType other) throws UnsupportedOperationException;
+	public abstract boolean gt(SnowType other) throws UnsupportedOperationException;
+	public abstract boolean le(SnowType other) throws UnsupportedOperationException;
+	public abstract boolean ge(SnowType other) throws UnsupportedOperationException;
+	public abstract boolean equals(SnowType other) throws UnsupportedOperationException;
+	public abstract boolean nequals(SnowType other) throws UnsupportedOperationException;
+	
 	public abstract SnowType clone();
 	public void addField(String string) {
 		setField(string,SnowAtom.makeNil());

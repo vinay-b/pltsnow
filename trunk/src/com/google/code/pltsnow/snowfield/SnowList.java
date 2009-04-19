@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import com.google.code.pltsnow.exception.InvalidArgumentException;
+import com.google.code.pltsnow.exception.UnsupportedOperationException;
+
 public class SnowList extends SnowType {
 		
 	protected LinkedList<SnowType> data;
@@ -76,7 +79,7 @@ public class SnowList extends SnowType {
 	}
 
 	@Override
-	public boolean isType(String type) {
+	public boolean isType(String type) throws InvalidArgumentException {
 		if(data.size() == 0)
 			return false;
 		else
@@ -157,5 +160,47 @@ public class SnowList extends SnowType {
 		SnowList r = new SnowList(null);
 		r.setSize(len);
 		return r;
+	}
+	@Override
+	public boolean isNumeric() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public SnowType power(SnowType other_) throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean equals(SnowType other_) throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean ge(SnowType other_) throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean gt(SnowType other_) throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean le(SnowType other_) throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean lt(SnowType other_) throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean nequals(SnowType other_)
+			throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
