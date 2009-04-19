@@ -125,7 +125,7 @@ public class BaseSnowProgram {
 	{
 		if (symbols.get("~maxFitness").getFloat() > symbols.get("~endFitness").getFloat() && symbols.get("~endFitness").getFloat() > 0)
 			return true;
-		if ((Integer)symbols.get("~generationCount").get() > (Integer)symbols.get("~endGenerations").get())
+		if (symbols.get("~generationCount").getFloat() > symbols.get("~endGenerations").getFloat())
 			return true;
 		return false;
 	}
