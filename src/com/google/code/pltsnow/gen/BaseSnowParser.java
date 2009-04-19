@@ -30,27 +30,13 @@ public abstract class BaseSnowParser {
 
 		String r = "";
 		if (by == null) {
-			r += "if(" + from.sval + ".le(" + to.sval + ")){\n";
-			r += "for(" + id.sval + " = " + from.sval + "; " + id.sval
-					+ ".nequals(" + to.sval + ");" + id.sval
-					+ ".plus(new SnowAtom(1))){";
-			r += stmts.sval;
-			r += "\n}";
-			r += "\n}\n";
-			r += "else{\n";
-			r += "for(" + id.sval + " = " + from.sval + "; " + id.sval
-					+ ".nequals(" + to.sval + ");" + id.sval
-					+ ".plus(new SnowAtom(-1))){";
-			r += stmts.sval;
-			r += "\n}";
-			r += "\n}\n";
-		} else {
-			r += "for(" + id.sval + " = " + from.sval + "; " + id.sval
+			by = new ParserVal("new SnowAtom(1)");
+		}
+		r += "for(" + id.sval + " = " + from.sval + "; " + id.sval
 					+ ".nequals(" + to.sval + ");" + id.sval + ".plus("
 					+ by.sval + ")){";
-			r += stmts.sval;
-			r += "\n}";
-		}
+		r += stmts.sval;
+		r += "\n}";
 		return new ParserVal(r);
 	}
 
@@ -133,15 +119,19 @@ public abstract class BaseSnowParser {
 	}
 
 	protected ParserVal makeFullIfStatement(ParserVal stmt) {
+		System.out.println(stmt);
 		String r = "";
 		r += "if " + stmt.sval;
 		return new ParserVal(r);
 	}
 
 	protected ParserVal makePartialIfElse(ParserVal s1, ParserVal s2, ParserVal s3) {
+		System.out.println(s1);
+		System.out.println(s2);
+		System.out.println(s3);
 		String r = "";
 		r += "(" + s1.sval + "){\n";
-		r += "" + s2.sval + "\n}\n";
+		r += s2.sval + "\n}\n";
 		if (s3 != null) {
 			r += "else " + "{\n" + s3.sval + "\n}\n";
 		}
@@ -149,12 +139,13 @@ public abstract class BaseSnowParser {
 	}
 	
 	protected ParserVal makePartialIfElseIf(ParserVal s1, ParserVal s2, ParserVal s3) {
+		System.out.println(s1);
+		System.out.println(s2);
+		System.out.println(s3);
 		String r = "";
 		r += "(" + s1.sval + "){\n";
-		r += "" + s2.sval + "\n}\n";
-		if (s3 != null) {
-			r += "else if " + s3.sval;
-		}
+		r += s2.sval + "\n}\n";
+		r += "else if " + s3.sval;
 		return new ParserVal(r);
 	}
 
