@@ -91,7 +91,7 @@ public class SnowAtom extends SnowType {
 	private SnowType doMathOp(SnowType other, char op) {
 		Float f1 = (isInt()) ? ((Integer) data).floatValue() : ((Float) data);
 
-		Float f2 = (isInt()) ? ((Integer) other.get()).floatValue()
+		Float f2 = (other.isInt()) ? ((Integer) other.get()).floatValue()
 				: ((Float) other.get());
 
 		switch (op) {
