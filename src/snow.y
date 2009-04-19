@@ -111,7 +111,7 @@ param			:
 unary_expression	:
 				postfix_expression {$$=$1;}
 			|	MINUS unary_expression {$$ = doOp("minus",new ParserVal(0),$2);}
-			|	LOG_OP_NOT unary_expression {$$ = doOp("bnot",$2,null);}
+			|	LOG_OP_NOT unary_expression {$$ = doOp("log_not",$2,null);}
 			;
 
 
