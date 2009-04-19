@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.code.pltsnow.exception.UnsupportedOperationException;
+
 public class BaseSnowProgram {
 	private static final int DEFAULT_POPULATION_SIZE   = 100;
 	private static final int DEFAULT_TOP_PARENT_POOL   = 10;
@@ -165,7 +167,12 @@ public class BaseSnowProgram {
 		dbg_afterGENERATION();
 		
 		//INCREASE THE GENERATION COUNT
-		symbols.put("~generationCount", symbols.get("~generationCount").plus(new SnowAtom(1)));
+		try {
+			symbols.put("~generationCount", symbols.get("~generationCount").plus(new SnowAtom(1)));
+		} catch (UnsupportedOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void doTheMutating() {
