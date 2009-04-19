@@ -25,7 +25,7 @@ public abstract class BaseSnowParser {
 	}
 
 	protected ParserVal doFor(ParserVal id, ParserVal from, ParserVal to,
-			ParserVal by, ParserVal stmt) {
+			ParserVal by, ParserVal stmts) {
 		System.err.println("doafor");
 
 		String r = "";
@@ -34,21 +34,21 @@ public abstract class BaseSnowParser {
 			r += "for(" + id.sval + " = " + from.sval + "; " + id.sval
 					+ ".nequals(" + to.sval + ");" + id.sval
 					+ ".plus(new SnowAtom(1))){";
-			r += stmt;
+			r += stmts.sval;
 			r += "\n}";
 			r += "\n}\n";
 			r += "else{\n";
 			r += "for(" + id.sval + " = " + from.sval + "; " + id.sval
 					+ ".nequals(" + to.sval + ");" + id.sval
 					+ ".plus(new SnowAtom(-1))){";
-			r += stmt;
+			r += stmts.sval;
 			r += "\n}";
 			r += "\n}\n";
 		} else {
 			r += "for(" + id.sval + " = " + from.sval + "; " + id.sval
 					+ ".nequals(" + to.sval + ");" + id.sval + ".plus("
 					+ by.sval + ")){";
-			r += stmt;
+			r += stmts.sval;
 			r += "\n}";
 		}
 		return new ParserVal(r);
