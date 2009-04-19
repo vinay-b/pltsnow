@@ -51,8 +51,8 @@ atom			:
 			;
 
 commaq			:
-				COMMA {$$= new ParserVal(",");}
-			| {$$=new ParserVal("");}
+					COMMA {$$= new ParserVal(",");}
+			| 		{$$=new ParserVal(",");}
 			;
 
 pair			:
@@ -92,12 +92,16 @@ postfix_expression	:
 			;
 
 function_expression	:
-				IDENTIFIER COLON params { $$ = executeFunction($1,$3); }
+				IDENTIFIER COLON params_opt { $$ = executeFunction($1,$3); }
+			;
+
+params_opt		:	params {$$ = $1;}
+			|		{$$ = "";}
 			;
 
 params			:
 				params commaq param {$$ = new ParserVal($1.sval+","+$3.sval);}
-			| {$$ = new ParserVal("");}
+			| 	param {$$ = $1;}
 			;
 
 param			:
@@ -144,12 +148,12 @@ equality_expression	:
 
 logical_and_expression:
 				equality_expression {$$=$1;}
-			|	logical_and_expression LOG_OP_AND equality_expression  {$$ = doOp("band",$2,null);}
+			|	logical_and_expression LOG_OP_AND equality_expression  {$$ = doOp("log_and",$2,null);}
 			;
 
 logical_or_expression	:
 				logical_and_expression {$$=$1;}
-			|	logical_or_expression LOG_OP_OR logical_and_expression {$$ = doOp("bor",$2,null);}
+			|	logical_or_expression LOG_OP_OR logical_and_expression {$$ = doOp("log_or",$2,null);}
 			;
 
 assignment_expression	:
