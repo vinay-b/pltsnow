@@ -222,7 +222,7 @@ from_statement		:
 
 by_statement		:
 				BY expression	{ $$ = $2;}
-			|	{ $$ = new ParserVal(1);}
+			|	{ $$ = null;}
 			;
 
 debug_hook_declarator	:
