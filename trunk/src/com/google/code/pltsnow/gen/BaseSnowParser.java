@@ -26,8 +26,8 @@ public abstract class BaseSnowParser {
 	{
 		System.err.println("doafor");
 		String r = "";
-		r += "for(SnowAtom " + id + " = new SnowAtom( " + from.sval + "); "
-				+ id + ".getFloat() <= " + to.sval + "; id.plus(" + by.sval
+		r += "for(SnowAtom " + id.sval + " = new SnowAtom( " + from.sval + "); "
+				+ id.sval + ".getFloat() <= " + to.sval + ";" + id.sval +".plus(" + by.sval
 				+ ")){";
 		r += stmt;
 		r += "\n}";
