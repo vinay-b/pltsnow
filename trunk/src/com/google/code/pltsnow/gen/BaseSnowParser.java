@@ -106,12 +106,18 @@ public abstract class BaseSnowParser {
 	protected ParserVal makeFullIfStatement(ParserVal stmt)
 	{
 		String r = "";
-		r += "if(" + stmt.sval + "}";
+		r += "if " + stmt.sval;
 		return new ParserVal(r);
 	}
 	protected ParserVal makePartialIf(ParserVal s1, ParserVal s2, ParserVal s3)
 	{
-		return new ParserVal("there is an if here" + s1.sval);
+		String r = "";
+		r+= "(" + s1.sval + ")";
+		r+= "{" + s2.sval + "}";
+		if( s3 != null){
+			r+= "else " + "{" + s3.sval + "}";
+		}
+		return new ParserVal(r);
 	}
 	protected ParserVal executeFunction(ParserVal fname,ParserVal params)
 	{
