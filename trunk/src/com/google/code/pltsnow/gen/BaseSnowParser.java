@@ -138,7 +138,7 @@ public abstract class BaseSnowParser {
 		return new ParserVal(r);
 	}
 
-	protected ParserVal makePartiaIfElse(ParserVal s1, ParserVal s2, ParserVal s3) {
+	protected ParserVal makePartialIfElse(ParserVal s1, ParserVal s2, ParserVal s3) {
 		String r = "";
 		r += "(" + s1.sval + "){\n";
 		r += "" + s2.sval + "\n}\n";
