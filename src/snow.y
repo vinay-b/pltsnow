@@ -240,17 +240,17 @@ function_declarator	:
 				TO IDENTIFIER COLON params NEWLINE statements END { $$ = createFunction($2,$4,$6); }
 			;
 var_declarator		:
-				VAR declaration_list { $$ = declareLocalVariable($2); }
+				VAR declaration_list {$$ = $2;}
 			;
 
 declaration_list	:
-				declarator
-			|	declaration_list COMMA declarator
+				declarator {$$ = $1;}
+			|	declaration_list COMMA declarator {$$.sval = $1.sval + ";\n"+$2.sval;}
 			;
 
 declarator		:	
-				IDENTIFIER
-			|	IDENTIFIER EQUALS expression
+				IDENTIFIER { $$ = declareLocalVariable($1); }
+			|	IDENTIFIER EQUALS expression { $$ = declareLocalVariable($1,$3); }
 			;
 
 molecule_declarator	:
