@@ -1343,7 +1343,23 @@ case 95:
 break;
 case 96:
 //#line 243 "snow.y"
+{yyval = val_peek(0);}
+break;
+case 97:
+//#line 247 "snow.y"
+{yyval = val_peek(0);}
+break;
+case 98:
+//#line 248 "snow.y"
+{yyval.sval = val_peek(2).sval + ";\n"+val_peek(1).sval;}
+break;
+case 99:
+//#line 252 "snow.y"
 { yyval = declareLocalVariable(val_peek(0)); }
+break;
+case 100:
+//#line 253 "snow.y"
+{ yyval = declareLocalVariable(val_peek(2),val_peek(0)); }
 break;
 case 101:
 //#line 257 "snow.y"
@@ -1365,7 +1381,7 @@ case 105:
 //#line 267 "snow.y"
 { yyval = moleCreateOne(val_peek(1));  }
 break;
-//#line 1290 "Parser.java"
+//#line 1306 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

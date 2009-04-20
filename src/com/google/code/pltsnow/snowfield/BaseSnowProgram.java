@@ -69,8 +69,6 @@ public class BaseSnowProgram {
 
 				if(m.getName().contains("moleDef"))
 				{
-					System.out.println("Invoking " + m.getName());
-
 					try {
 						m.invoke(this);
 					} catch (IllegalArgumentException e) {
@@ -180,9 +178,9 @@ public class BaseSnowProgram {
 		//snw_mutate(null);
 	}
 	
-	protected void snw_mutate(SnowType object) {
+	protected SnowType snw_mutate(SnowType object) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 	
 	private void doTheMating() {
@@ -190,7 +188,6 @@ public class BaseSnowProgram {
 		//find the parents to mate then
 		snw_mate(null,null);
 	}
-	
 	protected void snw_mate(SnowType object, SnowType object2) {
 		// TODO Auto-generated method stub
 		
@@ -211,78 +208,81 @@ public class BaseSnowProgram {
 		System.out.println(arg.toString());
 	}
 	
-	protected final SnowType first(List<SnowType> list)
+	protected final SnowType first(SnowType list)
 	{
 		//TODO
 		return null;
 	}
 	
-	protected final SnowType last(List<SnowType> list)
+	protected final SnowType last(SnowType list)
 	{
 		//TODO
 		return null;
 	}
 	
-	protected final SnowType max(List<SnowType> list)
+	protected final SnowType max(SnowType list)
 	{
 		//TODO
 		return null;
 	}
 	
-	protected final SnowType min(List<SnowType> list)
+	protected final SnowType min(SnowType list)
 	{
 		//TODO
 		return null;
 	}
 	
-	protected final SnowType sum(List<SnowType> list)
+	protected final SnowType sum(SnowType list)
 	{
 		//TODO
 		return null;
 	}
 	
-	protected final SnowType average(List<SnowType> list)
+	protected final SnowType average(SnowType list)
 	{
 		//TODO
 		return null;
 	}
 	
-	protected final List<SnowType> append(List<SnowType> list,SnowType a)
+	protected final SnowType append(SnowType list,SnowType a)
 	{
 		//TODO
 		return null;
 	}
 	
-	protected final SnowType pop(List<SnowType> list)
+	protected final SnowType pop(SnowType list)
 	{
 		//TODO
 		return null;
 	}
 	
-	protected final void push(List<SnowType> list, SnowType a)
+	protected final void push(SnowType list, SnowType a)
 	{
 		//TODO
 	}
 	
-	protected final SnowType nth(List<SnowType> list, int n)
+	protected final SnowType snw_nth(SnowType t, SnowType n)
+	{
+		//TODO
+		return null;
+	}
+	protected final void snw_setNth(SnowType list,SnowType n, SnowType rval)
+	{
+		//TODO
+	}
+	protected final SnowType snw_reverse(SnowType list)
 	{
 		//TODO
 		return null;
 	}
 	
-	protected final List<SnowType> reverse(List<SnowType> list)
-	{
-		//TODO
-		return null;
-	}
-	
-	protected final int search(List<SnowType> list, SnowType s)
+	protected final int snw_search(SnowType list, SnowType s)
 	{
 		//TODO
 		return 0;
 	}
 	
-	protected final List<SnowType> sort(List<SnowType> list)
+	protected final SnowType snw_sort(SnowType list)
 	{
 		return null;
 	}
@@ -292,7 +292,7 @@ public class BaseSnowProgram {
 		return null;
 	}
 	
-	protected final double rand(SnowType a1, SnowType a2, SnowType o3)
+	protected final double snw_rand(SnowType a1, SnowType a2, SnowType o3)
 	{
 		//TODO - implement. also check the args, i think this is missing some
 		return 0;

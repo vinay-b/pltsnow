@@ -8,7 +8,6 @@ public abstract class BaseSnowParser {
 
 	protected ParserVal doForeach(ParserVal id, ParserVal in, ParserVal as,
 			ParserVal from, ParserVal stmt) {
-		System.err.println("doaforeach");
 		String r = "";
 		String type = "SnowType";
 		if (as.sval != null && in.sval != null)
@@ -26,7 +25,6 @@ public abstract class BaseSnowParser {
 
 	protected ParserVal doFor(ParserVal id, ParserVal from, ParserVal to,
 			ParserVal by, ParserVal stmts) {
-		System.err.println("doafor");
 
 		String r = "";
 		if (by == null) {
@@ -57,7 +55,6 @@ public abstract class BaseSnowParser {
 		if (rval.contains("getField(") || rval.contains("symbols.get(")) {
 			rval = rval + ".clone()";
 		}
-		System.err.println("assign " + id.sval + " to " + val.sval);
 		if (id.sval.charAt(0) == '~')
 			return new ParserVal("public void set_" + id.sval.substring(1)
 					+ "(){\n\tsymbols.put(\"" + id.sval + "\"," + rval
@@ -71,9 +68,12 @@ public abstract class BaseSnowParser {
 
 	protected ParserVal declareLocalVariable(ParserVal varName) {
 		return new ParserVal("SnowAtom  " + varName.sval
-				+ " = new SnowAtom(null);");
+				+ " = SnowAtom.makeNil()");
 	}
-
+	protected ParserVal declareLocalVariable(ParserVal varName, ParserVal rval) {
+		return new ParserVal("SnowAtom  " + varName.sval
+				+ " = "+rval.sval);
+	}
 	protected ParserVal buildCompoundIdentifier(ParserVal left, ParserVal right) {
 		String l = left.sval;
 		if (definedGlobalSymbols.contains(left.sval))
@@ -119,16 +119,12 @@ public abstract class BaseSnowParser {
 	}
 
 	protected ParserVal makeFullIfStatement(ParserVal stmt) {
-		System.out.println(stmt);
 		String r = "";
 		r += "if " + stmt.sval;
 		return new ParserVal(r);
 	}
 
 	protected ParserVal makePartialIfElse(ParserVal s1, ParserVal s2, ParserVal s3) {
-		System.out.println(s1);
-		System.out.println(s2);
-		System.out.println(s3);
 		String r = "";
 		r += "(" + s1.sval + "){\n";
 		r += s2.sval + "\n}\n";
@@ -139,9 +135,6 @@ public abstract class BaseSnowParser {
 	}
 	
 	protected ParserVal makePartialIfElseIf(ParserVal s1, ParserVal s2, ParserVal s3) {
-		System.out.println(s1);
-		System.out.println(s2);
-		System.out.println(s3);
 		String r = "";
 		r += "(" + s1.sval + "){\n";
 		r += s2.sval + "\n}\n";

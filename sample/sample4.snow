@@ -52,24 +52,24 @@ end
 
 to mate: organismA organismB child
 	#Randomly splice 2 organisms to get the child
-	child.chromosome = splice:(rand: 0 8)  
+	child.chromosome = splice: (rand: 0 8) organismA organismB
 	return child
 end
 
 to mutate: organismA
 	#mutate the organism by randomly changing a gene
-	nth: (rand: 0 8), organism.chromosome  =  rand: 0 8
+	setNth: organism.chromosome,(rand: 0 8), rand: 0 8
 	return organismA
 end
 
 before generation:
-	print: "average fitness: " + averageFitness
+	print: "average fitness: " + ~averageFitness
 end
 
 after termination:
 	print: "The best solution found was:\n"
 	foreach organism in ~population as org1
-		if (evaluateFitness: organism) = ~endFitness then
+		if (evaluateFitness: org1) = ~endFitness then
 		#this is the optimal solution, print it out
        		for i from 0 to 7
  				print: "queen at" + i + ","  + (nth: i, organism.chromsome.gene) + "\n"
