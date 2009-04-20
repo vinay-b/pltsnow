@@ -31,8 +31,8 @@ public abstract class BaseSnowParser {
 			by = new ParserVal("new SnowAtom(1)");
 		}
 		r += "for(" + id.sval + " = " + from.sval + "; " + id.sval
-					+ ".nequals(" + to.sval + ");" + id.sval + ".plus("
-					+ by.sval + ")){";
+				+ ".hasReached(" + to.sval + ");" + id.sval + ".moveTowardsBy("
+				+ to.sval + "," + by.sval + ")){";
 		r += stmts.sval;
 		r += "\n}";
 		return new ParserVal(r);
@@ -70,10 +70,12 @@ public abstract class BaseSnowParser {
 		return new ParserVal("SnowType  " + varName.sval
 				+ " = SnowAtom.makeNil();");
 	}
+
 	protected ParserVal declareLocalVariable(ParserVal varName, ParserVal rval) {
-		return new ParserVal("SnowType  " + varName.sval
-				+ " = "+rval.sval+ ";");
+		return new ParserVal("SnowType  " + varName.sval + " = " + rval.sval
+				+ ";");
 	}
+
 	protected ParserVal buildCompoundIdentifier(ParserVal left, ParserVal right) {
 		String l = left.sval;
 		if (definedGlobalSymbols.contains(left.sval))
@@ -124,7 +126,8 @@ public abstract class BaseSnowParser {
 		return new ParserVal(r);
 	}
 
-	protected ParserVal makePartialIfElse(ParserVal s1, ParserVal s2, ParserVal s3) {
+	protected ParserVal makePartialIfElse(ParserVal s1, ParserVal s2,
+			ParserVal s3) {
 		String r = "";
 		r += "(" + s1.sval + "){\n";
 		r += s2.sval + "\n}\n";
@@ -133,15 +136,15 @@ public abstract class BaseSnowParser {
 		}
 		return new ParserVal(r);
 	}
-	
-	protected ParserVal makePartialIfElseIf(ParserVal s1, ParserVal s2, ParserVal s3) {
+
+	protected ParserVal makePartialIfElseIf(ParserVal s1, ParserVal s2,
+			ParserVal s3) {
 		String r = "";
 		r += "(" + s1.sval + "){\n";
 		r += s2.sval + "\n}\n";
 		r += "else if " + s3.sval;
 		return new ParserVal(r);
 	}
-
 
 	protected ParserVal executeFunction(ParserVal fname, ParserVal params) {
 		return new ParserVal("snw_" + fname.sval + "(" + params.sval + ")");
