@@ -328,4 +328,18 @@ public class SnowAtom extends SnowType {
 		throw new UnsupportedOperationException(
 				"Powed operator applied on incompatible types.");
 	}
+
+	@Override
+	public boolean hasApproached(SnowType other_)
+			throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean moveTowardsBy(SnowType other_, SnowType unit_)
+			throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
