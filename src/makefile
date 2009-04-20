@@ -2,14 +2,15 @@ LEXER = snow.l
 PARSER = snow.y
 UNAME := $(shell uname)
 
+BYACC = ./yacc.exe
+
 ifeq ($(UNAME), Linux)
 	BYACC = ./yacc.linux
-else ($(UNAME), Darwin)
-	BYACC = ./yacc.macosx
-else
-	BYACC = ./yacc.exe
 endif
 
+ifeq ($(UNAME), Darwin)
+	BYACC = ./yacc.macosx
+endif
 
 all: yacc lex freezeit
 
