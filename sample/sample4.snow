@@ -71,6 +71,7 @@ after termination:
 	foreach organism in ~population as org1
 		if (evaluateFitness: org1) = ~endFitness then
 		#this is the optimal solution, print it out
+			var i
        		for i from 0 to 7
  				print: "queen at" + i + ","  + (nth: i, organism.chromsome.gene) + "\n"
 			end

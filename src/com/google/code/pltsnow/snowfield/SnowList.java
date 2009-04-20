@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.google.code.pltsnow.exception.InvalidArgumentException;
-import com.google.code.pltsnow.exception.UnsupportedOperationException;
-
 public class SnowList extends SnowType {
 		
 	protected LinkedList<SnowType> data;
@@ -79,7 +76,7 @@ public class SnowList extends SnowType {
 	}
 
 	@Override
-	public boolean isType(String type) throws InvalidArgumentException {
+	public boolean isType(String type) throws IllegalArgumentException {
 		if(data.size() == 0)
 			return false;
 		else
