@@ -2,6 +2,13 @@ LEXER = snow.l
 PARSER = snow.y
 BYACC = ./yacc.macosx
 
+ifeq "$(shell uname)" "Linux"
+	BYACC = ./yacc.linux
+endif
+
+ifeq "$(shell uname)" "Darwin"
+	BYACC = ./yacc.macosx
+endif
 
 all: yacc lex freezeit
 mac: macyacc lex freezeit
