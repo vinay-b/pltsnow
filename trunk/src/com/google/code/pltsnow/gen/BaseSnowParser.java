@@ -67,11 +67,11 @@ public abstract class BaseSnowParser {
 	}
 
 	protected ParserVal declareLocalVariable(ParserVal varName) {
-		return new ParserVal("SnowAtom  " + varName.sval
+		return new ParserVal("SnowType  " + varName.sval
 				+ " = SnowAtom.makeNil();");
 	}
 	protected ParserVal declareLocalVariable(ParserVal varName, ParserVal rval) {
-		return new ParserVal("SnowAtom  " + varName.sval
+		return new ParserVal("SnowType  " + varName.sval
 				+ " = "+rval.sval+ ";");
 	}
 	protected ParserVal buildCompoundIdentifier(ParserVal left, ParserVal right) {
