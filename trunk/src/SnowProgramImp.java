@@ -1,14 +1,3 @@
-com.google.code.pltsnow.gen.ParserVal@e24e2a
-com.google.code.pltsnow.gen.ParserVal@79c285
-null
-com.google.code.pltsnow.gen.ParserVal@d1e604
-com.google.code.pltsnow.gen.ParserVal@54172f
-com.google.code.pltsnow.gen.ParserVal@be2358
-com.google.code.pltsnow.gen.ParserVal@27b4d
-com.google.code.pltsnow.gen.ParserVal@5eb0a9
-com.google.code.pltsnow.gen.ParserVal@a05308
-null
-com.google.code.pltsnow.gen.ParserVal@ab50cd
 import com.google.code.pltsnow.snowfield.*;
 import com.google.code.pltsnow.gen.*;
 import java.util.ArrayList;
@@ -49,16 +38,16 @@ String mName = "organism";
 	types.get(mName).addList("chromosome", 1);
 }
 public SnowType snw_construct (SnowType newOrganism){
-	for(SnowType gene1 : newOrganism.getField("chromosome")){
-			gene1.getField("num").set(snw_rand(new SnowAtom(0),new SnowAtom(8)));
-	}
-	return newOrganism;
+ for(SnowType gene1 : newOrganism.getField("chromosome")){
+gene1.getField("num").set(snw_rand(new SnowAtom(0),new SnowAtom(8)));
+}
+return newOrganism;
 
 }
 
 public SnowType snw_evaluateFitness (SnowType checkOrganism){
-SnowAtom  curfit = new SnowAtom(null);;
-SnowAtom  i = new SnowAtom(null);;
+SnowAtom  curfit = new SnowAtom(28);;
+SnowAtom  i = SnowAtom.makeNil();SnowAtom  j = SnowAtom.makeNil();SnowAtom  gene1 = SnowAtom.makeNil();SnowAtom  gene2 = SnowAtom.makeNil();;
 
 for(i = new SnowAtom(0); i.nequals(new SnowAtom(6));i.plus(new SnowAtom(1))){gene1.set(snw_nth(i,checkOrganism.getField("chromosome")));
 
@@ -82,19 +71,19 @@ return new SnowAtom(28).minus(curfit);
 }
 
 public SnowType snw_mate (SnowType organismA, SnowType organismB, SnowType child){
-child.getField("chromosome").set(snw_splice((snw_rand(new SnowAtom(0),new SnowAtom(8)))));
+child.getField("chromosome").set(snw_splice((snw_rand(new SnowAtom(0),new SnowAtom(8))),organismA,organismB));
 return child;
 
 }
 
 public SnowType snw_mutate (SnowType organismA){
-snw_nth((snw_rand(new SnowAtom(0),new SnowAtom(8))),symbols.get("organism").getField("chromosome").equals(snw_rand(new SnowAtom(0),new SnowAtom(8))));
+snw_setNth(symbols.get("organism").getField("chromosome"),(snw_rand(new SnowAtom(0),new SnowAtom(8))),snw_rand(new SnowAtom(0),new SnowAtom(8)));
 return organismA;
 
 }
 
 public void dbg_beforeGENERATION(){
-snw_print(new SnowAtom("average fitness: ").plus(averageFitness));
+snw_print(new SnowAtom("average fitness: ").plus(symbols.get("~averageFitness")));
 }
 
 
@@ -103,8 +92,9 @@ snw_print(new SnowAtom("The best solution found was:\n"));
  for(SnowType org1 : symbols.get("~population")){
 if ((snw_evaluateFitness(org1)).equals(symbols.get("~endFitness"))){
 
-for(SnowAtom i = new SnowAtom(0); i.nequals(new SnowAtom(7));i.plus(new SnowAtom(1))){
-	snw_print(new SnowAtom("queen at").plus(i).plus(new SnowAtom(",")).plus((snw_nth(i,org1.getField("gene")))).plus(new SnowAtom("\n")));
+SnowAtom  i = SnowAtom.makeNil();;
+for(i = new SnowAtom(0); i.nequals(new SnowAtom(7));i.plus(new SnowAtom(1))){
+	snw_print(new SnowAtom("queen at").plus(i).plus(new SnowAtom(",")).plus((snw_nth(i,symbols.get("organism").getField("chromsome").getField("gene")))).plus(new SnowAtom("\n")));
 
 }
 }

@@ -3,7 +3,6 @@ package com.google.code.pltsnow.snowfield;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.google.code.pltsnow.exception.InvalidArgumentException;
 
 public class SnowAtom extends SnowType {
 	protected HashMap<String, SnowType> fields;
@@ -50,7 +49,7 @@ public class SnowAtom extends SnowType {
 	}
 
 	@Override
-	public boolean isType(String type) throws InvalidArgumentException {
+	public boolean isType(String type) throws IllegalArgumentException {
 		if (type.equals("String")) {
 			return isString();
 		}
@@ -63,7 +62,7 @@ public class SnowAtom extends SnowType {
 			return isInt();
 		}
 
-		throw new InvalidArgumentException("Unknown Type : " + type);
+		throw new IllegalArgumentException("Unknown Type : " + type);
 
 	}
 
@@ -212,7 +211,7 @@ public class SnowAtom extends SnowType {
 		return null;
 	}
 
-	public static SnowType makeNil() {
+	public static SnowAtom makeNil() {
 		// TODO Auto-generated method stub
 		return new SnowAtom(null);
 	}
@@ -230,7 +229,7 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public boolean equals(SnowType other)
-			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+			throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
 			return doRelOp(other, 1);
@@ -246,7 +245,7 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public boolean ge(SnowType other)
-			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+			throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
 			return doRelOp(other, 5);
@@ -261,7 +260,7 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public boolean gt(SnowType other)
-			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+			throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
 			return doRelOp(other, 6);
@@ -276,7 +275,7 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public boolean le(SnowType other)
-			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+			throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
 			return doRelOp(other, 3);
@@ -291,7 +290,7 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public boolean lt(SnowType other)
-			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+			throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
 			return doRelOp(other, 4);
@@ -306,7 +305,7 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public boolean nequals(SnowType other)
-			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+			throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
 			return doRelOp(other, 2);
@@ -321,7 +320,7 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public SnowType power(SnowType other)
-			throws com.google.code.pltsnow.exception.UnsupportedOperationException {
+			throws UnsupportedOperationException {
 		if (isNumeric() && other.isNumeric()) {
 			return doMathOp(other, '^');
 		}

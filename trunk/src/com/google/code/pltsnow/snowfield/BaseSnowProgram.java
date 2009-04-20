@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.code.pltsnow.exception.UnsupportedOperationException;
 
 public class BaseSnowProgram {
 	private static final int DEFAULT_POPULATION_SIZE   = 100;

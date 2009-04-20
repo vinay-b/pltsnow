@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.google.code.pltsnow.exception.InvalidArgumentException;
-import com.google.code.pltsnow.exception.UnsupportedOperationException;
-
 public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 
 	protected String complexTypeName;
@@ -24,7 +21,7 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public abstract boolean isString();
 	public abstract boolean isFloat();
 	public abstract boolean isNumeric();
-	public abstract boolean isType(String type) throws InvalidArgumentException;
+	public abstract boolean isType(String type) throws IllegalArgumentException;
 	
 	public abstract SnowType plus(SnowType other) throws UnsupportedOperationException;
 	public abstract SnowType minus(SnowType other) throws UnsupportedOperationException;

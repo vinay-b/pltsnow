@@ -1351,7 +1351,7 @@ case 97:
 break;
 case 98:
 //#line 248 "snow.y"
-{yyval.sval = val_peek(2).sval + ";\n"+val_peek(1).sval;}
+{yyval.sval = val_peek(2).sval +val_peek(0).sval;}
 break;
 case 99:
 //#line 252 "snow.y"
