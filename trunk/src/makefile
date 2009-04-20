@@ -1,22 +1,17 @@
 LEXER = snow.l
 PARSER = snow.y
-BYACC = ./yacc.macosx
+UNAME := $(shell uname)
 
-ifeq "$(shell uname)" "Linux"
+ifeq ($(UNAME), Linux)
 	BYACC = ./yacc.linux
+else ($(UNAME), Darwin)
+	BYACC = ./yacc.macosx
+else
+	BYACC = ./yacc.exe
 endif
 
-ifeq "$(shell uname)" "Darwin"
-	BYACC = ./yacc.macosx
-endif
 
 all: yacc lex freezeit
-mac: macyacc lex freezeit
-
-macyacc:
-	byacc -J -Jextends=BaseSnowParser -Jpackage=com.google.code.pltsnow.gen $(PARSER)
-	mv Parser.java com/google/code/pltsnow/gen
-	mv ParserVal.java com/google/code/pltsnow/gen
 
 yacc:
 	$(BYACC) -J -Jextends=BaseSnowParser -Jpackage=com.google.code.pltsnow.gen $(PARSER)
