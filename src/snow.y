@@ -245,7 +245,7 @@ var_declarator		:
 
 declaration_list	:
 				declarator {$$ = $1;}
-			|	declaration_list COMMA declarator {$$.sval = $1.sval + ";\n"+$2.sval;}
+			|	declaration_list COMMA declarator {$$.sval = $1.sval +$3.sval;}
 			;
 
 declarator		:	
