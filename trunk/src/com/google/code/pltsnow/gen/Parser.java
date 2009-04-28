@@ -987,8 +987,8 @@ System.out.println("import java.util.ArrayList;");
 
 System.out.println("public class SnowProgramImp extends BaseSnowProgram {\n");
 System.out.println(val_peek(0).sval);
-System.out.println("public static void main(String[] args) {	SnowProgramImp this_prog = new SnowProgramImp(); this_prog.startProgram();}");
-System.out.println("}");
+System.out.println("public static void main(String[] args) {\n\tSnowProgramImp this_prog = new SnowProgramImp(); \n\tthis_prog.startProgram();\n}");
+System.out.println("\n}");
 }
 break;
 case 2:
