@@ -205,14 +205,21 @@ public class SnowAtom extends SnowType {
 				"Multiplication operator applied on incompatible types.");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
+	/**
+	 * @author willi
+	 * shallow cloning
+	 */
 	public SnowType clone() {
-		// TODO Auto-generated method stub
-		return null;
+		SnowAtom newAtom = new SnowAtom(this.data);
+		
+		// shallow. is this what we want?
+		newAtom.fields = (HashMap<String, SnowType>)this.fields.clone();
+		return newAtom;
 	}
 
 	public static SnowAtom makeNil() {
-		// TODO Auto-generated method stub
 		return new SnowAtom(null);
 	}
 

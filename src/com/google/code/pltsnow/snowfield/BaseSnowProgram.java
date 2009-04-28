@@ -56,7 +56,7 @@ public class BaseSnowProgram {
 		set_endGenerations();
 		set_endFitness();
 		
-		types.put("organism", SnowList.makeNil());
+		types.put("organism", new SnowAtom(null));
 		//TODO: add default types to the table
 		
 		//TODO: call all of the defMole_ functions now!
@@ -107,10 +107,12 @@ public class BaseSnowProgram {
 	protected final void initializePopulation()
 	{
 		SnowList population = new SnowList();
+		int populationSize = (Integer) (symbols.get("~populationSize").get());
+		SnowType baseOrganism = types.get("organism").clone();
 		
-		for (int i = 0; i < (Integer) (symbols.get("~populationSize").get()); i++) 
+		for (int i = 0; i < populationSize; i++) 
 		{
-			SnowType organism = types.get("organism").clone();
+			SnowType organism = baseOrganism.clone();
 			organism          = snw_toConstructOrganism(organism);
 			population.push(organism);
 		}
@@ -218,7 +220,7 @@ public class BaseSnowProgram {
 	private void doTheMutating() {
 
 		SnowList population = (SnowList)symbols.get("population");
-		float mutationRate = symbols.get("~mutationRate").getFloat();
+		double mutationRate = (Double)symbols.get("~mutationRate").get();
 		
 		for (SnowType o : population) {
 			double rand = Math.random();

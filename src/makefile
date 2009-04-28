@@ -44,4 +44,4 @@ run:
 	java SnowProgramImp
 
 clean:
-	rm *.class com/google/code/pltsnow/snowfield/*.class com/google/code/pltsnow/gen/*.class
+	rm -f *.class com/google/code/pltsnow/snowfield/*.class com/google/code/pltsnow/gen/*.class
