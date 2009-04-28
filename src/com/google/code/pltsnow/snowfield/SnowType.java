@@ -40,7 +40,13 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public abstract SnowType push(SnowType other)
 			throws UnsupportedOperationException;
 
-	public abstract SnowType pop(SnowType other)
+	/**
+	 * @author willi
+	 * change: no parameter?
+	 * @return
+	 * @throws UnsupportedOperationException
+	 */
+	public abstract SnowType pop()
 			throws UnsupportedOperationException;
 
 	public abstract SnowType times(SnowType other)
