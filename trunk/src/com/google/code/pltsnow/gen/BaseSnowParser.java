@@ -3,6 +3,8 @@ package com.google.code.pltsnow.gen;
 import java.io.IOException;
 import java.util.HashSet;
 
+import com.google.code.pltsnow.snowfield.SnowType;
+
 public abstract class BaseSnowParser {
 	protected HashSet<String> definedGlobalSymbols;
 
@@ -98,6 +100,7 @@ public abstract class BaseSnowParser {
 		}
 		r += "public SnowType snw_" + functionName.sval + " (" + parsedParams
 				+ "){\n";
+		
 		r += statements.sval;
 		// TODO - implement something to make sure there is a return!
 		r += "\n}";
