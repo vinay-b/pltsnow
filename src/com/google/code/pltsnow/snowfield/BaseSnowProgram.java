@@ -252,7 +252,7 @@ public class BaseSnowProgram {
 			
 			// TODO: these methods should take parameters
 			dbg_beforeORGANISMMATESWITHORGANISM();
-			SnowType child = snw_mate(o1, o2);
+			SnowType child = snw_mate(o1, o2, types.get("organism").clone());
 			dbg_afterORGANISMMATESWITHORGANISM();
 			
 			// TODO: should there be a constructed hook here?
@@ -368,25 +368,15 @@ public class BaseSnowProgram {
 	}
 	
 	/**
+	 * this must either return a new organism and mutate the
+	 * reference passed in
 	 * 
-	 * 
-	 * 
-	 * this must either return a new organism
-	 * or be passed an empty organism to be mutated by reference
-	 * 
-	 * TODO: for now, returning a new SnowType
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * @param object
-	 * @param object2
+	 * @param parent 1
+	 * @param parent 2
+	 * @param child reference to work with
 	 * @return a new organism
 	 */
-	protected SnowType snw_mate(SnowType object, SnowType object2) {
-		// TODO: this needs to go in generated code as well
-		SnowType child = types.get("organism").clone();
+	protected SnowType snw_mate(SnowType parent1, SnowType parent2, SnowType child) {
 		return snw_toConstructOrganism(child);
 	}
 	
