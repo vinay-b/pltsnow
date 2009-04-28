@@ -1,5 +1,7 @@
 package com.google.code.pltsnow.snowfield;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -7,10 +9,25 @@ import java.util.LinkedList;
 public class SnowList extends SnowType {
 		
 	protected LinkedList<SnowType> data;
-	private int size;
+	private int size = 0;
 	public int getSize() {
 		return size;
 	}
+	
+	/**
+	 * this could make things pretty confusing,
+	 * but thats whats great about lazy 
+	 * initialization!
+	 * 
+	 * actually, this is going to take some work
+	 * because Iterator, since it comes from this.data.iterator,
+	 * is going to only iterate objects truely in the list
+	 * not "virtually" in the list
+	 * 
+	 * aka, dont use setSize?
+	 * 
+	 * @param size
+	 */
 	public void setSize(int size) {
 		this.size = size;
 	}
@@ -18,6 +35,7 @@ public class SnowList extends SnowType {
 		super(s);
 		data = new LinkedList<SnowType>();
 		data.add(new SnowAtom(s));
+		size = 1;
 	}
 	
 	/**
@@ -29,20 +47,103 @@ public class SnowList extends SnowType {
 		data = new LinkedList<SnowType>();
 	}
 	
-	
 	/**
 	 * @author willi
 	 * implemented just so that it conforms to snowtype
+	 * probably want to use SnowType.get(int)
 	 */
 	public Object get()
 	{
 		return null;
 	}
-
-	public SnowList sort()
+	
+	/**
+	 * @author willi
+	 * @return SnowType at index i of the list
+	 * if i > size, return null
+	 * if i < size, i > this.data.size, expand list and return data.get(i)
+	 * if i < this.data.size, return data.get(i) <-- probably expected
+	 * this handles lazy instantiation
+	 */
+	public SnowType get(int i)
 	{
-		return null;
+		if(i > this.size)
+			return null;
+		if(i < this.data.size())
+			return this.data.get(i);
+		else
+		{
+			while(this.data.size() < i)
+				this.push(SnowAtom.makeNil());
+			return this.data.get(i);
+		}
 	}
+	
+	public void remove(int i)
+	{
+		this.size--;
+		this.data.remove(i);
+	}
+	
+	@Override
+	/**
+	 * @author willi
+	 * is this what was intended?
+	 * 
+	 * btw, pop def doesnt have a parameter
+	 */
+	public SnowType pop() {
+		this.size--;
+		return this.data.pop();
+	}
+
+	@Override
+	/**
+	 * @author willi
+	 * is this what was intended?
+	 * 
+	 * @return the object added
+	 */
+	public SnowType push(SnowType other) {
+		this.size++;
+		this.data.push(other);
+		return other;
+	}
+	
+	/**
+	 * @author willi
+	 * convenience method, rather than looping through pushes
+	 * used initially to add child population to adult at the
+	 * end of mating
+	 * @param other
+	 * @return
+	 */
+	public SnowType addAll(SnowList other) {
+		for (SnowType s : other) { 
+			this.data.add(s);
+			this.size ++ ;
+		}
+		
+		return this;
+	}
+	
+	public void reverse() {
+		Collections.reverse(this.data);
+	}
+
+
+	/**
+	 * @author willi
+	 * sorts in ascending order
+	 * @param c a comparator for the list
+	 * @return i dont really know why this returns anything
+	 */
+	public SnowList sort(Comparator<SnowType> c)
+	{
+		Collections.sort(this.data, c);
+		return this;
+	}
+	
 	@Override
 	public SnowType getField(String fieldName) {
 		if(data.size() == 0)
@@ -90,9 +191,11 @@ public class SnowList extends SnowType {
 		return v;
 	}
 
+	/**
+	 * @author willi
+	 */
 	public Iterator<SnowType> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.data.iterator();
 	}
 
 	@Override
@@ -126,18 +229,6 @@ public class SnowList extends SnowType {
 	}
 
 	@Override
-	public SnowType pop(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public SnowType push(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public SnowType times(SnowType other) {
 		// TODO Auto-generated method stub
 		return null;
@@ -149,7 +240,6 @@ public class SnowList extends SnowType {
 		return null;
 	}
 	public static SnowType makeNil() {
-		// TODO Auto-generated method stub
 		return new SnowList(null);
 	}
 	public static SnowList makeNilList(int len)
@@ -160,7 +250,6 @@ public class SnowList extends SnowType {
 	}
 	@Override
 	public boolean isNumeric() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

@@ -184,7 +184,7 @@ public class SnowAtom extends SnowType {
 	}
 
 	@Override
-	public SnowType pop(SnowType other) throws UnsupportedOperationException {
+	public SnowType pop() throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
 		return null;
 	}
