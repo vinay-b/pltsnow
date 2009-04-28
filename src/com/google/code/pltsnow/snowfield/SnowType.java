@@ -94,7 +94,7 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public void addList(String string, int len) {
 		setField(string, SnowList.makeNilList(len));
 	}
-
+	
 	public float getFloat() {
 		if (isFloat())
 			return (Float) get();
@@ -102,6 +102,31 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 			return Float.parseFloat(get().toString());
 		else
 			throw new ClassCastException(
-					"Can not make a float out of this type");
+					"Can not make a float out of this type," + get().getClass().getName());
 	}
+	public int getInt()
+	{
+		if(isInt())
+			return (Integer) get();
+		else
+			throw new ClassCastException("Can not make an integer out of " + this.getClass().getName());
+	}
+
+	public abstract boolean isNull();
+	public boolean isDouble()
+	{
+		return get() instanceof Double;
+	}
+	public double getDouble() {
+		if(isDouble())
+			return (Double) get();
+		else if(isInt())
+			return ((Integer) get()).doubleValue();
+		else if(isFloat())
+			return ((Float) get()).floatValue();
+		else
+			throw new ClassCastException("Can not make an double out of " + this.getClass().getName());
+	}
+
+	public abstract void populateFields();
 }

@@ -30,12 +30,21 @@ public class SnowList extends SnowType {
 	 */
 	public void setSize(int size) {
 		this.size = size;
+		data = new LinkedList<SnowType>();
+		for(int i =0;i<size;i++)
+		{
+			data.add(SnowAtom.makeNil());
+		}
 	}
 	public SnowList(Object s) {
 		super(s);
 		data = new LinkedList<SnowType>();
 		data.add(new SnowAtom(s));
-		size = 1;
+		size=1;
+		for(int i =0;i<size;i++)
+		{
+			data.add(SnowAtom.makeNil());
+		}
 	}
 	
 	/**
@@ -47,14 +56,14 @@ public class SnowList extends SnowType {
 		data = new LinkedList<SnowType>();
 	}
 	
+	
 	/**
 	 * @author willi
 	 * implemented just so that it conforms to snowtype
-	 * probably want to use SnowType.get(int)
 	 */
 	public Object get()
 	{
-		return null;
+		return data.getFirst();
 	}
 	
 	/**
@@ -97,7 +106,10 @@ public class SnowList extends SnowType {
 		return this.data.pop();
 	}
 
-	@Override
+	public SnowType peek() {
+		return this.data.peek();
+	}
+	
 	/**
 	 * @author willi
 	 * is this what was intended?
@@ -143,7 +155,6 @@ public class SnowList extends SnowType {
 		Collections.sort(this.data, c);
 		return this;
 	}
-	
 	@Override
 	public SnowType getField(String fieldName) {
 		if(data.size() == 0)
@@ -191,10 +202,8 @@ public class SnowList extends SnowType {
 		return v;
 	}
 
-	/**
-	 * @author willi
-	 */
 	public Iterator<SnowType> iterator() {
+		// TODO Auto-generated method stub
 		return this.data.iterator();
 	}
 
@@ -203,7 +212,10 @@ public class SnowList extends SnowType {
 		// TODO Auto-generated method stub
 		
 	}
-
+	public void setNth(int n, SnowType d)
+	{
+		data.set(n, d);
+	}
 	@Override
 	public SnowType divide(SnowType other) {
 		// TODO Auto-generated method stub
@@ -233,29 +245,29 @@ public class SnowList extends SnowType {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
-	/**
-	 * @author willi
-	 * shallow copy
-	 */
 	public SnowType clone() {
-		SnowList newList = new SnowList(data.clone());
-		newList.size = this.size;
-		// TODO Auto-generated method stub
-		return newList;
+		SnowList r = new SnowList(data.clone());
+		for(SnowType d : data)
+			r.push(d);
+		r.setSize(size);
+		return r;
 	}
 	public static SnowType makeNil() {
+		// TODO Auto-generated method stub
 		return new SnowList(null);
 	}
 	public static SnowList makeNilList(int len)
 	{
 		SnowList r = new SnowList(null);
 		r.setSize(len);
+		System.out.println(len);
 		return r;
 	}
 	@Override
 	public boolean isNumeric() {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -306,5 +318,32 @@ public class SnowList extends SnowType {
 			throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	@Override
+	public String toString() {
+		String r = "[SnowList; Data: {";
+		for(SnowType d : data)
+		{
+			r += d + ", ";
+		}
+		r += "}, size= " +size+"]";
+		return r;
+	}
+	@Override
+	public boolean isNull() {
+		// TODO Auto-generated method stub
+		return data.size() == 0;
+	}
+	public SnowType getNth(int i) {
+		// TODO Auto-generated method stub
+		return data.get(i);
+	}
+
+	@Override
+	public void populateFields() {
+		for(SnowType d : data)
+		{
+			d.populateFields();
+		}
 	}
 }

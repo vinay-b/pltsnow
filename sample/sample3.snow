@@ -3,7 +3,7 @@ These two variables define the stopping criteria. You can specify either or both
 |#
 ~endGenerations= -1
 ~endFitness     = 8
-~populationSize = 10
+~populationSize = 100
 
 # This defines a gene. In this case, the gene just contains 1 atom - "value"
 # Will be either 1 or 0
@@ -14,9 +14,12 @@ end
 
 define chromosome:
  # equivalent to "8 genes"
- 8 genes
+ 8 gene
 end
 
+define organism:
+ 1 chromosome
+end
 to construct: newOrganism
  #Set each gene to have a random num, 0 or 1
  foreach gene in newOrganism.chromosome as gene1
@@ -26,12 +29,12 @@ to construct: newOrganism
  return newOrganism
 end
 
-to evaluateFitness: organism
+to evaluateFitness: org
  var curfit
- curfit = (100 + 3)
+ curfit = 0
 
     #Loop over each gene except for the last one
-    foreach gene in organism.chromosome as gene1
+    foreach gene in org.chromosome as gene1
      curfit = curfit + gene1.num
     end
 
