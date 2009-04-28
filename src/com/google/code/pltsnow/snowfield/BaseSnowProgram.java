@@ -56,7 +56,7 @@ public class BaseSnowProgram {
 		set_endGenerations();
 		set_endFitness();
 		
-		types.put("organism", new SnowAtom(null));
+		types.put("organism", new SnowList());
 		//TODO: add default types to the table
 		
 		//TODO: call all of the defMole_ functions now!
@@ -364,9 +364,9 @@ public class BaseSnowProgram {
 	 * @author willi
 	 * default sets fitness to 0
 	 */
-	protected void snw_evaluateFitness(SnowType organism) {
+	protected SnowType snw_evaluateFitness(SnowType organism) {
 		organism.setField("fitness", new SnowAtom(new Float(0.0)));
-		return;
+		return organism;
 	}
 	
 	/**

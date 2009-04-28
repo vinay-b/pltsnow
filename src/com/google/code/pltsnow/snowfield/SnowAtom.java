@@ -16,6 +16,15 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public SnowType getField(String fieldName) {
+		if (fields.get(fieldName) != null)
+			return fields.get(fieldName);
+		
+		//if (symbols.get(fieldName) != null) {
+		//		fields.put(fieldname, symbols.get(fieldName).clone());
+		// 		return fields.get(fieldName);
+		//}
+		
+		fields.put(fieldName, SnowAtom.makeNil());
 		return fields.get(fieldName);
 	}
 
