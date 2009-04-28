@@ -19,6 +19,7 @@ public class SnowAtom extends SnowType {
 		if (fields.get(fieldName) != null)
 			return fields.get(fieldName);
 		
+		// TODO: make symbols accessable!!!
 		//if (symbols.get(fieldName) != null) {
 		//		fields.put(fieldname, symbols.get(fieldName).clone());
 		// 		return fields.get(fieldName);
