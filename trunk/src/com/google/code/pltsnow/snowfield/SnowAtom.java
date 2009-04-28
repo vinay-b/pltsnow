@@ -2,11 +2,12 @@ package com.google.code.pltsnow.snowfield;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 
 public class SnowAtom extends SnowType {
 	protected HashMap<String, SnowType> fields;
-	private Object data;
+	protected Object data;
 
 	public SnowAtom(Object s) {
 		super(s);
@@ -16,19 +17,23 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public SnowType getField(String fieldName) {
-		if (fields.get(fieldName) != null)
+		if(!fields.containsKey(fieldName) && BaseSnowProgram.types.containsKey(fieldName))
+			fields.put(fieldName, BaseSnowProgram.types.get(fieldName).clone());
+		else if(!fields.containsKey(fieldName))
+			fields.put(fieldName, SnowAtom.makeNil());
+		
+		SnowType t = fields.get(fieldName);
+		if(t instanceof SnowAtom && ((SnowAtom) t).getRawData() == null &&  ((SnowAtom) t).getFields().size() == 1)
+			return ((SnowAtom) t).getFields().values().iterator().next();
+		else
 			return fields.get(fieldName);
-		
-		// TODO: make symbols accessable!!!
-		//if (symbols.get(fieldName) != null) {
-		//		fields.put(fieldname, symbols.get(fieldName).clone());
-		// 		return fields.get(fieldName);
-		//}
-		
-		fields.put(fieldName, SnowAtom.makeNil());
-		return fields.get(fieldName);
 	}
-
+	public Object getRawData() {
+		return data;
+	}
+	protected HashMap<String, SnowType> getFields() {
+		return fields;
+	}
 	@Override
 	public boolean isFloat() {
 		if (data instanceof Float) {
@@ -55,9 +60,12 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public boolean isNumeric() {
-		return isInt() || isFloat();
+		return isInt() || isFloat() || isDouble();
 	}
-
+	public boolean isDouble()
+	{
+		return data instanceof Double;
+	}
 	@Override
 	public boolean isType(String type) throws IllegalArgumentException {
 		if (type.equals("String")) {
@@ -83,25 +91,35 @@ public class SnowAtom extends SnowType {
 	}
 
 	public Iterator<SnowType> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList l = new LinkedList();
+		l.add(data);
+		return l.iterator();
 	}
 
 	@Override
 	public void set(Object o) {
-		data = o;
+		if(o instanceof SnowType)
+		{
+			data = ((SnowType) o ).get();
+		}
+		else
+			data = o;
 	}
 
 	public Object get() {
-
-		return data;
+		if(data instanceof SnowAtom)
+			return ((SnowAtom) data).get();
+		else if(data == null  && fields.size() == 1)
+			return fields.values().iterator().next();
+		else
+			return data;
 	}
 
 	private SnowType doMathOp(SnowType other, char op) {
-		Float f1 = (isInt()) ? ((Integer) data).floatValue() : ((Float) data);
+		Double f1 = (isInt()) ? ((Integer) data).doubleValue() : ((Double) data);
 
-		Float f2 = (other.isInt()) ? ((Integer) other.get()).floatValue()
-				: ((Float) other.get());
+		Double f2 = (other.isInt()) ? ((Integer) other.get()).doubleValue()
+				: ((Double) other.get());
 
 		switch (op) {
 		case '+':
@@ -123,10 +141,10 @@ public class SnowAtom extends SnowType {
 	}
 
 	private boolean doRelOp(SnowType other, int choice) {
-		Float f1 = (isInt()) ? ((Integer) data).floatValue() : ((Float) data);
+		Double f1 = (isInt()) ? ((Integer) data).doubleValue() : ((Double) data);
 
-		Float f2 = (isInt()) ? ((Integer) other.get()).floatValue()
-				: ((Float) other.get());
+		Double f2 = (isInt()) ? ((Integer) other.get()).doubleValue()
+				: ((Double) other.get());
 
 		switch (choice) {
 		case 1:
@@ -183,21 +201,17 @@ public class SnowAtom extends SnowType {
 		if (isNumeric() && other.isNumeric()) {
 			return doMathOp(other, '+');
 		}
-
+		if(isNumeric() && other.isNull())
+			return doMathOp(new SnowAtom(0),'+');
 		if (isString()) {
 			return new SnowAtom(((String) data).concat(other.toString()));
 		}
-
+//		System.out.println(this + " " + other);
 		throw new UnsupportedOperationException(
 				"Addition operator applied on incompatible types.");
 
 	}
 
-	@Override
-	public SnowType pop() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public SnowType push(SnowType other) {
@@ -215,33 +229,38 @@ public class SnowAtom extends SnowType {
 				"Multiplication operator applied on incompatible types.");
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	/**
-	 * @author willi
-	 * shallow cloning
-	 */
 	public SnowType clone() {
-		SnowAtom newAtom = new SnowAtom(this.data);
-		
-		// shallow. is this what we want?
-		newAtom.fields = (HashMap<String, SnowType>)this.fields.clone();
-		return newAtom;
+		// TODO Auto-generated method stub
+		SnowAtom r = makeNil();
+		for(String field : fields.keySet())
+		{
+			r.setField(field, fields.get(field).clone());
+		}
+		return r;
 	}
 
 	public static SnowAtom makeNil() {
+		// TODO Auto-generated method stub
 		return new SnowAtom(null);
 	}
 
 	@Override
 	public String toString() {
+//		if(data instanceof SnowType)
+//			return data.toString();
 		if (isFloat())
 			return ((Float) data).toString();
 		else if (isInt())
 			return ((Integer) data).toString();
 		else if (isString())
 			return ((String) data);
-		return "Unknown data typed SnowAtom";
+		else if(isDouble())
+			return ((Double) data).toString();
+		else if(data == null)
+			return "[Null SnowAtom]";
+		else
+			return "[Unknown data typed SnowAtom. " + data.getClass().getName() + "]";
 	}
 
 	@Override
@@ -358,5 +377,33 @@ public class SnowAtom extends SnowType {
 			throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public boolean isNull() {
+		// TODO Auto-generated method stub
+		return data == null;
+	}
+
+	@Override
+	public SnowType pop() throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void populateFields() {
+		for(String s : fields.keySet())
+		{
+			SnowType t = fields.get(s);
+			if(BaseSnowProgram.types.containsKey(s) && !(fields.get(s) instanceof SnowList && ((SnowList) fields.get(s)).getSize() > 1))
+			{
+				
+				
+				fields.put(s, BaseSnowProgram.types.get(s));
+				System.out.println("Expanded " + s + " to " + BaseSnowProgram.types.get(s));
+				BaseSnowProgram.types.get(s).populateFields();
+			}
+		}
 	}
 }

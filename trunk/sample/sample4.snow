@@ -9,16 +9,6 @@ define gene:
 	num
 end
 
-
-for i from x to y
-	s.....
-	
-SnowAtom i = makeNil()
-for(i = x; x.hasApproached(i,y); i.moveTowards(y,1)_
-{
-
-}
-
 #This defines a chromosome. In this case, a chromosome is composed of 8 genes
 define chromosome:
 	8 genes

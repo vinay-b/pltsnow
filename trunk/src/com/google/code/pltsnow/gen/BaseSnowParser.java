@@ -33,7 +33,7 @@ public abstract class BaseSnowParser {
 			by = new ParserVal("new SnowAtom(1)");
 		}
 		r += "for(" + id.sval + " = " + from.sval + "; " + id.sval
-				+ ".hasReached(" + to.sval + ");" + id.sval + ".moveTowardsBy("
+				+ ".hasApproached(" + to.sval + ");" + id.sval + ".moveTowardsBy("
 				+ to.sval + "," + by.sval + ")){";
 		r += stmts.sval;
 		r += "\n}";

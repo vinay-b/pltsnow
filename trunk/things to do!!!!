@@ -1,19 +1,5 @@
 Tasks:
 
-Testing & Verification Plan
-Implement binary operators
-Implement Control structures
-Implement exceptions
-
--Allow for function calls w/o commas
--Fix this case:
-after termination:
-	foreach organism in ~population as org1
-		if (doFunction: toSomething) = 5 then
-		
-		end
-	end
-end
 
 
 EXCEPTIONS:

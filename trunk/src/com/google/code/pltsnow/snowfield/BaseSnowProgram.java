@@ -21,7 +21,7 @@ public class BaseSnowProgram {
 	private static final float DEFAULT_END_FITNESS     = -1;
 	
 	protected HashMap<String, SnowType> symbols;
-	protected HashMap<String, SnowType> types;
+	public static HashMap<String, SnowType> types;
 	
 	public BaseSnowProgram() {
 		initProgram();
@@ -41,7 +41,7 @@ public class BaseSnowProgram {
 		// TODO: create readonly sybil, such as '@'
 		symbols.put("~maxFitness",       new SnowAtom(-1f));
 		symbols.put("~minFitness",       SnowAtom.makeNil());
-		symbols.put("~avgFitness",       SnowAtom.makeNil());
+		symbols.put("~averageFitness",       new SnowAtom(new Integer(0)));
 		symbols.put("~generationCount",  new SnowAtom(new Integer(0)));
 		// total number of organisms constructed thus far
 		symbols.put("~organismCount",    new SnowAtom(new Integer(0)));
@@ -108,16 +108,23 @@ public class BaseSnowProgram {
 	{
 		SnowList population = new SnowList();
 		int populationSize = (Integer) (symbols.get("~populationSize").get());
-		SnowType baseOrganism = types.get("organism").clone();
+		types.get("organism").populateFields();
+//		types.get("chromosome").populateFields();
+		SnowType baseChromosome = types.get("chromosome");
+		SnowType baseOrganism = types.get("organism");
+		SnowType baseGene = types.get("gene").clone();
 		
 		for (int i = 0; i < populationSize; i++) 
 		{
 			SnowType organism = baseOrganism.clone();
-			organism          = snw_toConstructOrganism(organism);
+			organism          = snw_construct(organism);
 			population.push(organism);
+			// increment organism count
+			Integer currentCount = (Integer)symbols.get("~organismCount").get();
+			symbols.put("~organismCount",  new SnowAtom(new Integer(currentCount + 1)));
 		}
 		
-		symbols.put("population", population);
+		symbols.put("~population", population);
 	}
 	
 	
@@ -149,8 +156,8 @@ public class BaseSnowProgram {
 			return true;
 		
 		// generationCount
-		if (symbols.get("~generationCount").getFloat() > symbols.get("~endGenerations").getFloat() &&
-				symbols.get("~endGenerations").getFloat() > 0)
+		if (symbols.get("~generationCount").getDouble() > symbols.get("~endGenerations").getDouble() &&
+				symbols.get("~endGenerations").getDouble() > 0)
 			return true;
 		
 		return false;
@@ -162,11 +169,9 @@ public class BaseSnowProgram {
 	 * @param organism
 	 * @return default organism, no extra fields
 	 */
-	protected final SnowType snw_toConstructOrganism(SnowType organism) 
+	public SnowType snw_construct(SnowType organism) 
 	{		
-		// increment organism count
-		Integer currentCount = (Integer)symbols.get("~organismCount").get();
-		symbols.put("~organismCount",  new SnowAtom(new Integer(currentCount + 1)));
+		
 		
 		// basic fields: name, age, fitness
 		organism.setField("name", SnowAtom.makeNil());
@@ -203,6 +208,7 @@ public class BaseSnowProgram {
 		
 		dbg_afterGENERATION();
 		
+		
 		//TODO: age
 		
 		//INCREASE THE GENERATION COUNT
@@ -219,7 +225,7 @@ public class BaseSnowProgram {
 	 */
 	private void doTheMutating() {
 
-		SnowList population = (SnowList)symbols.get("population");
+		SnowList population = (SnowList)symbols.get("~population");
 		double mutationRate = (Double)symbols.get("~mutationRate").get();
 		
 		for (SnowType o : population) {
@@ -236,7 +242,7 @@ public class BaseSnowProgram {
 	
 	private void doTheMating() {
 
-		SnowList population = (SnowList)symbols.get("population");
+		SnowList population = (SnowList)symbols.get("~population");
 		Integer populationSize = (Integer)symbols.get("~populationSize").get();
 		
 		// children should be stored separate from adults until after mating
@@ -272,7 +278,8 @@ public class BaseSnowProgram {
 	 * and kills the rest
 	 */
 	protected void doTheSelection() {
-		SnowList population      = (SnowList)symbols.get("population");
+		SnowList population      = (SnowList)symbols.get("~population");
+
 		Integer organismLifespan = (Integer) symbols.get("~organismLifespan").get();
 		Integer topParentPool    = (Integer) symbols.get("~topParentPool").get();
 		Integer bottomParentPool = (Integer) symbols.get("~bottomParentPool").get();
@@ -280,11 +287,13 @@ public class BaseSnowProgram {
 		Iterator<SnowType> iterator = population.iterator();
 		
 		// remove age'd organisms
+		//TODO - this isn't working si i commented it out :)
+		
 		while(iterator.hasNext()) {
 			SnowType o = iterator.next();
 			// all this casting seems a bit dangerous...
-			if ((Integer)o.getField("age").get() > organismLifespan)
-				iterator.remove();
+//			if ((Integer)o.getField("age").get() > organismLifespan)
+//				iterator.remove();
 		}
 		
 		// anonymous classes FTW!!!
@@ -293,8 +302,8 @@ public class BaseSnowProgram {
 				{
 					public int compare(SnowType a1, SnowType a2)
 					{
-						float f1 = a1.getField("fitness").getFloat();
-						float f2 = a2.getField("fitness").getFloat();
+						double f1 = a1.getField("fitness").getDouble();
+						double f2 = a2.getField("fitness").getDouble();
 						if (f1 < f2)
 							return -1;
 						if (f2 > f2)
@@ -307,13 +316,18 @@ public class BaseSnowProgram {
 		
 		// take worst candidates
 		for (int i = 0; i < bottomParentPool; i++)
+		{
+//			System.out.println("Keeping one with fit " + population.peek().getField("fitness"));
 			newPopulation.push(population.pop());
-		
+		}
 		population.reverse();
 		
 		// take top candidates
 		for (int i = 0; i < topParentPool; i++)
+		{
+//			System.out.println("Keeping one with fit " + population.peek().getField("fitness"));
 			newPopulation.push(population.pop());
+		}
 		
 		// kill off remaining organisms
 		while (population.getSize() > 0) {
@@ -323,7 +337,7 @@ public class BaseSnowProgram {
 			dbg_afterORGANISMKILLED();
 		}
 		
-		symbols.put("population", newPopulation);
+		symbols.put("~population", newPopulation);
 	}
 	
 	/**
@@ -332,18 +346,25 @@ public class BaseSnowProgram {
 	 * on each organism
 	 */
 	protected void doTheFitnessEvaluation() {
-		SnowList population = (SnowList)symbols.get("population");
-		float maxFitness    = symbols.get("~maxFitness").getFloat();
+		SnowList population = (SnowList)symbols.get("~population");
+		double maxFitness    = symbols.get("~maxFitness").getDouble();
+		int avgFitness = 0;
+		int c = 0;
 		for (SnowType o : population) {
 			dbg_beforeORGANISMFITNESSCHANGES();
-			snw_evaluateFitness(o);
+			o.setField("fitness",snw_evaluateFitness(o));
 			dbg_afterORGANISMFITNESSCHANGES();
-			float fitness = o.getField("fitness").getFloat();
+			double fitness = o.getField("fitness").getDouble();
+			avgFitness += fitness;
+			c++;
 			if (fitness > maxFitness)
 				maxFitness =  fitness;
 		}
+		if(c > 0)
+			avgFitness/=c;
 		
 		symbols.put("~maxFitness", new SnowAtom(new Float(maxFitness)));
+		symbols.put("~averageFitness",new SnowAtom(avgFitness));
 	}
 	
 
@@ -365,8 +386,7 @@ public class BaseSnowProgram {
 	 * default sets fitness to 0
 	 */
 	protected SnowType snw_evaluateFitness(SnowType organism) {
-		organism.setField("fitness", new SnowAtom(new Float(0.0)));
-		return organism;
+		return new SnowAtom(0);
 	}
 	
 	/**
@@ -379,7 +399,7 @@ public class BaseSnowProgram {
 	 * @return a new organism
 	 */
 	protected SnowType snw_mate(SnowType parent1, SnowType parent2, SnowType child) {
-		return snw_toConstructOrganism(child);
+		return snw_construct(child);
 	}
 	
 	
@@ -494,9 +514,34 @@ public class BaseSnowProgram {
 		return null;
 	}
 	
-	protected final SnowType snw_splice(SnowType o1, SnowType o2, SnowType r)
+	protected final SnowType snw_splice(SnowType ratio, SnowType a1, SnowType a2)
 	{
-		return null;
+		SnowList c = new SnowList();
+		SnowList p1 = (SnowList) a1;
+		SnowList p2 = (SnowList) a2;
+		SnowAtom r = (SnowAtom) ratio;
+		
+		if(r.isInt())
+		{
+			//IMPLEMENT
+			throw new UnsupportedOperationException("Not implemented yet");
+		}
+		else if(r.isNumeric())
+		{
+			//It's r% p1 and (100-r)% p2
+			for(int i = 0;i<p1.getSize();i++)
+			{
+				if(Math.random() > r.getDouble())
+				{
+					c.push(p1.get(i));
+				}
+				else
+				{
+					c.push(p2.get(i));
+				}
+			}
+		}
+		return c;
 	}
 	
 	//
@@ -504,15 +549,6 @@ public class BaseSnowProgram {
 	//	why all the randoms?
 	//
 	//
-	
-	
-	protected final double snw_rand(SnowType a1, SnowType a2, SnowType o3)
-	{
-		//TODO - implement. also check the args, i think this is missing some
-		return 0;
-	}
-	
-
 	/**
 	 * 
 	 * @param a1 contains float
@@ -533,15 +569,25 @@ public class BaseSnowProgram {
 	}
 	
 	/**
-	 * from willi: i dont remember the difference between rand and randI
-	 * sorry :-/
-	 * @param a1
-	 * @param a2
-	 * @return
+	 * @param a1 Low val
+	 * @param a2 High val
+	 * @return Random # between a1 and a2, inclusive on both sides of range.
 	 */
-	protected final SnowAtom snw_randI(Object a1, Object a2)
+	protected final SnowAtom snw_randI(SnowType a1, SnowType a2)
 	{
-		return null;
+		SnowAtom l = (SnowAtom) a1;
+		SnowAtom h = (SnowAtom) a2;
+		
+		Double rand = Math.random();
+		rand = rand * (1+a2.getFloat());
+//		rand = rand / a1.getFloat();
+		rand = rand + a1.getFloat();
+		// rand is now in range a1 - a2 ?
+		
+		if(a1.isInt())
+			return new SnowAtom(Math.floor(rand));
+		else
+			return new SnowAtom(rand);
 	}
 	
 	//
