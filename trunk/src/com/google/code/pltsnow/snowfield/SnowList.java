@@ -235,9 +235,15 @@ public class SnowList extends SnowType {
 	}
 
 	@Override
+	/**
+	 * @author willi
+	 * shallow copy
+	 */
 	public SnowType clone() {
+		SnowList newList = new SnowList(data.clone());
+		newList.size = this.size;
 		// TODO Auto-generated method stub
-		return null;
+		return newList;
 	}
 	public static SnowType makeNil() {
 		return new SnowList(null);
