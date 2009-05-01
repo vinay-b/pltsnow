@@ -56,7 +56,9 @@ public class BaseSnowProgram {
 		set_endGenerations();
 		set_endFitness();
 		
-		types.put("organism", new SnowList());
+		types.put("organism", new SnowList(SnowAtom.makeNil()));
+		types.put("gene", SnowAtom.makeNil());
+		
 		//TODO: add default types to the table
 		
 		//TODO: call all of the defMole_ functions now!
@@ -108,12 +110,17 @@ public class BaseSnowProgram {
 	{
 		SnowList population = new SnowList();
 		int populationSize = (Integer) (symbols.get("~populationSize").get());
+
 		types.get("organism").populateFields();
 //		types.get("chromosome").populateFields();
-		SnowType baseChromosome = types.get("chromosome");
-		SnowType baseOrganism = types.get("organism");
-		SnowType baseGene = types.get("gene").clone();
 		
+		
+		SnowType baseChromosome = types.get("chromosome");
+
+		SnowType baseOrganism = types.get("organism");
+		// types.gene is not, by default, defined
+		SnowType baseGene     = types.get("gene").clone();
+
 		for (int i = 0; i < populationSize; i++) 
 		{
 			SnowType organism = baseOrganism.clone();
@@ -354,6 +361,8 @@ public class BaseSnowProgram {
 			dbg_beforeORGANISMFITNESSCHANGES();
 			o.setField("fitness",snw_evaluateFitness(o));
 			dbg_afterORGANISMFITNESSCHANGES();
+
+			System.out.println(o.getField("fitness"));
 			double fitness = o.getField("fitness").getDouble();
 			avgFitness += fitness;
 			c++;
@@ -386,7 +395,7 @@ public class BaseSnowProgram {
 	 * default sets fitness to 0
 	 */
 	protected SnowType snw_evaluateFitness(SnowType organism) {
-		return new SnowAtom(0);
+		return new SnowAtom(new Double(0.0));
 	}
 	
 	/**

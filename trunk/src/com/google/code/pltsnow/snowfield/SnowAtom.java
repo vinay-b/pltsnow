@@ -90,6 +90,9 @@ public class SnowAtom extends SnowType {
 		return v;
 	}
 
+	/**
+	 * from willi: this doesnt make sense?
+	 */
 	public Iterator<SnowType> iterator() {
 		LinkedList l = new LinkedList();
 		l.add(data);
@@ -214,6 +217,10 @@ public class SnowAtom extends SnowType {
 
 
 	@Override
+	/**
+	 * from willi: this also doesnt make sense?
+	 * whats the conversion?
+	 */
 	public SnowType push(SnowType other) {
 		// TODO Auto-generated method stub
 		return null;
@@ -366,6 +373,9 @@ public class SnowAtom extends SnowType {
 	}
 
 	@Override
+	/**
+	 * from willi: i dont know what this means...
+	 */
 	public boolean hasApproached(SnowType other_)
 			throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
