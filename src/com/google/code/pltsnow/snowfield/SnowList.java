@@ -156,6 +156,10 @@ public class SnowList extends SnowType {
 		return this;
 	}
 	@Override
+	/**
+	 * returns the field of the first element of the list
+	 * null if the list is empty
+	 */
 	public SnowType getField(String fieldName) {
 		if(data.size() == 0)
 			return null;
@@ -196,6 +200,10 @@ public class SnowList extends SnowType {
 	}
 
 	@Override
+	/**
+	 * sets the field given by fieldName of _each_ element 
+	 * in the list
+	 */
 	public SnowType setField(String fieldName, SnowType v) {
 		for(SnowType a : data)
 			a.setField(fieldName, v);
@@ -308,6 +316,9 @@ public class SnowList extends SnowType {
 		return false;
 	}
 	@Override
+	/**
+	 * from willi: i dont know what these are...
+	 */
 	public boolean hasApproached(SnowType other_)
 			throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
