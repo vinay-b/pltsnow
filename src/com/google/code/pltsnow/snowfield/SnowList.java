@@ -218,7 +218,7 @@ public class SnowList extends SnowType {
 	@Override
 	public void set(Object o) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("SnowList.set not implemented");
 	}
 	public void setNth(int n, SnowType d)
 	{

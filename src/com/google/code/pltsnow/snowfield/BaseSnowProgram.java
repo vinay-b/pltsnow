@@ -265,12 +265,14 @@ public class BaseSnowProgram {
 			r = rand.nextInt(population.getSize());
 			SnowType o2 = population.get(r);
 			
-			// TODO: these methods should take parameters
+			// TODO: these dbg methods should take parameters
 			dbg_beforeORGANISMMATESWITHORGANISM();
 			SnowType child = snw_mate(o1, o2, types.get("organism").clone());
+			// increment organism count
+			Integer currentCount = (Integer)symbols.get("~organismCount").get();
+			symbols.put("~organismCount",  new SnowAtom(new Integer(currentCount + 1)));
 			dbg_afterORGANISMMATESWITHORGANISM();
 			
-			// TODO: should there be a constructed hook here?
 			children.push(child);
 		}
 		
@@ -361,8 +363,6 @@ public class BaseSnowProgram {
 			dbg_beforeORGANISMFITNESSCHANGES();
 			o.setField("fitness",snw_evaluateFitness(o));
 			dbg_afterORGANISMFITNESSCHANGES();
-
-			System.out.println(o.getField("fitness"));
 			double fitness = o.getField("fitness").getDouble();
 			avgFitness += fitness;
 			c++;
@@ -530,6 +530,14 @@ public class BaseSnowProgram {
 		SnowList p2 = (SnowList) a2;
 		SnowAtom r = (SnowAtom) ratio;
 		
+		System.out.println("Splice got:");
+		for (SnowType a : a1)
+			System.out.print(a.getField("num") + " ");
+		System.out.println("");
+		for (SnowType a : a2)
+			System.out.print(a.getField("num") + " ");
+		System.out.println("");
+		
 		if(r.isInt())
 		{
 			//IMPLEMENT
@@ -550,6 +558,11 @@ public class BaseSnowProgram {
 				}
 			}
 		}
+		c.reverse();
+		System.out.println("Splice produced:");
+		for (SnowType a : c)
+			System.out.print(a.getField("num") + " ");
+		System.out.println("");
 		return c;
 	}
 	
