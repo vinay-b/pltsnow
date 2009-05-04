@@ -3,6 +3,7 @@ package com.google.code.pltsnow.snowfield;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 
 public class SnowAtom extends SnowType {
@@ -104,6 +105,13 @@ public class SnowAtom extends SnowType {
 		if(o instanceof SnowType)
 		{
 			data = ((SnowType) o ).get();
+			SnowType t = (SnowType) o;
+			t.populateFields();
+			for(String fieldName : t.getFieldNames())
+			{
+				System.out.println("Setting on a snowtype " + fieldName);
+				setField(fieldName, t.getField(fieldName));
+			}
 		}
 		else
 			data = o;
@@ -408,12 +416,15 @@ public class SnowAtom extends SnowType {
 			SnowType t = fields.get(s);
 			if(BaseSnowProgram.types.containsKey(s) && !(fields.get(s) instanceof SnowList && ((SnowList) fields.get(s)).getSize() > 1))
 			{
-				
-				
 				fields.put(s, BaseSnowProgram.types.get(s));
-				System.out.println("Expanded " + s + " to " + BaseSnowProgram.types.get(s));
+//				System.out.println("Expanded " + s + " to " + BaseSnowProgram.types.get(s));
 				BaseSnowProgram.types.get(s).populateFields();
 			}
 		}
+	}
+
+	@Override
+	public Set<String> getFieldNames() {
+		return fields.keySet();
 	}
 }

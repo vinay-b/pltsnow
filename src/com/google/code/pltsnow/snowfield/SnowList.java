@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Set;
 
 public class SnowList extends SnowType {
 		
@@ -219,6 +220,7 @@ public class SnowList extends SnowType {
 	public void set(Object o) {
 		// TODO Auto-generated method stub
 		System.out.println("SnowList.set not implemented");
+		System.exit(-1);
 	}
 	public void setNth(int n, SnowType d)
 	{
@@ -229,7 +231,10 @@ public class SnowList extends SnowType {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Override
+	public Set<String> getFieldNames() {
+		return data.getFirst().getFieldNames();
+	}
 	@Override
 	public SnowType minus(SnowType other) {
 		// TODO Auto-generated method stub
