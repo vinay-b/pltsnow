@@ -215,7 +215,7 @@ public class BaseSnowProgram {
 		
 		dbg_afterGENERATION();
 		
-		
+		System.out.println("**********GENERATION OVER");
 		//TODO: age
 		
 		//INCREASE THE GENERATION COUNT
@@ -267,6 +267,7 @@ public class BaseSnowProgram {
 			
 			// TODO: these dbg methods should take parameters
 			dbg_beforeORGANISMMATESWITHORGANISM();
+			SnowType t = types.get("organism");
 			SnowType child = snw_mate(o1, o2, types.get("organism").clone());
 			// increment organism count
 			Integer currentCount = (Integer)symbols.get("~organismCount").get();
@@ -530,14 +531,14 @@ public class BaseSnowProgram {
 		SnowList p2 = (SnowList) a2;
 		SnowAtom r = (SnowAtom) ratio;
 		
-		System.out.println("Splice got:");
-		for (SnowType a : a1)
-			System.out.print(a.getField("num") + " ");
-		System.out.println("");
-		for (SnowType a : a2)
-			System.out.print(a.getField("num") + " ");
-		System.out.println("");
-		
+//		System.out.println("Splice got:");
+//		for (SnowType a : a1)
+//			System.out.print(a.getField("num") + " ");
+//		System.out.println("");
+//		for (SnowType a : a2)
+//			System.out.print(a.getField("num") + " ");
+//		System.out.println("");
+//		
 		if(r.isInt())
 		{
 			//IMPLEMENT
@@ -559,10 +560,10 @@ public class BaseSnowProgram {
 			}
 		}
 		c.reverse();
-		System.out.println("Splice produced:");
-		for (SnowType a : c)
-			System.out.print(a.getField("num") + " ");
-		System.out.println("");
+//		System.out.println("0Splice produced:");
+//		for (SnowType a : c)
+//			System.out.print(a.getField("num") + " ");
+//		System.out.println("");
 		return c;
 	}
 	
