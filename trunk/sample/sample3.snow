@@ -5,12 +5,6 @@ These two variables define the stopping criteria. You can specify either or both
 ~endFitness     = 8
 ~populationSize = 100
 
-# This defines a gene. In this case, the gene just contains 1 atom - "value"
-# Will be either 1 or 0
-define gene:
- # single atom named "value"
-  num
-end
 
 define chromosome:
  # equivalent to "8 genes"
@@ -24,7 +18,7 @@ to construct: newOrganism
  #Set each gene to have a random num, 0 or 1
  foreach gene in newOrganism.chromosome as gene1
   # randI - random, inclusive
-  gene1.num = randI: 0, 1
+  gene1 = randI: 0, 1
  end
  return newOrganism
 end
@@ -35,19 +29,26 @@ to evaluateFitness: org
 
     #Loop over each gene except for the last one
     foreach gene in org.chromosome as gene1
-     curfit = curfit + gene1.num
+     curfit = curfit + gene1
     end
 
  return curfit
 end
 
 to mate: organismA, organismB, newOrganism
-  newOrganism.chromsome = splice: ((rand: 0 100) / 100), organismA.chromosome, organismB.chromosome
+  newOrganism.chromosome = splice: ((rand: 0 100) / 100), organismA.chromosome, organismB.chromosome
   return newOrganism
+end
+
+to mutate: organismA
+	#mutate the organism by randomly changing a gene
+	setNth: organismA.chromosome,(randI: 0 7), randI: 0 1
+	return organismA
 end
 
 after generation:
   print: "average fitness: " + ~averageFitness
+  printPopulation: 
 end
 
 before termination:

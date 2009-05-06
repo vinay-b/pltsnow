@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -57,7 +58,7 @@ public class BaseSnowProgram {
 		set_endFitness();
 		
 		types.put("organism", new SnowList(SnowAtom.makeNil()));
-		types.put("gene", SnowAtom.makeNil());
+//		types.put("gene", SnowAtom.makeNil());
 		
 		//TODO: add default types to the table
 		
@@ -118,8 +119,6 @@ public class BaseSnowProgram {
 		SnowType baseChromosome = types.get("chromosome");
 
 		SnowType baseOrganism = types.get("organism");
-		// types.gene is not, by default, defined
-		SnowType baseGene     = types.get("gene").clone();
 
 		for (int i = 0; i < populationSize; i++) 
 		{
@@ -235,15 +234,17 @@ public class BaseSnowProgram {
 		SnowList population = (SnowList)symbols.get("~population");
 		double mutationRate = (Double)symbols.get("~mutationRate").get();
 		
-		for (SnowType o : population) {
+		for(SnowType t : population)
+		{			
 			double rand = Math.random();
 			if (rand < mutationRate) {
 				dbg_beforeORGANISMMUTATED();
-				// o is mutated by reference
-				snw_mutate(o);
+				snw_mutate(t);
+				
 				dbg_afterORGANISMMUTATED();
 			}
 		}
+		
 	}
 
 	
@@ -268,6 +269,7 @@ public class BaseSnowProgram {
 			// TODO: these dbg methods should take parameters
 			dbg_beforeORGANISMMATESWITHORGANISM();
 			SnowType t = types.get("organism");
+			SnowType o = types.get("chromosome");
 			SnowType child = snw_mate(o1, o2, types.get("organism").clone());
 			// increment organism count
 			Integer currentCount = (Integer)symbols.get("~organismCount").get();
@@ -505,12 +507,14 @@ public class BaseSnowProgram {
 	}
 	protected final void snw_setNth(SnowType list,SnowType n, SnowType rval)
 	{
-		//TODO
+		SnowList l = (SnowList) list;
+		l.setNth((int) n.getDouble(), rval);
 	}
 	protected final SnowType snw_reverse(SnowType list)
 	{
-		//TODO
-		return null;
+		SnowList r = (SnowList) list.clone();
+		r.reverse();
+		return r;
 	}
 	
 	protected final int snw_search(SnowType list, SnowType s)
@@ -526,10 +530,11 @@ public class BaseSnowProgram {
 	
 	protected final SnowType snw_splice(SnowType ratio, SnowType a1, SnowType a2)
 	{
-		SnowList c = new SnowList();
+		SnowList c = SnowList.makeNilList(0);
 		SnowList p1 = (SnowList) a1;
 		SnowList p2 = (SnowList) a2;
 		SnowAtom r = (SnowAtom) ratio;
+
 		
 //		System.out.println("Splice got:");
 //		for (SnowType a : a1)
@@ -538,7 +543,7 @@ public class BaseSnowProgram {
 //		for (SnowType a : a2)
 //			System.out.print(a.getField("num") + " ");
 //		System.out.println("");
-//		
+		
 		if(r.isInt())
 		{
 			//IMPLEMENT
@@ -551,11 +556,11 @@ public class BaseSnowProgram {
 			{
 				if(Math.random() > r.getDouble())
 				{
-					c.push(p1.get(i));
+					c.push(p1.get(i).clone());
 				}
 				else
 				{
-					c.push(p2.get(i));
+					c.push(p2.get(i).clone());
 				}
 			}
 		}
@@ -591,6 +596,21 @@ public class BaseSnowProgram {
 		return new SnowAtom(rand);
 	}
 	
+	protected final void snw_printPopulation()
+	{
+		SnowList population = (SnowList) symbols.get("~population");
+		for(SnowType t : population)
+		{
+			String r = "Org: ";
+			SnowList genes = (SnowList) t.getField("chromosome");
+			for(SnowType g : genes)
+			{
+				r+=g.get() + " ";
+			}
+			r+=" f "+snw_evaluateFitness(t);
+			snw_print(r);
+		}
+	}
 	/**
 	 * @param a1 Low val
 	 * @param a2 High val

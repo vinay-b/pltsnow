@@ -30,7 +30,10 @@ public class SnowAtom extends SnowType {
 			return fields.get(fieldName);
 	}
 	public Object getRawData() {
-		return data;
+		if(data instanceof SnowAtom)
+			return ((SnowAtom) data).get();
+		else
+			return data;
 	}
 	protected HashMap<String, SnowType> getFields() {
 		return fields;
@@ -109,7 +112,6 @@ public class SnowAtom extends SnowType {
 			t.populateFields();
 			for(String fieldName : t.getFieldNames())
 			{
-				System.out.println("Setting on a snowtype " + fieldName);
 				setField(fieldName, t.getField(fieldName));
 			}
 		}
@@ -246,12 +248,12 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public SnowType clone() {
-		// TODO Auto-generated method stub
 		SnowAtom r = makeNil();
 		for(String field : fields.keySet())
 		{
 			r.setField(field, fields.get(field).clone());
 		}
+		r.data = data;
 		return r;
 	}
 

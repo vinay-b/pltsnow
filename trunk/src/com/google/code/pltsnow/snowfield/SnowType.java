@@ -111,7 +111,7 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 		if(isInt())
 			return (Integer) get();
 		else
-			throw new ClassCastException("Can not make an integer out of " + this.getClass().getName());
+			throw new ClassCastException("Can not make an integer out of " + this.get().getClass().getName());
 	}
 
 	public abstract boolean isNull();
