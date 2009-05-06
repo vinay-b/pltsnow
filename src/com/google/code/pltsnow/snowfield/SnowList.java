@@ -16,16 +16,9 @@ public class SnowList extends SnowType {
 	}
 	
 	/**
-	 * this could make things pretty confusing,
-	 * but thats whats great about lazy 
-	 * initialization!
+	 * THERE BE DRAGONS HERE!!!!!!!!
 	 * 
-	 * actually, this is going to take some work
-	 * because Iterator, since it comes from this.data.iterator,
-	 * is going to only iterate objects truely in the list
-	 * not "virtually" in the list
-	 * 
-	 * aka, dont use setSize?
+	 * THIS WILL INITIALIZE THE LIST TOO!!!!!!
 	 * 
 	 * @param size
 	 */
@@ -219,12 +212,24 @@ public class SnowList extends SnowType {
 	@Override
 	public void set(Object o) {
 		// TODO Auto-generated method stub
-		System.out.println("SnowList.set not implemented");
-		System.exit(-1);
+		if(o instanceof SnowList)
+		{
+			SnowList o1 = (SnowList) o;
+			data = o1.data;
+			this.size = o1.size;
+		}
+		else
+		{
+			data.clear();
+			data.add((SnowType) o);
+//			System.out.println("SnowList.set not implemented");
+//			System.exit(-1);
+		}
 	}
 	public void setNth(int n, SnowType d)
 	{
-		data.set(n, d);
+		data.get(n).set(d);
+//		data.set(n, d);
 	}
 	@Override
 	public SnowType divide(SnowType other) {
@@ -261,10 +266,11 @@ public class SnowList extends SnowType {
 	
 	@Override
 	public SnowType clone() {
-		SnowList r = new SnowList(data.clone());
+		SnowList r = makeNilList(0);
+		r.data = new LinkedList<SnowType>();
 		for(SnowType d : data)
-			r.push(d);
-		r.setSize(size);
+			r.push(d.clone());
+		
 		return r;
 	}
 	public static SnowType makeNil() {
@@ -275,7 +281,7 @@ public class SnowList extends SnowType {
 	{
 		SnowList r = new SnowList(null);
 		r.setSize(len);
-		System.out.println(len);
+//		System.out.println("Make nil list of " + len);
 		return r;
 	}
 	@Override
