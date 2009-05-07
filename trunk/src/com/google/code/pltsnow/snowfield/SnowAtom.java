@@ -105,9 +105,9 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public void set(Object o) {
-		if(o instanceof SnowType)
+		if (o instanceof SnowType)
 		{
-			data = ((SnowType) o ).get();
+			data = ((SnowType) o).get();
 			SnowType t = (SnowType) o;
 			t.populateFields();
 			for(String fieldName : t.getFieldNames())
@@ -115,6 +115,22 @@ public class SnowAtom extends SnowType {
 				setField(fieldName, t.getField(fieldName));
 			}
 		}
+			
+		/*
+		if(o instanceof SnowList)
+		{
+			data = ((SnowList) o ).get();
+		}
+		else if (o instanceof SnowAtom)
+		{
+			data = ((SnowAtom) o).get();
+			for(String field : ((SnowAtom) o).fields.keySet())
+			{
+				this.setField(field, fields.get(field).clone());
+			}
+			//fields = ((SnowAtom) o).fields;
+		}
+		*/
 		else
 			data = o;
 	}
