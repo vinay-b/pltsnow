@@ -172,7 +172,7 @@ public class SnowAtom extends SnowType {
 	private boolean doRelOp(SnowType other, int choice) {
 		Double f1 = (isInt()) ? ((Integer) data).doubleValue() : ((Double) data);
 
-		Double f2 = (isInt()) ? ((Integer) other.get()).doubleValue()
+		Double f2 = (other.isInt()) ? ((Integer) other.get()).doubleValue()
 				: ((Double) other.get());
 
 		switch (choice) {
@@ -234,6 +234,10 @@ public class SnowAtom extends SnowType {
 			return doMathOp(new SnowAtom(0),'+');
 		if (isString()) {
 			return new SnowAtom(((String) data).concat(other.toString()));
+		}
+		if(other.isString())
+		{
+			return new SnowAtom(data.toString().concat(other.toString()));
 		}
 //		System.out.println(this + " " + other);
 		throw new UnsupportedOperationException(
@@ -401,18 +405,24 @@ public class SnowAtom extends SnowType {
 	@Override
 	/**
 	 * from willi: i dont know what this means...
+	 * @willi - it means basically is this equal to that. there is a bug in the translator that requires this to be the opposite though
 	 */
-	public boolean hasApproached(SnowType other_)
+	public boolean hasApproached(SnowType other)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return false;
+		return !equals(other);
 	}
 
 	@Override
-	public boolean moveTowardsBy(SnowType other_, SnowType unit_)
+	public boolean moveTowardsBy(SnowType other, SnowType unit)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return false;
+		if(ge(other))
+		{
+			//We are bigger than the other, subtract
+			minus(unit);
+		}
+		else
+			plus(unit);
+		return true;
 	}
 
 	@Override

@@ -540,8 +540,8 @@ public class BaseSnowProgram {
 	
 	protected final SnowType snw_nth(SnowType t, SnowType n)
 	{
-		//TODO
-		return null;
+		SnowList l = (SnowList) t;
+		return l.getNth(n.getInt());
 	}
 	protected final void snw_setNth(SnowType list,SnowType n, SnowType rval)
 	{
@@ -581,10 +581,11 @@ public class BaseSnowProgram {
 //		for (SnowType a : a2)
 //			System.out.print(a.getField("num") + " ");
 //		System.out.println("");
-		
+		System.out.println("Splice");
 		if(r.isInt())
 		{
 			//IMPLEMENT
+			System.out.println("Nice spliceeee");
 			throw new UnsupportedOperationException("Not implemented yet");
 		}
 		else if(r.isNumeric())

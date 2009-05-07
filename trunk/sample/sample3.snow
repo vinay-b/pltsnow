@@ -47,8 +47,8 @@ to mutate: organismA
 end
 
 after generation:
-  print: "average fitness: " + ~averageFitness
-  printPopulation: 
+  print: ~generationCount +","+ ~averageFitness
+#  printPopulation: 
 end
 
 before termination:
