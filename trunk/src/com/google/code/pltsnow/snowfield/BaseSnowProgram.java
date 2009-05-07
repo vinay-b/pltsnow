@@ -157,12 +157,12 @@ public class BaseSnowProgram {
 	private final boolean terminationMet()
 	{
 		// maxFitness > endFitness > 0
-		if (symbols.get("~maxFitness").getFloat() > symbols.get("~endFitness").getFloat() &&
+		if (symbols.get("~maxFitness").getFloat() >= symbols.get("~endFitness").getFloat() &&
 				symbols.get("~endFitness").getFloat() > 0)
 			return true;
 		
 		// generationCount
-		if (symbols.get("~generationCount").getDouble() > symbols.get("~endGenerations").getDouble() &&
+		if (symbols.get("~generationCount").getDouble() >= symbols.get("~endGenerations").getDouble() &&
 				symbols.get("~endGenerations").getDouble() > 0)
 			return true;
 		
@@ -360,20 +360,27 @@ public class BaseSnowProgram {
 	protected void doTheFitnessEvaluation() {
 		SnowList population  = (SnowList)symbols.get("~population");
 		double maxFitness    = symbols.get("~maxFitness").getDouble();
+		System.out.println("Current max fitness: " + maxFitness);
+		
 		int avgFitness = 0;
 		int c = 0;
 		for (SnowType o : population) {
 			dbg_beforeORGANISMFITNESSCHANGES();
-			o.setField("fitness",snw_evaluateFitness(o));
+			o.setField("fitness", snw_evaluateFitness(o));
+			
 			dbg_afterORGANISMFITNESSCHANGES();
+			
 			double fitness = o.getField("fitness").getDouble();
 			avgFitness += fitness;
 			c++;
 			if (fitness > maxFitness)
+			{
+				System.out.println("greater fitness: " + fitness);
 				maxFitness =  fitness;
+			}
 		}
 		if(c > 0)
-			avgFitness/=c;
+			avgFitness /= c;
 		
 		symbols.put("~maxFitness", new SnowAtom(new Float(maxFitness)));
 		symbols.put("~averageFitness",new SnowAtom(avgFitness));
