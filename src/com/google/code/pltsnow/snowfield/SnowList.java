@@ -149,6 +149,7 @@ public class SnowList extends SnowType {
 		Collections.sort(this.data, c);
 		return this;
 	}
+	
 	@Override
 	/**
 	 * returns the field of the first element of the list
