@@ -8,14 +8,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 
 public class BaseSnowProgram {
 	private static final int DEFAULT_POPULATION_SIZE   = 100;
 	private static final int DEFAULT_TOP_PARENT_POOL   = 10;
-	private static final int DEFAULT_BOTTOM_PARENT_POOL = 2;
-	private static final int DEFAULT_ORGANISM_LIFESPAN = 30;
+	private static final int DEFAULT_BOTTOM_PARENT_POOL = 4;
+	private static final int DEFAULT_ORGANISM_LIFESPAN = 3;
 	private static final double DEFAULT_MUTATION_RATE  = 0.50;
 	private static final String DEFAULT_SELECT_METHOD  = "top_half";
 	private static final int DEFAULT_END_GENERATION    = 100;
@@ -48,6 +49,7 @@ public class BaseSnowProgram {
 		symbols.put("~organismCount",    new SnowAtom(new Integer(0)));
 		
 		
+		
 		set_bottomParentPool();
 		set_mutationRate();
 		set_organismLifespan();
@@ -56,14 +58,25 @@ public class BaseSnowProgram {
 		set_topParentPool();
 		set_endGenerations();
 		set_endFitness();
-		
+			
+
 		types.put("organism", new SnowList(SnowAtom.makeNil()));
+		
+		
 //		types.put("gene", SnowAtom.makeNil());
 		
 		//TODO: add default types to the table
 		
 		//TODO: call all of the defMole_ functions now!
 		callAllDefMoles();
+		
+		// add basic fields to organism
+		// MUST go after user definition
+		SnowType organism = types.get("organism");
+		organism.setField("name", SnowAtom.makeNil());
+		organism.setField("age", new SnowAtom(new Integer(0)));
+		organism.setField("fitness", new SnowAtom(new Integer(0)));
+		types.put("organism", organism);
 		
 		dbg_beforeINITIALIZATION();
 		initializePopulation();
@@ -215,7 +228,6 @@ public class BaseSnowProgram {
 		dbg_afterGENERATION();
 		
 		System.out.println("**********GENERATION OVER");
-		//TODO: age
 		
 		//INCREASE THE GENERATION COUNT
 		try {
@@ -268,8 +280,6 @@ public class BaseSnowProgram {
 			
 			// TODO: these dbg methods should take parameters
 			dbg_beforeORGANISMMATESWITHORGANISM();
-			SnowType t = types.get("organism");
-			SnowType o = types.get("chromosome");
 			SnowType child = snw_mate(o1, o2, types.get("organism").clone());
 			// increment organism count
 			Integer currentCount = (Integer)symbols.get("~organismCount").get();
@@ -297,15 +307,30 @@ public class BaseSnowProgram {
 		Integer bottomParentPool = (Integer) symbols.get("~bottomParentPool").get();
 		
 		Iterator<SnowType> iterator = population.iterator();
-		
-		// remove age'd organisms
-		//TODO - this isn't working si i commented it out :)
-		
-		while(iterator.hasNext()) {
+
+		// unfortunately there need to be two loops here
+		// according to the java api, remove() is undefined if
+		// the collection changes during iteration.
+		while(iterator.hasNext()) 
+		{
 			SnowType o = iterator.next();
-			// all this casting seems a bit dangerous...
-//			if ((Integer)o.getField("age").get() > organismLifespan)
-//				iterator.remove();
+			int age = (Integer)o.getField("age").get();
+			o.setField("age", new SnowAtom(new Integer(age + 1)));
+		}
+		
+		iterator = population.iterator();
+		while(iterator.hasNext()) 
+		{
+			SnowType o = iterator.next();
+			
+			int age = (Integer)o.getField("age").get();
+			
+			if (age > organismLifespan)
+			{
+				dbg_beforeORGANISMKILLED();
+				iterator.remove();
+				dbg_afterORGANISMKILLED();
+			}
 		}
 		
 		// anonymous classes FTW!!!
@@ -329,7 +354,6 @@ public class BaseSnowProgram {
 		// take worst candidates
 		for (int i = 0; i < bottomParentPool; i++)
 		{
-//			System.out.println("Keeping one with fit " + population.peek().getField("fitness"));
 			newPopulation.push(population.pop());
 		}
 		population.reverse();
@@ -337,16 +361,25 @@ public class BaseSnowProgram {
 		// take top candidates
 		for (int i = 0; i < topParentPool; i++)
 		{
-//			System.out.println("Keeping one with fit " + population.peek().getField("fitness"));
 			newPopulation.push(population.pop());
 		}
 		
 		// kill off remaining organisms
 		while (population.getSize() > 0) {
 			// TODO: these should take the dying organism as a parameter?
-			dbg_beforeORGANISMKILLED();
-			population.pop();
-			dbg_afterORGANISMKILLED();
+			try
+			{
+				dbg_beforeORGANISMKILLED();
+				population.pop();
+				dbg_afterORGANISMKILLED();
+			} catch (NoSuchElementException e)
+			{
+				// do nothing.
+				// iterator.remove() doesnt seem to decrement the size
+				// of the population, which means the bounds are overrun 
+				// here.
+				// ideally this would be fixed elsewhere...
+			}
 		}
 		
 		symbols.put("~population", newPopulation);
@@ -360,14 +393,12 @@ public class BaseSnowProgram {
 	protected void doTheFitnessEvaluation() {
 		SnowList population  = (SnowList)symbols.get("~population");
 		double maxFitness    = symbols.get("~maxFitness").getDouble();
-		System.out.println("Current max fitness: " + maxFitness);
 		
 		int avgFitness = 0;
 		int c = 0;
 		for (SnowType o : population) {
 			dbg_beforeORGANISMFITNESSCHANGES();
 			o.setField("fitness", snw_evaluateFitness(o));
-			
 			dbg_afterORGANISMFITNESSCHANGES();
 			
 			double fitness = o.getField("fitness").getDouble();
@@ -375,13 +406,13 @@ public class BaseSnowProgram {
 			c++;
 			if (fitness > maxFitness)
 			{
-				System.out.println("greater fitness: " + fitness);
 				maxFitness =  fitness;
 			}
 		}
 		if(c > 0)
 			avgFitness /= c;
 		
+		//TODO: record minFitness
 		symbols.put("~maxFitness", new SnowAtom(new Float(maxFitness)));
 		symbols.put("~averageFitness",new SnowAtom(avgFitness));
 	}
