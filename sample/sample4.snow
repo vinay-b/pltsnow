@@ -1,17 +1,13 @@
 #These two variables define the stopping criteria. You can specify either or 
 ~endGenerations= 800
 ~endFitness     = 28
-~topParentPool  = 0.1
+#~topParentPool  = 0.1
 ~mutationRate   = (rand: 1 5)/10
-
-#This defines a gene. In this case, the gene just contains 1 atom - "value"
-define gene:
-	num
-end
+~populationSize = 100
 
 #This defines a chromosome. In this case, a chromosome is composed of 8 genes
 define chromosome:
-	8 genes
+	8 gene
 end
 
 define organism:
@@ -21,7 +17,7 @@ end
 to construct: newOrganism
 	#Set each gene to have a random value from 0-7
 	foreach gene in newOrganism.chromosome as gene1
-		gene1.num = rand: 0 8
+		gene1 = rand: 0 8
 	end
 	return newOrganism
 end
@@ -32,16 +28,16 @@ to evaluateFitness: checkOrganism
   
 	for i from 0 to 6
 		# a deep copy. by value
-		gene1 = nth:i, checkOrganism.chromosome
+		gene1 = nth: checkOrganism.chromosome, i
  
 		for j from 1 to 7
-			gene2 = nth:j, checkOrganism.chromosome
+			gene2 = nth: checkOrganism.chromosome, j
    
 			#Check to see if gene1 and gene2 are in the same row
 			if gene1 = gene2 then
 				curfit = curfit - 1
 			#Check to see if they are along the same diagonal
-			elseif ((gene1.num - gene2.num) / (i - j)) = 1 then
+			elseif ((gene1 - gene2) / (i - j)) = 1 then
 				curfit = curfit - 1
 			end
 		end
@@ -52,13 +48,13 @@ end
 
 to mate: organismA organismB child
 	#Randomly splice 2 organisms to get the child
-	child.chromosome = splice: (rand: 0 8) organismA organismB
+	child.chromosome = splice: (rand: 0 8) organismA.chromosome organismB.chromosome
 	return child
 end
 
 to mutate: organismA
 	#mutate the organism by randomly changing a gene
-	setNth: organism.chromosome,(rand: 0 8), rand: 0 8
+	setNth: organismA.chromosome,(rand: 0 8), rand: 0 8
 	return organismA
 end
 
