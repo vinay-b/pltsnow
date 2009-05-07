@@ -554,12 +554,16 @@ public class BaseSnowProgram {
 			//It's r% p1 and (100-r)% p2
 			for(int i = 0;i<p1.getSize();i++)
 			{
-				if(Math.random() > r.getDouble())
+				Double rate = r.getDouble();
+				System.out.print("rate: " + rate);
+				if(Math.random() > rate)
 				{
+					System.out.println("... less");
 					c.push(p1.get(i).clone());
 				}
 				else
 				{
+					System.out.println("... greater");
 					c.push(p2.get(i).clone());
 				}
 			}
@@ -586,12 +590,9 @@ public class BaseSnowProgram {
 	 */
 	protected final SnowAtom snw_rand(SnowType a1, SnowType a2)
 	{
-		
 		Double rand = Math.random();
-		rand = rand * a2.getFloat();
-		rand = rand / a1.getFloat();
+		rand = rand * (a2.getFloat() + a1.getFloat());
 		rand = rand + a1.getFloat();
-		// rand is now in range a1 - a2 ?
 		
 		return new SnowAtom(rand);
 	}
@@ -601,16 +602,22 @@ public class BaseSnowProgram {
 		SnowList population = (SnowList) symbols.get("~population");
 		for(SnowType t : population)
 		{
-			String r = "Org: ";
-			SnowList genes = (SnowList) t.getField("chromosome");
-			for(SnowType g : genes)
-			{
-				r+=g.get() + " ";
-			}
-			r+=" f "+snw_evaluateFitness(t);
-			snw_print(r);
+			snw_printOrganism(t);
 		}
 	}
+	
+	protected final void snw_printOrganism(SnowType o)
+	{
+		String r = "Org: ";
+		SnowList genes = (SnowList) o.getField("chromosome");
+		for(SnowType g : genes)
+		{
+			r+=g.get() + " ";
+		}
+		r+=" f "+snw_evaluateFitness(o);
+		snw_print(r);
+	}
+	
 	/**
 	 * @param a1 Low val
 	 * @param a2 High val
@@ -618,14 +625,9 @@ public class BaseSnowProgram {
 	 */
 	protected final SnowAtom snw_randI(SnowType a1, SnowType a2)
 	{
-		SnowAtom l = (SnowAtom) a1;
-		SnowAtom h = (SnowAtom) a2;
-		
 		Double rand = Math.random();
-		rand = rand * (1+a2.getFloat());
-//		rand = rand / a1.getFloat();
+		rand = rand * (1 + a1.getFloat() + a2.getFloat());
 		rand = rand + a1.getFloat();
-		// rand is now in range a1 - a2 ?
 		
 		if(a1.isInt())
 			return new SnowAtom(Math.floor(rand));
