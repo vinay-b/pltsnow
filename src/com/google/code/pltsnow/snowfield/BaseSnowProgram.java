@@ -552,7 +552,7 @@ public class BaseSnowProgram {
 		else if(r.isNumeric())
 		{
 			//It's r% p1 and (100-r)% p2
-			for(int i = 0;i<p1.getSize();i++)
+			for(int i = 0; i < p1.getSize(); i++)
 			{
 				Double rate = r.getDouble();
 				System.out.print("rate: " + rate);
@@ -568,7 +568,7 @@ public class BaseSnowProgram {
 				}
 			}
 		}
-		c.reverse();
+		//c.reverse();
 //		System.out.println("0Splice produced:");
 //		for (SnowType a : c)
 //			System.out.print(a.getField("num") + " ");
