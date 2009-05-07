@@ -14,7 +14,7 @@ import java.util.Random;
 public class BaseSnowProgram {
 	private static final int DEFAULT_POPULATION_SIZE   = 100;
 	private static final int DEFAULT_TOP_PARENT_POOL   = 10;
-	private static final int DEFAULT_BOTTOM_PARENT_POOL = 10;
+	private static final int DEFAULT_BOTTOM_PARENT_POOL = 2;
 	private static final int DEFAULT_ORGANISM_LIFESPAN = 30;
 	private static final double DEFAULT_MUTATION_RATE  = 0.50;
 	private static final String DEFAULT_SELECT_METHOD  = "top_half";
@@ -318,7 +318,7 @@ public class BaseSnowProgram {
 						double f2 = a2.getField("fitness").getDouble();
 						if (f1 < f2)
 							return -1;
-						if (f2 > f2)
+						if (f1 > f2)
 							return 1;
 						return 0;
 					}
@@ -358,7 +358,7 @@ public class BaseSnowProgram {
 	 * on each organism
 	 */
 	protected void doTheFitnessEvaluation() {
-		SnowList population = (SnowList)symbols.get("~population");
+		SnowList population  = (SnowList)symbols.get("~population");
 		double maxFitness    = symbols.get("~maxFitness").getDouble();
 		int avgFitness = 0;
 		int c = 0;
@@ -555,15 +555,12 @@ public class BaseSnowProgram {
 			for(int i = 0; i < p1.getSize(); i++)
 			{
 				Double rate = r.getDouble();
-				System.out.print("rate: " + rate);
 				if(Math.random() > rate)
 				{
-					System.out.println("... less");
 					c.push(p1.get(i).clone());
 				}
 				else
 				{
-					System.out.println("... greater");
 					c.push(p2.get(i).clone());
 				}
 			}
@@ -600,6 +597,32 @@ public class BaseSnowProgram {
 	protected final void snw_printPopulation()
 	{
 		SnowList population = (SnowList) symbols.get("~population");
+		
+//		population.sort(new 
+//				Comparator<SnowType>() 
+//				{
+//					public int compare(SnowType a1, SnowType a2)
+//					{
+//						double f1 = a1.getField("fitness").getDouble();
+//						double f2 = a2.getField("fitness").getDouble();
+//						//double f1 = snw_evaluateFitness(a1).getDouble();
+//						//double f2 = snw_evaluateFitness(a2).getDouble();
+//						if (f1 < f2)
+//						{	
+//							return -1;
+//						}
+//						if (f1 > f2)
+//						{
+//							return 1;
+//						}
+//						else
+//						{	
+//							return 0;
+//						}
+//					}
+//				});
+		
+
 		for(SnowType t : population)
 		{
 			snw_printOrganism(t);
