@@ -55,7 +55,8 @@ snw_print(new SnowAtom("Number of generations: ").plus(symbols.get("~generationC
 
 
 public static void main(String[] args) {
-	SnowProgramImp this_prog = new SnowProgramImp();
+	SnowProgramImp this_prog = new SnowProgramImp(); 
 	this_prog.startProgram();
 }
+
 }
