@@ -1,0 +1,27 @@
+#|
+Test Case 8
+ 2. Expression
+    Miscellaneous postfix++, postfix --, unary - 
+|#
+
+after termination:
+	var i = 0
+	
+	i++
+	
+	if i = 1
+		print: "Postfix ++ works\n"
+	end
+		
+	i--
+	
+	if i = 1
+		print: "Postfix -- works\n"
+	end
+	
+	i = -2
+	
+	if i = -2
+		print: "Unary - works\n"
+	end
+end

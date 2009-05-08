@@ -1,0 +1,33 @@
+#|
+Test Case 6
+ 2. Expression
+    Relational < , <= , > , >= , != , =
+|#
+after termination:
+	var i = 0
+	var j = 1
+	
+	if i < j
+		print: "Relation Lesser Than works\n"
+	end
+	
+	if i <= j
+		print: "Relation Lesser Than Equals works\n"
+	end
+	
+	if i > j
+		print: "Relation Greater Than works\n"
+	end
+	
+	if i >= j
+		print: "Relation Greater Than Equals works\n"
+	end
+	
+	if i = j
+		print: "Relation Equals works\n"
+	end
+	
+	if i != j
+		print: "Relation Not Equals works\n"
+	end
+end

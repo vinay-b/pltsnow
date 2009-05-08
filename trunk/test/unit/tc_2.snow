@@ -1,0 +1,20 @@
+#|
+Test Case 2
+ 1. Control Flow:
+    FOR
+    FOR - BY
+|#
+after termination:
+	var i = 1
+	for i from 1 to 10
+		print: "For Construct Works\n"
+	end
+	
+	for i from 1 to 10 by 2
+		print: "For Construct Works\n"
+	end
+	
+	for i from 10 to 1 by 1
+		print: "For Construct Works\n"
+	end
+end

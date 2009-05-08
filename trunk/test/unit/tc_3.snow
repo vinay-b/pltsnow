@@ -1,0 +1,11 @@
+#|
+Test Case 3
+ 1. Control Flow:
+    FOREACH
+    FOREACH IN
+    FOREACH AS
+    FOREACH IN AS FROM
+|#
+after termination:
+	
+end
