@@ -9,19 +9,19 @@ after termination:
 	
 	i++
 	
-	if i = 1
+	if i = 1 then
 		print: "Postfix ++ works\n"
 	end
 		
 	i--
 	
-	if i = 1
+	if i = 1 then
 		print: "Postfix -- works\n"
 	end
 	
 	i = -2
 	
-	if i = -2
+	if i = -2 then
 		print: "Unary - works\n"
 	end
 end
