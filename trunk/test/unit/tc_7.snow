@@ -7,27 +7,27 @@ after termination:
 	var i = 0
 	var j = 1
 	
-	if i = 1 && j = 0
+	if i = 1 && j = 0 then
 		print: "Logical And works\n"
 	end
 	
-	if i = 1 and  j = 0
+	if i = 1 and  j = 0 then
 		print: "Logical And works\n"
 	end
 	
-	if i = 1 || j = 0
+	if i = 1 || j = 0 then
 		print: "Logical Ot works\n"
 	end
 	
-	if i = 1 or j = 0
+	if i = 1 or j = 0 then
 		print: "Logical Or works\n"
 	end
 	
-	if !(i = 1)
+	if !(i = 1) then
 		print: "Logical Not works\n"
 	end
 	
-	if not (i = 1)
+	if not (i = 1) then
 		print: "Logical Not works\n"
 	end
 end

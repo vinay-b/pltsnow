@@ -7,27 +7,27 @@ after termination:
 	var i = 0
 	var j = 1
 	
-	if i < j
+	if i < j then
 		print: "Relation Lesser Than works\n"
 	end
 	
-	if i <= j
+	if i <= j then
 		print: "Relation Lesser Than Equals works\n"
 	end
 	
-	if i > j
+	if i > j then
 		print: "Relation Greater Than works\n"
 	end
 	
-	if i >= j
+	if i >= j then
 		print: "Relation Greater Than Equals works\n"
 	end
 	
-	if i = j
+	if i = j then
 		print: "Relation Equals works\n"
 	end
 	
-	if i != j
+	if i != j then
 		print: "Relation Not Equals works\n"
 	end
 end
