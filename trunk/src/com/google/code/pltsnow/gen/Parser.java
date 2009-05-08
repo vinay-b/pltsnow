@@ -1081,11 +1081,11 @@ case 29:
 break;
 case 30:
 //#line 89 "snow.y"
-{yyval = doOp("plus",val_peek(1),new ParserVal(1)); }
+{yyval = doOp("plus",val_peek(1),new ParserVal("new SnowAtom(1)")); }
 break;
 case 31:
 //#line 90 "snow.y"
-{yyval = doOp("minus",val_peek(1),new ParserVal(1)); }
+{yyval = doOp("minus",val_peek(1),new ParserVal("new SnowAtom(1)")); }
 break;
 case 32:
 //#line 91 "snow.y"
@@ -1121,7 +1121,7 @@ case 39:
 break;
 case 40:
 //#line 113 "snow.y"
-{yyval = doOp("minus",new ParserVal(0),val_peek(0));}
+{yyval = doOp("minus",new ParserVal("0"),val_peek(0));}
 break;
 case 41:
 //#line 114 "snow.y"
@@ -1201,7 +1201,7 @@ case 59:
 break;
 case 60:
 //#line 151 "snow.y"
-{yyval = doOp("log_and",val_peek(1),null);}
+{yyval = doOp("log_and",val_peek(2),val_peek(0));}
 break;
 case 61:
 //#line 155 "snow.y"
@@ -1209,7 +1209,7 @@ case 61:
 break;
 case 62:
 //#line 156 "snow.y"
-{yyval = doOp("log_or",val_peek(1),null);}
+{yyval = doOp("log_or",val_peek(2),val_peek(0));}
 break;
 case 63:
 //#line 160 "snow.y"

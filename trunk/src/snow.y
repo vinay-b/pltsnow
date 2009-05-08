@@ -86,8 +86,8 @@ compound_identifier	:
 			;
 postfix_expression	:
 				primary_expression {$$=$1;}
-			|	postfix_expression PLUSPLUS {$$ = doOp("plus",$1,new ParserVal(1)); }
-			|	postfix_expression MINUSMINUS {$$ = doOp("minus",$1,new ParserVal(1)); }
+			|	postfix_expression PLUSPLUS {$$ = doOp("plus",$1,new ParserVal("new SnowAtom(1)")); }
+			|	postfix_expression MINUSMINUS {$$ = doOp("minus",$1,new ParserVal("new SnowAtom(1)")); }
 			|	function_expression {$$=$1;}
 			;
 
@@ -110,7 +110,7 @@ param			:
 
 unary_expression	:
 				postfix_expression {$$=$1;}
-			|	MINUS unary_expression {$$ = doOp("minus",new ParserVal(0),$2);}
+			|	MINUS unary_expression {$$ = doOp("minus",new ParserVal("0"),$2);}
 			|	LOG_OP_NOT unary_expression {$$ = doOp("log_not",$2,null);}
 			;
 
@@ -148,12 +148,12 @@ equality_expression	:
 
 logical_and_expression:
 				equality_expression {$$=$1;}
-			|	logical_and_expression LOG_OP_AND equality_expression  {$$ = doOp("log_and",$2,null);}
+			|	logical_and_expression LOG_OP_AND equality_expression  {$$ = doOp("log_and",$1,$3);}
 			;
 
 logical_or_expression	:
 				logical_and_expression {$$=$1;}
-			|	logical_or_expression LOG_OP_OR logical_and_expression {$$ = doOp("log_or",$2,null);}
+			|	logical_or_expression LOG_OP_OR logical_and_expression {$$ = doOp("log_or",$1,$3);}
 			;
 
 assignment_expression	:
