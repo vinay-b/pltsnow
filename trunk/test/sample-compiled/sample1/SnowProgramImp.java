@@ -11,7 +11,8 @@ snw_print(new SnowAtom("Hello Word\n"));
 
 
 public static void main(String[] args) {
-	SnowProgramImp this_prog = new SnowProgramImp();
+	SnowProgramImp this_prog = new SnowProgramImp(); 
 	this_prog.startProgram();
 }
+
 }
