@@ -18,8 +18,9 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public abstract SnowType getField(String fieldName);
 
 	public abstract SnowType setField(String fieldName, SnowType v);
+
 	public abstract Set<String> getFieldNames();
-	
+
 	public SnowType(Object s) {
 	}
 
@@ -43,13 +44,11 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 			throws UnsupportedOperationException;
 
 	/**
-	 * @author willi
-	 * change: no parameter?
+	 * @author willi change: no parameter?
 	 * @return
 	 * @throws UnsupportedOperationException
 	 */
-	public abstract SnowType pop()
-			throws UnsupportedOperationException;
+	public abstract SnowType pop() throws UnsupportedOperationException;
 
 	public abstract SnowType times(SnowType other)
 			throws UnsupportedOperationException;
@@ -63,22 +62,31 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public abstract SnowType power(SnowType other)
 			throws UnsupportedOperationException;
 
-	public abstract boolean lt(SnowType other)
+	public abstract SnowType lt(SnowType other)
 			throws UnsupportedOperationException;
 
-	public abstract boolean gt(SnowType other)
+	public abstract SnowType gt(SnowType other)
 			throws UnsupportedOperationException;
 
-	public abstract boolean le(SnowType other)
+	public abstract SnowType le(SnowType other)
 			throws UnsupportedOperationException;
 
-	public abstract boolean ge(SnowType other)
+	public abstract SnowType ge(SnowType other)
 			throws UnsupportedOperationException;
 
-	public abstract boolean equals(SnowType other)
+	public abstract SnowType equals(SnowType other)
 			throws UnsupportedOperationException;
 
-	public abstract boolean nequals(SnowType other)
+	public abstract SnowType nequals(SnowType other)
+			throws UnsupportedOperationException;
+
+	public abstract SnowType log_and(SnowType other)
+			throws UnsupportedOperationException;
+
+	public abstract SnowType log_or(SnowType other)
+			throws UnsupportedOperationException;
+
+	public abstract SnowType log_not() 
 			throws UnsupportedOperationException;
 
 	public abstract boolean hasApproached(SnowType other)
@@ -96,7 +104,7 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public void addList(String string, int len) {
 		setField(string, SnowList.makeNilList(len));
 	}
-	
+
 	public float getFloat() {
 		if (isFloat())
 			return (Float) get();
@@ -104,30 +112,34 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 			return Float.parseFloat(get().toString());
 		else
 			throw new ClassCastException(
-					"Can not make a float out of this type," + get().getClass().getName());
+					"Can not make a float out of this type,"
+							+ get().getClass().getName());
 	}
-	public int getInt()
-	{
-		if(isInt())
+
+	public int getInt() {
+		if (isInt())
 			return (Integer) get();
 		else
-			throw new ClassCastException("Can not make an integer out of " + this.get().getClass().getName());
+			throw new ClassCastException("Can not make an integer out of "
+					+ this.get().getClass().getName());
 	}
 
 	public abstract boolean isNull();
-	public boolean isDouble()
-	{
+
+	public boolean isDouble() {
 		return get() instanceof Double;
 	}
+
 	public double getDouble() {
-		if(isDouble())
+		if (isDouble())
 			return (Double) get();
-		else if(isInt())
+		else if (isInt())
 			return ((Integer) get()).doubleValue();
-		else if(isFloat())
+		else if (isFloat())
 			return ((Float) get()).floatValue();
 		else
-			throw new ClassCastException("Can not make an double out of " + this.getClass().getName());
+			throw new ClassCastException("Can not make an double out of "
+					+ this.getClass().getName());
 	}
 
 	public abstract void populateFields();

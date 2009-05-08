@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
-
 public class SnowAtom extends SnowType {
+	public static final SnowAtom TRUE = new SnowAtom(1);
+	public static final SnowAtom FALSE = new SnowAtom(0);
+
 	protected HashMap<String, SnowType> fields;
 	protected Object data;
 
@@ -18,26 +20,31 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public SnowType getField(String fieldName) {
-		if(!fields.containsKey(fieldName) && BaseSnowProgram.types.containsKey(fieldName))
+		if (!fields.containsKey(fieldName)
+				&& BaseSnowProgram.types.containsKey(fieldName))
 			fields.put(fieldName, BaseSnowProgram.types.get(fieldName).clone());
-		else if(!fields.containsKey(fieldName))
+		else if (!fields.containsKey(fieldName))
 			fields.put(fieldName, SnowAtom.makeNil());
-		
+
 		SnowType t = fields.get(fieldName);
-		if(t instanceof SnowAtom && ((SnowAtom) t).getRawData() == null &&  ((SnowAtom) t).getFields().size() == 1)
+		if (t instanceof SnowAtom && ((SnowAtom) t).getRawData() == null
+				&& ((SnowAtom) t).getFields().size() == 1)
 			return ((SnowAtom) t).getFields().values().iterator().next();
 		else
 			return fields.get(fieldName);
 	}
+
 	public Object getRawData() {
-		if(data instanceof SnowAtom)
+		if (data instanceof SnowAtom)
 			return ((SnowAtom) data).get();
 		else
 			return data;
 	}
+
 	protected HashMap<String, SnowType> getFields() {
 		return fields;
 	}
+
 	@Override
 	public boolean isFloat() {
 		if (data instanceof Float) {
@@ -66,10 +73,11 @@ public class SnowAtom extends SnowType {
 	public boolean isNumeric() {
 		return isInt() || isFloat() || isDouble();
 	}
-	public boolean isDouble()
-	{
+
+	public boolean isDouble() {
 		return data instanceof Double;
 	}
+
 	@Override
 	public boolean isType(String type) throws IllegalArgumentException {
 		if (type.equals("String")) {
@@ -105,47 +113,37 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public void set(Object o) {
-		if (o instanceof SnowType)
-		{
+		if (o instanceof SnowType) {
 			data = ((SnowType) o).get();
 			SnowType t = (SnowType) o;
 			t.populateFields();
-			for(String fieldName : t.getFieldNames())
-			{
+			for (String fieldName : t.getFieldNames()) {
 				setField(fieldName, t.getField(fieldName));
 			}
 		}
-			
+
 		/*
-		if(o instanceof SnowList)
-		{
-			data = ((SnowList) o ).get();
-		}
-		else if (o instanceof SnowAtom)
-		{
-			data = ((SnowAtom) o).get();
-			for(String field : ((SnowAtom) o).fields.keySet())
-			{
-				this.setField(field, fields.get(field).clone());
-			}
-			//fields = ((SnowAtom) o).fields;
-		}
-		*/
+		 * if(o instanceof SnowList) { data = ((SnowList) o ).get(); } else if
+		 * (o instanceof SnowAtom) { data = ((SnowAtom) o).get(); for(String
+		 * field : ((SnowAtom) o).fields.keySet()) { this.setField(field,
+		 * fields.get(field).clone()); } //fields = ((SnowAtom) o).fields; }
+		 */
 		else
 			data = o;
 	}
 
 	public Object get() {
-		if(data instanceof SnowAtom)
+		if (data instanceof SnowAtom)
 			return ((SnowAtom) data).get();
-		else if(data == null  && fields.size() == 1)
+		else if (data == null && fields.size() == 1)
 			return fields.values().iterator().next();
 		else
 			return data;
 	}
 
 	private SnowType doMathOp(SnowType other, char op) {
-		Double f1 = (isInt()) ? ((Integer) data).doubleValue() : ((Double) data);
+		Double f1 = (isInt()) ? ((Integer) data).doubleValue()
+				: ((Double) data);
 
 		Double f2 = (other.isInt()) ? ((Integer) other.get()).doubleValue()
 				: ((Double) other.get());
@@ -170,7 +168,8 @@ public class SnowAtom extends SnowType {
 	}
 
 	private boolean doRelOp(SnowType other, int choice) {
-		Double f1 = (isInt()) ? ((Integer) data).doubleValue() : ((Double) data);
+		Double f1 = (isInt()) ? ((Integer) data).doubleValue()
+				: ((Double) data);
 
 		Double f2 = (other.isInt()) ? ((Integer) other.get()).doubleValue()
 				: ((Double) other.get());
@@ -230,26 +229,23 @@ public class SnowAtom extends SnowType {
 		if (isNumeric() && other.isNumeric()) {
 			return doMathOp(other, '+');
 		}
-		if(isNumeric() && other.isNull())
-			return doMathOp(new SnowAtom(0),'+');
+		if (isNumeric() && other.isNull())
+			return doMathOp(new SnowAtom(0), '+');
 		if (isString()) {
 			return new SnowAtom(((String) data).concat(other.toString()));
 		}
-		if(other.isString())
-		{
+		if (other.isString()) {
 			return new SnowAtom(data.toString().concat(other.toString()));
 		}
-//		System.out.println(this + " " + other);
+		// System.out.println(this + " " + other);
 		throw new UnsupportedOperationException(
 				"Addition operator applied on incompatible types.");
 
 	}
 
-
 	@Override
-	/**
-	 * from willi: this also doesnt make sense?
-	 * whats the conversion?
+	/*
+	 * from willi: this also doesnt make sense? whats the conversion?
 	 */
 	public SnowType push(SnowType other) {
 		// TODO Auto-generated method stub
@@ -269,8 +265,7 @@ public class SnowAtom extends SnowType {
 	@Override
 	public SnowType clone() {
 		SnowAtom r = makeNil();
-		for(String field : fields.keySet())
-		{
+		for (String field : fields.keySet()) {
 			r.setField(field, fields.get(field).clone());
 		}
 		r.data = data;
@@ -284,32 +279,33 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public String toString() {
-//		if(data instanceof SnowType)
-//			return data.toString();
+		// if(data instanceof SnowType)
+		// return data.toString();
 		if (isFloat())
 			return ((Float) data).toString();
 		else if (isInt())
 			return ((Integer) data).toString();
 		else if (isString())
 			return ((String) data);
-		else if(isDouble())
+		else if (isDouble())
 			return ((Double) data).toString();
-		else if(data == null)
+		else if (data == null)
 			return "[Null SnowAtom]";
 		else
-			return "[Unknown data typed SnowAtom. " + data.getClass().getName() + "]";
+			return "[Unknown data typed SnowAtom. " + data.getClass().getName()
+					+ "]";
 	}
 
 	@Override
-	public boolean equals(SnowType other)
-			throws UnsupportedOperationException {
+	public SnowAtom equals(SnowType other) throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
-			return doRelOp(other, 1);
+			return doRelOp(other, 1) ? TRUE : FALSE;
 		}
 
 		if (isString()) {
-			return ((String) data).compareTo(other.toString()) == 0;
+			return ((String) data).compareTo(other.toString()) == 0 ? TRUE
+					: FALSE;
 		}
 
 		throw new UnsupportedOperationException(
@@ -317,83 +313,83 @@ public class SnowAtom extends SnowType {
 	}
 
 	@Override
-	public boolean ge(SnowType other)
-			throws UnsupportedOperationException {
+	public SnowAtom ge(SnowType other) throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
-			return doRelOp(other, 5);
+			return doRelOp(other, 5) ? TRUE : FALSE;
 		}
 
 		if (isString()) {
-			return ((String) data).compareTo(other.toString()) != -1;
+			return ((String) data).compareTo(other.toString()) != -1 ? TRUE
+					: FALSE;
 		}
 		throw new UnsupportedOperationException(
 				"Greater Than Or Equals operator applied on incompatible types.");
 	}
 
 	@Override
-	public boolean gt(SnowType other)
-			throws UnsupportedOperationException {
+	public SnowAtom gt(SnowType other) throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
-			return doRelOp(other, 6);
+			return doRelOp(other, 6) ? TRUE : FALSE;
 		}
 
 		if (isString()) {
-			return ((String) data).compareTo(other.toString()) == 1;
+			return ((String) data).compareTo(other.toString()) == 1 ? TRUE
+					: FALSE;
 		}
 		throw new UnsupportedOperationException(
 				"Greater Than operator applied on incompatible types.");
 	}
 
 	@Override
-	public boolean le(SnowType other)
-			throws UnsupportedOperationException {
+	public SnowAtom le(SnowType other) throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
-			return doRelOp(other, 3);
+			return doRelOp(other, 3) ? TRUE : FALSE;
 		}
 
 		if (isString()) {
-			return ((String) data).compareTo(other.toString()) != 1;
+			return ((String) data).compareTo(other.toString()) != 1 ? TRUE
+					: FALSE;
 		}
 		throw new UnsupportedOperationException(
 				"Less Than Or Equals operator applied on incompatible types.");
 	}
 
 	@Override
-	public boolean lt(SnowType other)
-			throws UnsupportedOperationException {
+	public SnowAtom lt(SnowType other) throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
-			return doRelOp(other, 4);
+			return doRelOp(other, 4) ? TRUE : FALSE;
 		}
 
 		if (isString()) {
-			return ((String) data).compareTo(other.toString()) == -1;
+			return ((String) data).compareTo(other.toString()) == -1 ? TRUE
+					: FALSE;
 		}
 		throw new UnsupportedOperationException(
 				"Less Than operator applied on incompatible types.");
 	}
 
 	@Override
-	public boolean nequals(SnowType other)
+	public SnowAtom nequals(SnowType other)
 			throws UnsupportedOperationException {
 
 		if (isNumeric() && other.isNumeric()) {
-			return doRelOp(other, 2);
+			return doRelOp(other, 2) ? TRUE : FALSE;
 		}
 
 		if (isString()) {
-			return ((String) data).compareTo(other.toString()) != 0;
+			return ((String) data).compareTo(other.toString()) != 0 ? TRUE
+					: FALSE;
 		}
 		throw new UnsupportedOperationException(
 				"Not Equals operator applied on incompatible types.");
 	}
 
 	@Override
-	public SnowType power(SnowType other)
-			throws UnsupportedOperationException {
+	public SnowType power(SnowType other) throws UnsupportedOperationException {
 		if (isNumeric() && other.isNumeric()) {
 			return doMathOp(other, '^');
 		}
@@ -403,24 +399,25 @@ public class SnowAtom extends SnowType {
 	}
 
 	@Override
-	/**
+	/*
 	 * from willi: i dont know what this means...
-	 * @willi - it means basically is this equal to that. there is a bug in the translator that requires this to be the opposite though
+	 * 
+	 * @willi - it means basically is this equal to that. there is a bug in the
+	 * translator that requires this to be the opposite though
 	 */
 	public boolean hasApproached(SnowType other)
 			throws UnsupportedOperationException {
-		return !equals(other);
+
+		return equals(other).getInt() == 1;
 	}
 
 	@Override
 	public boolean moveTowardsBy(SnowType other, SnowType unit)
 			throws UnsupportedOperationException {
-		if(ge(other))
-		{
-			//We are bigger than the other, subtract
+		if (ge(other).getInt() == 1) {
+			// We are bigger than the other, subtract
 			minus(unit);
-		}
-		else
+		} else
 			plus(unit);
 		return true;
 	}
@@ -439,13 +436,14 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public void populateFields() {
-		for(String s : fields.keySet())
-		{
+		for (String s : fields.keySet()) {
 			SnowType t = fields.get(s);
-			if(BaseSnowProgram.types.containsKey(s) && !(fields.get(s) instanceof SnowList && ((SnowList) fields.get(s)).getSize() > 1))
-			{
+			if (BaseSnowProgram.types.containsKey(s)
+					&& !(fields.get(s) instanceof SnowList && ((SnowList) fields
+							.get(s)).getSize() > 1)) {
 				fields.put(s, BaseSnowProgram.types.get(s));
-//				System.out.println("Expanded " + s + " to " + BaseSnowProgram.types.get(s));
+				// System.out.println("Expanded " + s + " to " +
+				// BaseSnowProgram.types.get(s));
 				BaseSnowProgram.types.get(s).populateFields();
 			}
 		}
@@ -454,5 +452,50 @@ public class SnowAtom extends SnowType {
 	@Override
 	public Set<String> getFieldNames() {
 		return fields.keySet();
+	}
+
+	@Override
+	public SnowType log_and(SnowType other_)
+			throws UnsupportedOperationException {
+		try {
+			if (getInt() == 0) {
+				return FALSE;
+			} else if (other_.getInt() == 0) {
+				return FALSE;
+			} else {
+				return TRUE;
+			}
+		} catch (ClassCastException e) {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	@Override
+	public SnowType log_not() throws UnsupportedOperationException {
+		try {
+			if (getInt() == 0) {
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+		} catch (ClassCastException e) {
+			throw new UnsupportedOperationException();
+		}
+	}
+
+	@Override
+	public SnowType log_or(SnowType other_)
+			throws UnsupportedOperationException {
+		try {
+			if (getInt() != 0) {
+				return TRUE;
+			} else if (other_.getInt() != 0) {
+				return TRUE;
+			} else {
+				return FALSE;
+			}
+		} catch (ClassCastException e) {
+			throw new UnsupportedOperationException();
+		}
 	}
 }
