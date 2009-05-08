@@ -21,7 +21,7 @@ public abstract class BaseSnowParser {
 
 	protected ParserVal doWhile(ParserVal cond, ParserVal stmts) {
 		String r = "";
-		r += "while(" + cond.sval + "){\n" + stmts.sval + "\n}\n";
+		r += "while((" + cond.sval + ").getInt() != 0){\n" + stmts.sval + "\n}\n";
 		return new ParserVal(r);
 	}
 
@@ -137,7 +137,7 @@ public abstract class BaseSnowParser {
 	protected ParserVal makePartialIfElse(ParserVal s1, ParserVal s2,
 			ParserVal s3) {
 		String r = "";
-		r += "(" + s1.sval + "){\n";
+		r += "((" + s1.sval + ").getInt() !=0 ){\n";
 		r += s2.sval + "\n}\n";
 		if (s3 != null) {
 			r += "else " + "{\n" + s3.sval + "\n}\n";
@@ -148,7 +148,7 @@ public abstract class BaseSnowParser {
 	protected ParserVal makePartialIfElseIf(ParserVal s1, ParserVal s2,
 			ParserVal s3) {
 		String r = "";
-		r += "(" + s1.sval + "){\n";
+		r += "((" + s1.sval + ").getInt() != 0){\n";
 		r += s2.sval + "\n}\n";
 		r += "else if " + s3.sval;
 		return new ParserVal(r);
