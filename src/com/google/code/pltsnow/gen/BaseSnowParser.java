@@ -119,7 +119,12 @@ public abstract class BaseSnowParser {
 
 	protected ParserVal doOp(String op, ParserVal l, ParserVal r) {
 		String ret = "";
-		ret += l.sval + "." + op + "(" + r.sval + ")";
+		if(r != null){
+			ret += l.sval + "." + op + "(" + r.sval + ")";
+		}else{
+			// For Unary Operations like logical not
+			ret += l.sval + "." + op + "()" 
+		}
 		return new ParserVal(ret);
 	}
 
