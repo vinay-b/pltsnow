@@ -1,0 +1,71 @@
+#|
+Test Case 5
+ 2. Expression
+    Arithmetic + , - , * , / , % , ^
+|#
+after termination:
+	var i = 2
+	var j = 1
+	var k = 2
+	
+	var val1 = i + j
+	if val1 = 3
+		print: "Arithmetic + works\n"
+	end
+	
+	var val2 = i - j
+	if val2 = 1
+		print: "Arithmetic - works\n"
+	end
+	
+	var val3 = k * j
+	if val3 = 2
+		print: "Arithmetic * works\n"
+	end
+		
+	var val4 = k / i
+	if val4 = 1
+		print: "Arithmetic / works\n"
+	end
+		
+	var val5 = j % i
+	if val5 = 1
+		print: "Arithmetic % works\n"
+	end
+		
+	var val6 = k ^ i
+	if val6 = 4
+		print: "Arithmetic ^ works\n"
+	end	
+	
+	var a = 1
+	var b = 2 
+	var c = 3
+	
+	var val7 = b ^ a * c
+	if val7 = 6
+		print: "Arithmetic Precedence 1 works\n"
+	end	
+	
+	var val8 = b ^ (a * c)
+	if val8 = 8
+		print: "Arithmetic Precedence 2 works\n"
+	end	
+	
+	var val9a = a * b - c
+	var val9b = a - b * c
+	var val9c = a * b + c
+	var val9d = a + b * c
+	var val9e = b / a - c
+	var val9f = b - a / c
+	var val9g = b / a + c
+	var val9h = b + a / c
+	if val9a = -1 && val9b = -5 && val9c = 5 && val9d = 7 && val9e = -1 && val9f = 2 && val9g = 5 && val9h = 2
+		print: "Arithmetic Precedence 3 works\n"
+	end	
+	
+	var val10 = b * (a - c)
+	if val10 = -4
+		print: "Arithmetic Precedence 4 works\n"
+	end	
+end

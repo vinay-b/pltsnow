@@ -1,0 +1,50 @@
+#|
+Test Case 1
+ 1. Control Flow:
+    IF
+    IF-ELSE
+    IF-ELSEIF
+    IF-ELSIF
+    IF-ELSEIF-ELSE
+    IF-ELSIF-ELSE
+|#
+after termination:
+	var i = 1
+	if i = 1
+		print: "If Construct Works\n"
+	end
+	
+	if i = 1
+		print: "If-Else Construct Works\n"
+	else
+		print: "If-Else Construct Works\n"
+	end
+	
+	if i = 1
+		print: "If-Elseif Construct Works\n"
+	elseif
+		print: "If-Elseif Construct Works\n"
+	end
+	
+	if i = 1
+		print: "If-Elsif Construct Works\n"
+	elsif
+		print: "If-Elsif Construct Works\n"
+	end
+	
+	if i = 1
+		print: "If-Elseif-Else Construct Works\n"
+	elseif
+		print: "If-Elseif-Else Construct Works\n"
+	else
+		print: "If-Elseif-Else Construct Works\n"
+	end
+
+	if i = 1
+		print: "If-Elsif-Else Construct Works\n"
+	elsif
+		print: "If-Elsif-Else Construct Works\n"
+	else
+		print: "If-Elsif-Else Construct Works\n"
+	end
+end

@@ -1,0 +1,12 @@
+#|
+Test Case 4
+ 1. Control Flow:
+    WHILE
+|#
+after termination:
+	var i = 1
+	while i != 10
+		print: "While Construct works\n"
+		i++
+	end
+end
