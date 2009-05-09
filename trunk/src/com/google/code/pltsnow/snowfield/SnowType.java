@@ -89,10 +89,10 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public abstract SnowType log_not() 
 			throws UnsupportedOperationException;
 
-	public abstract boolean hasApproached(SnowType other)
+	public abstract boolean hasApproached(SnowType other, SnowType from)
 			throws UnsupportedOperationException;
 
-	public abstract boolean moveTowardsBy(SnowType other, SnowType unit)
+	public abstract boolean moveTowardsBy(SnowType other, SnowType unit, SnowType from)
 			throws UnsupportedOperationException;
 
 	public abstract SnowType clone();
@@ -119,6 +119,8 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 	public int getInt() {
 		if (isInt())
 			return (Integer) get();
+		else if(isDouble())
+			return ((Double) get()).intValue();
 		else
 			throw new ClassCastException("Can not make an integer out of "
 					+ this.get().getClass().getName());

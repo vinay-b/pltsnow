@@ -405,20 +405,22 @@ public class SnowAtom extends SnowType {
 	 * @willi - it means basically is this equal to that. there is a bug in the
 	 * translator that requires this to be the opposite though
 	 */
-	public boolean hasApproached(SnowType other)
+	public boolean hasApproached(SnowType other, SnowType from)
 			throws UnsupportedOperationException {
-
-		return equals(other).getInt() == 1;
+		if(from.getDouble() > other.getDouble()) //We want to check for 
+			return getDouble() <= other.getDouble();
+		else //We are counting up
+			return getDouble() >= other.getDouble(); //do not change this without talking to me. - jb
 	}
 
 	@Override
-	public boolean moveTowardsBy(SnowType other, SnowType unit)
+	public boolean moveTowardsBy(SnowType other, SnowType unit, SnowType from)
 			throws UnsupportedOperationException {
 		if (ge(other).getInt() == 1) {
 			// We are bigger than the other, subtract
-			minus(unit);
+			data = minus(unit).get();
 		} else
-			plus(unit);
+			data = plus(unit).get();
 		return true;
 	}
 
