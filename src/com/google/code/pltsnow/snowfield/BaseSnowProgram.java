@@ -209,14 +209,11 @@ public class BaseSnowProgram {
 	{
 		dbg_beforeGENERATION();
 		
-		
 		doTheFitnessEvaluation();
-		
 		
 		dbg_beforeSELECTION();
 		doTheSelection();
 		dbg_afterSELECTION();
-		
 		dbg_beforeMATING();
 		doTheMating();
 		dbg_afterMATING();
@@ -226,9 +223,7 @@ public class BaseSnowProgram {
 		dbg_afterMUTATION();
 		
 		dbg_afterGENERATION();
-		
-		System.out.println("**********GENERATION OVER");
-		
+				
 		//INCREASE THE GENERATION COUNT
 		try {
 			symbols.put("~generationCount", symbols.get("~generationCount").plus(new SnowAtom(1)));
@@ -261,7 +256,6 @@ public class BaseSnowProgram {
 
 	
 	private void doTheMating() {
-
 		SnowList population = (SnowList)symbols.get("~population");
 		Integer populationSize = (Integer)symbols.get("~populationSize").get();
 		
@@ -576,17 +570,23 @@ public class BaseSnowProgram {
 		
 //		System.out.println("Splice got:");
 //		for (SnowType a : a1)
-//			System.out.print(a.getField("num") + " ");
+//			System.out.print(a + " ");
 //		System.out.println("");
 //		for (SnowType a : a2)
 //			System.out.print(a.getField("num") + " ");
 //		System.out.println("");
-		System.out.println("Splice");
+//		System.out.println(r.data);
 		if(r.isInt())
 		{
-			//IMPLEMENT
-			System.out.println("Nice spliceeee");
-			throw new UnsupportedOperationException("Not implemented yet");
+			//Intertwine the two at r
+			for(int i = 0; i < r.getInt(); i++)
+			{
+				c.push(p1.get(i).clone());
+			}
+			for(int j = r.getInt();j<p2.getSize();j++)
+			{
+				c.push(p2.get(j).clone());
+			}
 		}
 		else if(r.isNumeric())
 		{
@@ -630,7 +630,10 @@ public class BaseSnowProgram {
 		rand = rand * (a2.getFloat() + a1.getFloat());
 		rand = rand + a1.getFloat();
 		
-		return new SnowAtom(rand);
+		if(a1.isInt() && a2.isInt())
+			return new SnowAtom(rand.intValue());
+		else
+			return new SnowAtom(rand);
 	}
 	
 	protected final void snw_printPopulation()

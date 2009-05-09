@@ -326,14 +326,14 @@ public class SnowList extends SnowType {
 	/*
 	 * from willi: i dont know what these are...
 	 */
-	public boolean hasApproached(SnowType other_)
+	public boolean hasApproached(SnowType other_, SnowType from)
 			throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean moveTowardsBy(SnowType other_, SnowType unit_)
+	public boolean moveTowardsBy(SnowType other_, SnowType unit_, SnowType from)
 			throws UnsupportedOperationException {
 		// TODO Auto-generated method stub
 		return false;
