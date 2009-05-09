@@ -168,12 +168,13 @@ public class SnowAtom extends SnowType {
 	}
 
 	private boolean doRelOp(SnowType other, int choice) {
-		Double f1 = (isInt()) ? ((Integer) data).doubleValue()
+		Double t1 = (isInt()) ? ((Integer) data).doubleValue()
 				: ((Double) data);
 
-		Double f2 = (other.isInt()) ? ((Integer) other.get()).doubleValue()
+		Double t2 = (other.isInt()) ? ((Integer) other.get()).doubleValue()
 				: ((Double) other.get());
-
+		double f1 = t1.doubleValue();
+		double f2 = t2.doubleValue();
 		switch (choice) {
 		case 1:
 			return f1 == f2;
