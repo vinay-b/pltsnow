@@ -86,8 +86,8 @@ compound_identifier	:
 			;
 postfix_expression	:
 				primary_expression {$$=$1;}
-			|	postfix_expression PLUSPLUS {$$ = doOp("plus",$1,new ParserVal("new SnowAtom(1)")); }
-			|	postfix_expression MINUSMINUS {$$ = doOp("minus",$1,new ParserVal("new SnowAtom(1)")); }
+			|	postfix_expression PLUSPLUS {$$ = doOp("increment",$1,null)); }
+			|	postfix_expression MINUSMINUS {$$ = doOp("decrement",$1,null)); }
 			|	function_expression {$$=$1;}
 			;
 
