@@ -1,6 +1,6 @@
 #These two variables define the stopping criteria. You can specify either or 
 ~endGenerations= 800
-~endFitness     = 28
+~endFitness     = 0
 #~topParentPool  = 0.1
 ~mutationRate   = (rand: 1 5)/10
 ~populationSize = 100
@@ -26,11 +26,11 @@ to evaluateFitness: checkOrganism
 	var curfit = 28
 	var i,j,gene1,gene2
   
-	for i from 1 to 6
+	for i from 0 to 7
 		# a deep copy. by value
 		gene1 = nth: checkOrganism.chromosome, i
  
-		for j from 0 to 7
+		for j from i + 1 to 8
 			gene2 = nth: checkOrganism.chromosome, j
    
    			if gene1 = gene2 and i = j then
@@ -43,6 +43,8 @@ to evaluateFitness: checkOrganism
 			#	curfit = curfit - 1
 			#Check to see if they are along the same diagonal
 			elseif ((gene1 - gene2) / (i - j)) = 1 then
+				curfit = curfit - 1
+			elseif ((gene1 - gene2) / (i - j)) = -1 then
 				curfit = curfit - 1
 			end
 		end
@@ -69,14 +71,24 @@ end
 
 after termination:
 	printPopulation:
-	print: "The best solution found was:\n"
+	var solCount = 0
 	foreach organism in ~population as org1
-		if (evaluateFitness: org1) = ~endFitness then
+		if (evaluateFitness: org1) = 0 then
 		#this is the optimal solution, print it out
-			var i
-       		for i from 0 to 7
- 				print: "queen at" + i + ","  + (nth: i, organism.chromosome.gene) + "\n"
+		solCount = solCount + 1
+		print: "Optimal Solution " + solCount +  " \n"
+		print: "############################ \n"
+			var i,row,col
+       			for i from 0 to 8
+				row = i
+				col = nth: org1.chromosome, i
+ 				print: "queen at (" + row +  " , "  + col + ")\n"
 			end
+		print: "############################ \n"
 		end
 	end
+	if solCount = 0 then
+		print: "No optimal solution was found\n"  
+	end
+
 end
