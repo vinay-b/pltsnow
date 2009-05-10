@@ -1,0 +1,124 @@
+#|
+Test Case 6
+ 2. Expression
+    Relational < , <= , > , >= , != , =
+|#
+after termination:
+	var i = 0
+	var j = 1
+	
+	if i < j then
+		print: "Relation Lesser Than works\n"
+	end
+	
+	if j < i then
+		print: "Relation Lesser Than does not work\n"
+	end
+	
+	if j <= 1 then
+		print: "Relation Lesser Than Equals works\n"
+	end
+
+	if j <= 2 then
+		print: "Relation Lesser Than Equals works\n"
+	end
+	
+	if j <= 0 then
+		print: "Relation Lesser Than Equals does not work\n"
+	end
+	
+	if j > i then
+		print: "Relation Greater Than works\n"
+	end
+	
+	if i > j then
+		print: "Relation Greater Than does not work\n"
+	end
+	
+	if j >= 1 then
+		print: "Relation Greater Than Equals works\n"
+	end
+	
+	if j >= 0 then
+		print: "Relation Greater Than Equals works\n"
+	end
+	
+	if j >= 2 then
+		print: "Relation Greater Than Equals does not work\n"
+	end
+	
+	if i = 0 then
+		print: "Relation Equals works\n"
+	end
+	
+	if i = j then
+		print: "Relation Equals does not work\n"
+	end
+	
+	if i != j then
+		print: "Relation Not Equals works\n"
+	end
+
+	if i != 0 then
+		print: "Relation Not Equals does not work\n"
+	end
+
+	i = "a"
+	j = "b"
+	if i < j then
+		print: "Relation Lesser Than works\n"
+	end
+	
+	if j < i then
+		print: "Relation Lesser Than does not work\n"
+	end
+	
+	if j <= "b" then
+		print: "Relation Lesser Than Equals works\n"
+	end
+
+	if j <= "c" then
+		print: "Relation Lesser Than Equals works\n"
+	end
+	
+	if j <= "a" then
+		print: "Relation Lesser Than Equals does not work\n"
+	end
+	
+	if j > i then
+		print: "Relation Greater Than works\n"
+	end
+	
+	if i > j then
+		print: "Relation Greater Than does not work\n"
+	end
+	
+	if j >= "b" then
+		print: "Relation Greater Than Equals works\n"
+	end
+	
+	if j >= "a" then
+		print: "Relation Greater Than Equals works\n"
+	end
+	
+	if j >= "c" then
+		print: "Relation Greater Than Equals does not work\n"
+	end
+	
+	if i = "a" then
+		print: "Relation Equals works\n"
+	end
+	
+	if i = j then
+		print: "Relation Equals does not work\n"
+	end
+	
+	if i != j then
+		print: "Relation Not Equals works\n"
+	end
+
+	if i != "a" then
+		print: "Relation Not Equals does not work\n"
+	end
+
+end

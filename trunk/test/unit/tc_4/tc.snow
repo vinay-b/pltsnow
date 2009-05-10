@@ -6,7 +6,7 @@ Test Case 4
 after termination:
 	var i = 1
 	while i != 10
-		print: "While Construct works\n"
+		print: "While Construct works " + i + "\n"
 		i++
 	end
 end

@@ -24,9 +24,9 @@ do
 	diff SnowProgramImp.java ../test/sample-compiled/$i/SnowProgramImp.java >> /tmp/$i.diff
 	if [ $? == 0 ]
 	then
-		echo "Test Status: SUCCESS - Program : $i.snow"
+		echo "Test Status: TRANSLATION SUCCESS - Program : $i.snow"
 	else
-		echo "Test Status: FAILURE - Program : $i.snow"
+		echo "Test Status: TRANSLATION FAILURE - Program : $i.snow"
 		echo "Diff File : /tmp/$i.diff"
 	fi
 done
@@ -35,13 +35,22 @@ unit_test_dir=../test/unit
 
 for i in tc_1 tc_2 tc_3 tc_4 tc_5 tc_6 tc_7 tc_8
 do
-	java com/google/code/pltsnow/gen/Parser ${unit_test_dir}/$i/$i.snow > SnowProgramImp.java
-	diff SnowProgramImp.java ${unit_test_dir}/$i/SnowProgramImp.java >> /tmp/$i.diff
+	java com/google/code/pltsnow/gen/Parser ${unit_test_dir}/$i/tc.snow > SnowProgramImp.java
+	diff SnowProgramImp.java ${unit_test_dir}/$i/SnowProgramImp.java > /tmp/$i.diff
 	if [ $? == 0 ]
 	then
-		echo "Test Status: SUCCESS - Program : $i.snow"
+		javac SnowProgramImp.java
+		java SnowProgramImp > /tmp/$i.output
+		diff /tmp/$i.output  ${unit_test_dir}/$i/tc.output > /tmp/$i.diff
+		if [ $? == 0 ]
+	        then
+			echo "Test Status: SUCCESS - Program : $i.snow"
+		else
+			echo "Test Status: TRANSLATION SUCCESS; EXECUTION FAILURE - Program : $i.snow"
+			echo "Diff File : /tmp/$i.diff"
+		fi
 	else
-		echo "Test Status: FAILURE - Program : $i.snow"
+		echo "Test Status: TRANSLATION FAILURE - Program : $i.snow"
 		echo "Diff File : /tmp/$i.diff"
 	fi
 done

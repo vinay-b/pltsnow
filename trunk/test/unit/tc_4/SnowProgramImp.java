@@ -7,8 +7,8 @@ public class SnowProgramImp extends BaseSnowProgram {
 public void dbg_afterTERMINATION(){
 SnowType  i = new SnowAtom(1);;
 while((i.nequals(new SnowAtom(10))).getInt() != 0){
-snw_print(new SnowAtom("While Construct works\n"));
-i.plus(new SnowAtom(1));
+snw_print(new SnowAtom("While Construct works ").plus(i).plus(new SnowAtom("\n")));
+i.increment();
 
 }
 }
