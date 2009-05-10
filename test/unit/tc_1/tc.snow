@@ -1,0 +1,108 @@
+#|
+1. Control Flow:
+    IF
+    IF-ELSE
+    IF-ELSEIF
+    IF-ELSIF
+    IF-ELSEIF-ELSE
+    IF-ELSIF-ELSE
+|#
+
+after termination:
+	print: "Hello Word\n"
+	var i = 1
+	var j = 2
+	if i = 1 then
+		print: "If Construct Works\n"
+	end
+	
+	if i = 0 then
+		print: "If Construct does not work\n"
+	end
+	
+	if i = 1 then
+		print: "If-Else Construct Works\n"
+	else
+		print: "If-Else Construct does not work\n"
+	end
+	
+	if i = 0 then
+		print: "If-Else Construct does not work\n"
+	else
+		print: "If-Else Construct Works\n"
+	end
+
+	if i = 1 then
+		print: "If-Elseif Construct Works\n"
+	elseif j = 2 then
+		print: "If-Elseif Construct does not work\n"
+	end
+	
+	if i = 0 then
+		print: "If-Elseif Construct does not work\n"
+	elseif j = 2 then
+		print: "If-Elseif Construct Works\n"
+	end
+	
+	if i = 1 then
+		print: "If-Elsif Construct Works\n"
+	elsif j = 2 then
+		print: "If-Elsif Construct does not work\n"
+	end
+	
+	if i = 0 then
+		print: "If-Elsif Construct does not work\n"
+	elsif j = 2 then
+		print: "If-Elsif Construct Works\n"
+	end
+	
+	if i = 1 then
+		print: "If-Elseif-Else Construct Works\n"
+	elseif j = 2 then
+		print: "If-Elseif-Else Construct does not work\n"
+	else
+		print: "If-Elseif-Else Construct does not work\n"
+	end
+
+	if i = 0 then
+		print: "If-Elseif-Else Construct does not work\n"
+	elseif j = 2 then
+		print: "If-Elseif-Else Construct Works\n"
+	else
+		print: "If-Elseif-Else Construct does not work\n"
+	end
+
+	if i = 0 then
+		print: "If-Elseif-Else Construct does not work\n"
+	elseif j = 0 then
+		print: "If-Elseif-Else Construct does not work\n"
+	else
+		print: "If-Elseif-Else Construct Works\n"
+	end
+
+	if i = 1 then
+		print: "If-Elsif-Else Construct Works\n"
+	elsif j = 2 then
+		print: "If-Elsif-Else Construct does not work\n"
+	else
+		print: "If-Elsif-Else Construct does not work\n"
+	end
+
+	if i = 0 then
+		print: "If-Elseif-Else Construct does not work\n"
+	elsif j = 2 then
+		print: "If-Elsif-Else Construct Works\n"
+	else
+		print: "If-Elsif-Else Construct does not work\n"
+	end
+
+	if i = 0 then
+		print: "If-Elseif-Else Construct does not work\n"
+	elsif j = 0 then
+		print: "If-Elsif-Else Construct does not work\n"
+	else
+		print: "If-Elsif-Else Construct Works\n"
+	end
+
+end
+

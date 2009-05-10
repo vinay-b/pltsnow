@@ -1081,11 +1081,11 @@ case 29:
 break;
 case 30:
 //#line 89 "snow.y"
-{yyval = doOp("plus",val_peek(1),new ParserVal("new SnowAtom(1)")); }
+{yyval = doOp("increment",val_peek(1),null); }
 break;
 case 31:
 //#line 90 "snow.y"
-{yyval = doOp("minus",val_peek(1),new ParserVal("new SnowAtom(1)")); }
+{yyval = doOp("decrement",val_peek(1),null); }
 break;
 case 32:
 //#line 91 "snow.y"

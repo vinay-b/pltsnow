@@ -1,0 +1,141 @@
+#|
+Test Case 5
+ 2. Expression
+    Arithmetic + , - , * , / , % , ^
+|#
+after termination:
+	var i = 2
+	var j = 1
+	var k = 2
+	
+	var val1 = i + j
+	if val1 = 3 then
+		print: "Arithmetic + works\n"
+	else
+		print: "Arithmetic + does not work\n"
+	end
+	
+	var val2 = i - j
+	if val2 = 1 then
+		print: "Arithmetic - works\n"
+	else
+		print: "Arithmetic - does not work\n"
+	end
+	
+	var val3 = k * j
+	if val3 = 2 then
+		print: "Arithmetic * works\n"
+	else
+		print: "Arithmetic * does not work\n"
+	end
+		
+	var val4 = k / i
+	if val4 = 1 then
+		print: "Arithmetic / works\n"
+	else
+		print: "Arithmetic / does not work\n"
+	end
+		
+	var val5 = j % i
+	if val5 = 1 then
+		print: "Arithmetic % works\n"
+	else
+		print: "Arithmetic % does not work\n"
+	end
+		
+	var val6 = k ^ i
+	if val6 = 4 then
+		print: "Arithmetic ^ works\n"
+	else
+		print: "Arithmetic ^ does not work\n"
+	end	
+	
+	var a = 1
+	var b = 2 
+	var c = 3
+	
+	var val7 = b ^ a * c
+	if val7 = 6 then
+		print: "Arithmetic Precedence 1 works\n"
+	else
+		print: "Arithmetic Precedence 1 does not work\n"
+	end	
+	
+	var val8 = b ^ (a * c)
+	if val8 = 8 then
+		print: "Arithmetic Precedence 2 works\n"
+	else
+		print: "Arithmetic Precedence 2 does not work\n"
+	end	
+	
+	var val9a = a * b - c
+	var val9b = a - b * c
+	var val9c = a * b + c
+	var val9d = a + b * c
+	var val9e = b / a - c
+	var val9f = b - a / c
+	var val9g = b / a + c
+	var val9h = b + a / c
+	if val9a = -1 then
+		print: "Arithmetic Precedence 3a works\n"
+	else
+		print: "Arithmetic Precedence 3a does not work\n"
+	end	
+	
+	if val9b = -5 then
+		print: "Arithmetic Precedence 3b works\n"
+	else
+		print: "Arithmetic Precedence 3b does not work\n"
+	end	
+	
+	if val9c = 5 then
+		print: "Arithmetic Precedence 3c works\n"
+	else
+		print: "Arithmetic Precedence 3c does not work\n"
+	end	
+	
+	if val9d = 7 then
+		print: "Arithmetic Precedence 3d works\n"
+	else
+		print: "Arithmetic Precedence 3d does not work\n"
+	end	
+	
+	if val9e = -1 then
+		print: "Arithmetic Precedence 3e works\n"
+	else
+		print: "Arithmetic Precedence 3e does not work\n"
+	end	
+	
+	if val9f = 1.6666666666666667 then
+		print: "Arithmetic Precedence 3f works\n"
+	else
+		print: "Arithmetic Precedence 3f does not work\n"
+	end	
+	
+	if val9g = 5 then
+		print: "Arithmetic Precedence 3g works\n"
+	else
+		print: "Arithmetic Precedence 3g does not work\n"
+	end	
+	
+	if val9h = 2.3333333333333333 then
+		print: "Arithmetic Precedence 3h works\n"
+	else
+		print: "Arithmetic Precedence 3h does not work\n"
+	end	
+	
+	var val10 = b * (a - c)
+	if val10 = -4 then
+		print: "Arithmetic Precedence 4 works\n"
+	else
+		print: "Arithmetic Precedence 4 does not work\n"
+	end	
+
+	val1 = "i" + "j"
+	if val1 = "ij" then
+		print: "String + works\n"
+	else
+		print: "String + does not work\n"
+	end
+	
+end

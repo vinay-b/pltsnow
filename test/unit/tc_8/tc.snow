@@ -15,7 +15,7 @@ after termination:
 		
 	i--
 	
-	if i = 1 then
+	if i = 0 then
 		print: "Postfix -- works\n"
 	end
 	

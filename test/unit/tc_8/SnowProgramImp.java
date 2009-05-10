@@ -8,7 +8,7 @@ public class SnowProgramImp extends BaseSnowProgram {
 public void dbg_afterTERMINATION(){
 SnowType  i = new SnowAtom(0);;
 
-i.plus(new SnowAtom(1));
+i.increment();
 
 if ((i.equals(new SnowAtom(1))).getInt() !=0 ){
 
@@ -16,9 +16,9 @@ snw_print(new SnowAtom("Postfix ++ works\n"));
 
 }
 
-i.minus(new SnowAtom(1));
+i.decrement();
 
-if ((i.equals(new SnowAtom(1))).getInt() !=0 ){
+if ((i.equals(new SnowAtom(0))).getInt() !=0 ){
 
 snw_print(new SnowAtom("Postfix -- works\n"));
 
