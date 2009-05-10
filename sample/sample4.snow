@@ -1,6 +1,6 @@
 #These two variables define the stopping criteria. You can specify either or 
 ~endGenerations= 800
-~endFitness     = 0
+~endFitness     = 28
 #~topParentPool  = 0.1
 ~mutationRate   = (rand: 1 5)/10
 ~populationSize = 100
@@ -50,7 +50,7 @@ to evaluateFitness: checkOrganism
 		end
 	end
 
-	return 28 - curfit
+	return curfit
 end
 
 to mate: organismA organismB child
@@ -73,7 +73,7 @@ after termination:
 	printPopulation:
 	var solCount = 0
 	foreach organism in ~population as org1
-		if (evaluateFitness: org1) = 0 then
+		if (evaluateFitness: org1) = ~endFitness then
 		#this is the optimal solution, print it out
 		solCount = solCount + 1
 		print: "Optimal Solution " + solCount +  " \n"

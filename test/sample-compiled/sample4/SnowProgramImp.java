@@ -43,16 +43,25 @@ public SnowType snw_evaluateFitness (SnowType checkOrganism){
 SnowType  curfit = new SnowAtom(28);;
 SnowType  i = SnowAtom.makeNil();SnowType  j = SnowAtom.makeNil();SnowType  gene1 = SnowAtom.makeNil();SnowType  gene2 = SnowAtom.makeNil();;
 
-for(i = new SnowAtom(0); i.hasApproached(new SnowAtom(6));i.moveTowardsBy(new SnowAtom(6),new SnowAtom(1))){gene1.set(snw_nth(checkOrganism.getField("chromosome"),i));
+for(i = new SnowAtom(0); !i.hasApproached(new SnowAtom(7),new SnowAtom(0));i.moveTowardsBy(new SnowAtom(7),new SnowAtom(1),new SnowAtom(0))){gene1.set(snw_nth(checkOrganism.getField("chromosome"),i));
 
-for(j = new SnowAtom(1); j.hasApproached(new SnowAtom(7));j.moveTowardsBy(new SnowAtom(7),new SnowAtom(1))){gene2.set(snw_nth(checkOrganism.getField("chromosome"),j));
+for(j = i.plus(new SnowAtom(1)); !j.hasApproached(new SnowAtom(8),i.plus(new SnowAtom(1)));j.moveTowardsBy(new SnowAtom(8),new SnowAtom(1),i.plus(new SnowAtom(1)))){gene2.set(snw_nth(checkOrganism.getField("chromosome"),j));
 
-if ((gene1.equals(gene2)).getInt() != 0){
+if ((gene1.equals(gene2).log_and(i.equals(j))).getInt() != 0){
+
+
+}
+else if ((gene1.equals(gene2)).getInt() != 0){
 
 curfit.set(curfit.minus(new SnowAtom(1)));
 
 }
-else if ((((gene1.minus(gene2)).divide((i.minus(j)))).equals(new SnowAtom(1))).getInt() !=0 ){
+else if ((((gene1.minus(gene2)).divide((i.minus(j)))).equals(new SnowAtom(1))).getInt() != 0){
+
+curfit.set(curfit.minus(new SnowAtom(1)));
+
+}
+else if ((((gene1.minus(gene2)).divide((i.minus(j)))).equals(new SnowAtom(-1))).getInt() !=0 ){
 
 curfit.set(curfit.minus(new SnowAtom(1)));
 
@@ -60,7 +69,7 @@ curfit.set(curfit.minus(new SnowAtom(1)));
 
 }
 }
-return new SnowAtom(28).minus(curfit);
+return curfit;
 
 }
 
@@ -82,16 +91,29 @@ snw_print(new SnowAtom("average fitness: ").plus(symbols.get("~averageFitness"))
 
 
 public void dbg_afterTERMINATION(){
-snw_print(new SnowAtom("The best solution found was:\n"));
+snw_printPopulation();
+SnowType  solCount = new SnowAtom(0);;
  for(SnowType org1 : symbols.get("~population")){
 if (((snw_evaluateFitness(org1)).equals(symbols.get("~endFitness"))).getInt() !=0 ){
 
-SnowType  i = SnowAtom.makeNil();;
-for(i = new SnowAtom(0); i.hasApproached(new SnowAtom(7));i.moveTowardsBy(new SnowAtom(7),new SnowAtom(1))){snw_print(new SnowAtom("queen at").plus(i).plus(new SnowAtom(",")).plus((snw_nth(i,symbols.get("organism").getField("chromsome").getField("gene")))).plus(new SnowAtom("\n")));
+solCount.set(solCount.plus(new SnowAtom(1)));
+snw_print(new SnowAtom("Optimal Solution ").plus(solCount).plus(new SnowAtom(" \n")));
+snw_print(new SnowAtom("############################ \n"));
+SnowType  i = SnowAtom.makeNil();SnowType  row = SnowAtom.makeNil();SnowType  col = SnowAtom.makeNil();;
+for(i = new SnowAtom(0); !i.hasApproached(new SnowAtom(8),new SnowAtom(0));i.moveTowardsBy(new SnowAtom(8),new SnowAtom(1),new SnowAtom(0))){row.set(i);
+col.set(snw_nth(org1.getField("chromosome"),i));
+snw_print(new SnowAtom("queen at (").plus(row).plus(new SnowAtom(" , ")).plus(col).plus(new SnowAtom(")\n")));
+
+}snw_print(new SnowAtom("############################ \n"));
 
 }
 }
+if ((solCount.equals(new SnowAtom(0))).getInt() !=0 ){
+
+snw_print(new SnowAtom("No optimal solution was found\n"));
+
 }
+
 }
 
 
