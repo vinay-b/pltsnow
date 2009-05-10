@@ -386,4 +386,16 @@ public class SnowList extends SnowType {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public SnowType decrement() throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SnowType increment() throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

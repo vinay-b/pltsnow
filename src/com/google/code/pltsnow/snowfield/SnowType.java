@@ -88,6 +88,12 @@ public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 
 	public abstract SnowType log_not() 
 			throws UnsupportedOperationException;
+	
+	public abstract SnowType increment()
+		throws UnsupportedOperationException;
+
+	public abstract SnowType decrement() 
+		throws UnsupportedOperationException;
 
 	public abstract boolean hasApproached(SnowType other, SnowType from)
 			throws UnsupportedOperationException;

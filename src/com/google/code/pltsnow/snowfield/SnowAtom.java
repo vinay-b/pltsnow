@@ -501,4 +501,25 @@ public class SnowAtom extends SnowType {
 			throw new UnsupportedOperationException();
 		}
 	}
+
+	@Override
+	public SnowType decrement() throws UnsupportedOperationException {
+		if (isNumeric()) {
+			data = minus(new SnowAtom(1)).get();
+			return this;
+		}
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public SnowType increment()
+			throws UnsupportedOperationException {
+		if (isNumeric()) {
+			data = plus(new SnowAtom(1)).get();
+			return this;
+		}
+
+		throw new UnsupportedOperationException();
+	}
 }

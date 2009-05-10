@@ -123,7 +123,7 @@ public abstract class BaseSnowParser {
 		if(r != null){
 			ret += l.sval + "." + op + "(" + r.sval + ")";
 		}else{
-			// For Unary Operations like logical not
+			// For Unary Operations like logical not,increment,decrement
 			ret += l.sval + "." + op + "()";
 		}
 		return new ParserVal(ret);
