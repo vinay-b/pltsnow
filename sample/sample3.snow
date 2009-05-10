@@ -8,7 +8,7 @@ These two variables define the stopping criteria. You can specify either or both
 
 define chromosome:
  # equivalent to "8 genes"
- 8 gene
+ (gene gene gene gene gene gene gene gene) 
 end
 
 define organism:
