@@ -40,7 +40,6 @@ public class BaseSnowProgram {
 		symbols = new HashMap<String, SnowType>();
 		types   = new HashMap<String, SnowType>();	
 		
-		// TODO: create readonly sybil, such as '@'
 		symbols.put("~maxFitness",       new SnowAtom(-1f));
 		symbols.put("~minFitness",       SnowAtom.makeNil());
 		symbols.put("~averageFitness",       new SnowAtom(new Integer(0)));
@@ -62,12 +61,8 @@ public class BaseSnowProgram {
 
 		types.put("organism", new SnowList(SnowAtom.makeNil()));
 		
+			
 		
-//		types.put("gene", SnowAtom.makeNil());
-		
-		//TODO: add default types to the table
-		
-		//TODO: call all of the defMole_ functions now!
 		callAllDefMoles();
 		
 		// add basic fields to organism
@@ -387,7 +382,7 @@ public class BaseSnowProgram {
 	protected void doTheFitnessEvaluation() {
 		SnowList population  = (SnowList)symbols.get("~population");
 		double maxFitness    = symbols.get("~maxFitness").getDouble();
-		
+		double minFitness = Double.MAX_VALUE;
 		int avgFitness = 0;
 		int c = 0;
 		for (SnowType o : population) {
@@ -402,11 +397,15 @@ public class BaseSnowProgram {
 			{
 				maxFitness =  fitness;
 			}
+			if(fitness < minFitness)
+			{
+				minFitness = fitness;
+			}
 		}
 		if(c > 0)
 			avgFitness /= c;
 		
-		//TODO: record minFitness
+		symbols.put("~minFitness", new SnowAtom(new Float(minFitness)));
 		symbols.put("~maxFitness", new SnowAtom(new Float(maxFitness)));
 		symbols.put("~averageFitness",new SnowAtom(avgFitness));
 	}
@@ -479,57 +478,107 @@ public class BaseSnowProgram {
 		System.out.println(arg.toString());
 	}
 	
-	protected final SnowType first(SnowType list)
+	protected final SnowType snw_first(SnowType list)
 	{
-		//TODO
-		return null;
+		if(list instanceof SnowAtom)
+			return list;
+		else
+			return ((SnowList) list).data.getFirst();
 	}
 	
-	protected final SnowType last(SnowType list)
+	protected final SnowType snw_last(SnowType list)
 	{
-		//TODO
-		return null;
+		if(list instanceof SnowAtom)
+			return list;
+		else
+			return ((SnowList) list).data.getLast();
 	}
 	
-	protected final SnowType max(SnowType list)
+	protected final SnowType snw_max(SnowType list)
 	{
-		//TODO
-		return null;
+		if(list instanceof SnowAtom)
+			return list;
+		else
+		{
+			SnowList l = (SnowList) list;
+			SnowType r = l.data.getFirst();
+			for(SnowType d : l)
+			{
+				if(d.gt(r) != SnowAtom.FALSE)
+				{
+					r = d;
+				}
+			}
+			return r;
+		}
 	}
 	
-	protected final SnowType min(SnowType list)
+	protected final SnowType snw_min(SnowType list)
 	{
-		//TODO
-		return null;
+		if(list instanceof SnowAtom)
+			return list;
+		else
+		{
+			SnowList l = (SnowList) list;
+			SnowType r = l.data.getFirst();
+			for(SnowType d : l)
+			{
+				if(d.lt(r) == (SnowAtom.TRUE))
+				{
+					r = d;
+				}
+			}
+			return r;
+		}
 	}
 	
-	protected final SnowType sum(SnowType list)
+	protected final SnowType snw_sum(SnowType list)
 	{
-		//TODO
-		return null;
+		if(list instanceof SnowAtom)
+			return list;
+		else
+		{
+			SnowList l = (SnowList) list;
+			SnowType r = l.data.getFirst();
+			for(SnowType d : l)
+			{
+				if(d != l.data.getFirst())
+					r = r.plus(d);
+			}
+			return r;
+		}
 	}
 	
-	protected final SnowType average(SnowType list)
+	protected final SnowType snw_average(SnowType list)
 	{
-		//TODO
-		return null;
+		if(list instanceof SnowAtom)
+			return list;
+		else
+		{
+			SnowList l = (SnowList) list;
+			SnowType r = l.data.getFirst();
+			for(SnowType d : l)
+			{
+				if(d != l.data.getFirst())
+					r = r.plus(d);
+			}
+			return r.divide(new SnowAtom(l.getSize()));
+		}
 	}
 	
-	protected final SnowType append(SnowType list,SnowType a)
+	protected final SnowType snw_append(SnowType list,SnowType a)
 	{
-		//TODO
-		return null;
+		return list.push(a);
 	}
 	
-	protected final SnowType pop(SnowType list)
+	protected final SnowType snw_pop(SnowType list)
 	{
-		//TODO
-		return null;
+		return list.pop();
 	}
 	
-	protected final void push(SnowType list, SnowType a)
+	protected final void snw_push(SnowType list, SnowType a)
 	{
-		//TODO
+		list = list.push(a);
 	}
 	
 	protected final SnowType snw_nth(SnowType t, SnowType n)
@@ -548,16 +597,11 @@ public class BaseSnowProgram {
 		r.reverse();
 		return r;
 	}
-	
-	protected final int snw_search(SnowType list, SnowType s)
-	{
-		//TODO
-		return 0;
-	}
-	
+
 	protected final SnowType snw_sort(SnowType list)
 	{
-		return null;
+		//This is not implemented in snow :(
+		throw new UnsupportedOperationException("Sort not implemented :(");
 	}
 	
 	protected final SnowType snw_splice(SnowType ratio, SnowType a1, SnowType a2)
