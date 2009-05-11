@@ -51,6 +51,7 @@ global_variable_assignment	:
 atom			:
 				NUMERIC {$$.sval= "new SnowAtom("+$1.sval+")";}
 			|	STRING {$$.sval= "new SnowAtom("+$1.sval+")";}
+			|  	IDENTIFIER {$$.sval = $1.sval;}
 			;
 
 commaq			:
@@ -59,15 +60,15 @@ commaq			:
 			;
 
 pair			:
-				LPAREN atom commaq NIL RPAREN
-			|	LPAREN atom commaq atom RPAREN
-			|	LPAREN atom commaq pair RPAREN
-			|	LPAREN atoms RPAREN
+				LPAREN atom commaq NIL RPAREN   { $$.sval = $2.sval;}
+			|	LPAREN atom commaq atom RPAREN  { $$.sval = $2.sval + "," + $4.sval;}
+			|	LPAREN atom commaq pair RPAREN  { $$.sval = $2.sval + "," + $4.sval;}
+			|	LPAREN atoms RPAREN 	{ $$.sval = $2.sval;}
 			;
 
 atoms			:
-				atoms commaq atom
-			|	atom
+				atoms commaq atom	{ $$.sval = $1.sval + "," + $3.sval;}
+			|	atom			{ $$.sval = $1.sval;}
 			;
 
 
