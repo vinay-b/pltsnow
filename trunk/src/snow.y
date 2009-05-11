@@ -67,7 +67,7 @@ pair			:
 			;
 
 atoms			:
-				atoms commaq atom	{ $$.sval = $1.sval + "," + $3.sval;}
+				atom commaq atoms	{ $$.sval = $1.sval + "," + $3.sval;}
 			|	atom			{ $$.sval = $1.sval;}
 			;
 
