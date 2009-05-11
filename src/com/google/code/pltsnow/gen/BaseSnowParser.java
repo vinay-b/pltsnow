@@ -78,13 +78,13 @@ public abstract class BaseSnowParser {
 	
 	protected ParserVal Push(ParserVal id, ParserVal exp){
 		String r ="";
-		r += "\ttypes.get(" + id.sval + ").push(" + exp.sval + ")";
+		r += "\t" + id.sval + "=" + id.sval +".push(" + exp.sval + ")";
 		return new ParserVal(r);
 	}
 	
 	protected ParserVal Pop(ParserVal id, ParserVal id2){
 		String r ="";
-		r += "\t" +id2.sval+ " = types.get(" + id.sval + ").pop()";
+		r += "\t" + id2.sval + " = " + id.sval + ".pop()";
 		return new ParserVal(r);
 	}
 
