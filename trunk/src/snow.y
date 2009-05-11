@@ -40,6 +40,8 @@ external_declaration	:
 			|	debug_hook_declarator {$$=$1;}
 			|	global_variable_assignment {$$=$1;}
 			|	NEWLINE {$$=$1;}
+			|       END {}
+			|	error NEWLINE { System.err.println("Line Number:" + lexer.ln + "\t Error:Error in External Definition");}
 			;
 				
 global_variable_assignment	:
@@ -169,6 +171,7 @@ statement		:
 			|	assignment_statement NEWLINE {$$=addLineEnding($1);}
 			|	return_statement NEWLINE {$$=$1;}
 			|	NEWLINE
+			|	error NEWLINE { System.err.println("Line Number:" + lexer.ln + "\t Error:In Statement");}
 			;
 return_statement:
 					RETURN expression {$$.sval = "return " +  $2.sval + ";\n";}
