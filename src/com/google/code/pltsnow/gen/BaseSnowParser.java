@@ -54,6 +54,8 @@ public abstract class BaseSnowParser {
 	}
 	protected ParserVal moleCreateFromPair(ParserVal from)
 	{
+		
+		new ParserVal("\ttypes.get(mName).addList();\n");
 		return new ParserVal("oops");
 	}
 
@@ -71,6 +73,18 @@ public abstract class BaseSnowParser {
 			return new ParserVal(id.sval + ".set(" + rval + ")");
 		else
 			return new ParserVal(id.sval + ".set(" + val.sval + ")");
+	}
+	
+	protected ParserVal Push(ParserVal id, ParserVal exp){
+		String r ="";
+		r += "\ttypes.get(" + id.sval + ").push("+exp.sval+");\n";
+		return new ParserVal(r);
+	}
+	
+	protected ParserVal Pop(ParserVal id, ParserVal id2){
+		String r ="";
+		r += "\t" +id2.sval+ " = types.get(" + id.sval + ").pop();\n";
+		return new ParserVal(r);
 	}
 
 	protected ParserVal declareLocalVariable(ParserVal varName) {
