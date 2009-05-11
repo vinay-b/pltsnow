@@ -14,6 +14,11 @@ ifeq ($(UNAME), Darwin)
 endif
 
 all: yacc lex freezeit
+sample1: sample11 test run
+sample2: sample22 test run
+sample3: sample33 test run
+sample4: sample44 test run
+program: compile test run
 
 yacc:
 	$(BYACC) -J -Jextends=BaseSnowParser -Jpackage=com.google.code.pltsnow.gen $(PARSER)
@@ -26,17 +31,20 @@ lex:
 freezeit: 
 	javac com/google/code/pltsnow/gen/Parser.java
 	
-sample1:
+sample11:
 	java com/google/code/pltsnow/gen/Parser ../sample/sample1.snow > SnowProgramImp.java
 
-sample2:
+sample22:
 	java com/google/code/pltsnow/gen/Parser ../sample/sample2.snow > SnowProgramImp.java
 	
-sample3:
+sample33:
 	java com/google/code/pltsnow/gen/Parser ../sample/sample3.snow > SnowProgramImp.java
 	
-sample4:
+sample44:
 	java com/google/code/pltsnow/gen/Parser ../sample/sample4.snow > SnowProgramImp.java
+
+compile:
+	java com/google/code/pltsnow/gen/Parser $(FILE) > SnowProgramImp.java
 	
 test:
 	javac SnowProgramImp.java
