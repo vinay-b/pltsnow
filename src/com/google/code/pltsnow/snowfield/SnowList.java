@@ -191,13 +191,11 @@ public class SnowList extends SnowType {
 	}
 
 	public Iterator<SnowType> iterator() {
-		// TODO Auto-generated method stub
 		return this.data.iterator();
 	}
 
 	@Override
 	public void set(Object o) {
-		// TODO Auto-generated method stub
 		if (o instanceof SnowList) {
 			SnowList o1 = (SnowList) o;
 			data = o1.data;
@@ -205,20 +203,16 @@ public class SnowList extends SnowType {
 		} else {
 			data.clear();
 			data.add((SnowType) o);
-			// System.out.println("SnowList.set not implemented");
-			// System.exit(-1);
 		}
 	}
 
 	public void setNth(int n, SnowType d) {
 		data.get(n).set(d);
-		// data.set(n, d);
 	}
 
 	@Override
 	public SnowType divide(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().divide(other);
 	}
 
 	@Override
@@ -228,26 +222,22 @@ public class SnowList extends SnowType {
 
 	@Override
 	public SnowType minus(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().minus(other);
 	}
 
 	@Override
 	public SnowType modulo(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().modulo(other);
 	}
 
 	@Override
 	public SnowType plus(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().plus(other);
 	}
 
 	@Override
 	public SnowType times(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().times(other);
 	}
 
 	@Override
@@ -261,82 +251,77 @@ public class SnowList extends SnowType {
 	}
 
 	public static SnowType makeNil() {
-		// TODO Auto-generated method stub
 		return new SnowList(null);
 	}
 
 	public static SnowList makeNilList(int len) {
 		SnowList r = new SnowList(null);
 		r.setSize(len);
-		// System.out.println("Make nil list of " + len);
 		return r;
 	}
 
 	@Override
 	public boolean isNumeric() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public SnowType power(SnowType other_) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+	public SnowType power(SnowType other) throws UnsupportedOperationException {
+		return data.getFirst().power(other);
 	}
 
 	@Override
-	public SnowAtom equals(SnowType other_)
+	public SnowAtom equals(SnowType other)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		if(!(other instanceof SnowList))
+		{
+			return SnowAtom.FALSE;
+		}
+		else
+		{
+			SnowList o = (SnowList) other;
+			if(o.data.equals(data) && o.size==size)
+				return SnowAtom.TRUE;
+		}
+		return SnowAtom.FALSE;
 	}
 
 	@Override
-	public SnowAtom ge(SnowType other_) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+	public SnowType ge(SnowType other) throws UnsupportedOperationException {
+		return data.getFirst().ge(other);
 	}
 
 	@Override
-	public SnowAtom gt(SnowType other_) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+	public SnowType gt(SnowType other) throws UnsupportedOperationException {
+		return data.getFirst().gt(other);
 	}
 
 	@Override
-	public SnowAtom le(SnowType other_) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+	public SnowType le(SnowType other) throws UnsupportedOperationException {
+		return data.getFirst().le(other);
 	}
 
 	@Override
-	public SnowAtom lt(SnowType other_) throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+	public SnowType lt(SnowType other) throws UnsupportedOperationException {
+		return data.getFirst().lt(other);
 	}
 
 	@Override
-	public SnowAtom nequals(SnowType other_)
+	public SnowType nequals(SnowType other)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().nequals(other);
 	}
 
 	@Override
-	/*
-	 * from willi: i dont know what these are...
-	 */
-	public boolean hasApproached(SnowType other_, SnowType from)
+	public boolean hasApproached(SnowType other, SnowType from)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return false;
+		return data.getFirst().hasApproached(other, from);
 	}
 
 	@Override
-	public boolean moveTowardsBy(SnowType other_, SnowType unit_, SnowType from)
+	public boolean moveTowardsBy(SnowType other, SnowType unit, SnowType from)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return false;
+		return data.getFirst().moveTowardsBy(other, unit, from);
 	}
 
 	@Override
@@ -351,12 +336,10 @@ public class SnowList extends SnowType {
 
 	@Override
 	public boolean isNull() {
-		// TODO Auto-generated method stub
 		return data.size() == 0;
 	}
 
 	public SnowType getNth(int i) {
-		// TODO Auto-generated method stub
 		return data.get(i);
 	}
 
@@ -370,32 +353,27 @@ public class SnowList extends SnowType {
 	@Override
 	public SnowType log_and(SnowType other_)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().log_and(other_);
 	}
 
 	@Override
 	public SnowType log_not() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().log_not();
 	}
 
 	@Override
-	public SnowType log_or(SnowType other_)
+	public SnowType log_or(SnowType other)
 			throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().log_or(other);
 	}
 
 	@Override
 	public SnowType decrement() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().decrement();
 	}
 
 	@Override
 	public SnowType increment() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getFirst().increment();
 	}
 }
