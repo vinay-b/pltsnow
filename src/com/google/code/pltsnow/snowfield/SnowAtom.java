@@ -246,12 +246,11 @@ public class SnowAtom extends SnowType {
 	}
 
 	@Override
-	/*
-	 * from willi: this also doesnt make sense? whats the conversion?
-	 */
 	public SnowType push(SnowType other) {
-		// TODO Auto-generated method stub
-		return null;
+		SnowList l = new SnowList();
+		l.push(this);
+		l.push(other);
+		return l;
 	}
 
 	@Override
@@ -275,7 +274,6 @@ public class SnowAtom extends SnowType {
 	}
 
 	public static SnowAtom makeNil() {
-		// TODO Auto-generated method stub
 		return new SnowAtom(null);
 	}
 
@@ -431,14 +429,12 @@ public class SnowAtom extends SnowType {
 
 	@Override
 	public boolean isNull() {
-		// TODO Auto-generated method stub
 		return data == null;
 	}
 
 	@Override
 	public SnowType pop() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+		return SnowList.makeNil();
 	}
 
 	@Override
