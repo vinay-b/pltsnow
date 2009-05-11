@@ -7,7 +7,7 @@ package com.google.code.pltsnow.gen;
 //Authored by Jon, Cesar, Vinay, Sharadh
   /* store a reference to the parser object */
   private static Parser yyparser;
-
+  public int ln = 0;
   /* constructor taking an additional parser object */
   public Yylex(java.io.Reader r, Parser yyparser) {
     this(r);
@@ -19,8 +19,8 @@ digit=		[0-9]
 ncc=		[^#|]|\n
 %%
 
-\#.*\n						{yyparser.yylval = new ParserVal(""); return yyparser.NEWLINE;}
-#\|(#|{ncc})*\|\|*({ncc}(#|{ncc})*\|\|*)*#	{yyparser.yylval = new ParserVal(""); return yyparser.NEWLINE;}
+\#.*\n						{ln++; yyparser.yylval = new ParserVal(""); return yyparser.NEWLINE;}
+#\|(#|{ncc})*\|\|*({ncc}(#|{ncc})*\|\|*)*#	{ln++; yyparser.yylval = new ParserVal(""); return yyparser.NEWLINE;}
 to					{	return yyparser.TO;}
 for				{	return yyparser.FOR;}
 foreach				{	return yyparser.FOREACH;}
@@ -74,6 +74,6 @@ generation|termination|mutation|mating|selection|organismConstructed|organismKil
 \~[a-zA-Z][a-zA-Z0-9]*			{	yyparser.yylval = new ParserVal(yytext()); return yyparser.SYS_IDENTIFIER;}
 \"([^\"]|\\\"|\\n)*\"|\'([^\']|\\\'\\n)*\'	{	yyparser.yylval = new ParserVal(yytext()); return yyparser.STRING;}
 -?{digit}*(\.{digit}+)?			{	yyparser.yylval = new ParserVal(yytext()); return yyparser.NUMERIC;}
-\n					{	yyparser.yylval= new ParserVal("\n"); return yyparser.NEWLINE;}
+\n					{	ln++; yyparser.yylval= new ParserVal("\n"); return yyparser.NEWLINE;}
 [ \t]					{}
 .					{ return 0;}
