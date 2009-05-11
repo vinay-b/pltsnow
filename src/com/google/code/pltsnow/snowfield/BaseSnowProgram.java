@@ -2,16 +2,14 @@ package com.google.code.pltsnow.snowfield;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+
 import java.util.NoSuchElementException;
 import java.util.Random;
 
-//Author - Jon & Willi
+//Original author - Jon & Willi
 public class BaseSnowProgram {
 	private static final int DEFAULT_POPULATION_SIZE   = 100;
 	private static final int DEFAULT_TOP_PARENT_POOL   = 10;
