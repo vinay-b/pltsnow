@@ -162,8 +162,9 @@ logical_or_expression	:
 
 assignment_expression	:
 				compound_identifier EQUALS expression { $$ = assignVariable($1,$3); }
+			|	compound_identifier LIST_OP_PUSH expression { $$ = Push($1,$3); }
+			|	compound_identifier LIST_OP_POP compound_identifier { $$ = Pop($1,$3); }
 			;
-
 
 
 statement		: 
@@ -191,6 +192,7 @@ assignment_statement	:
 expression_statement	:
 				expression {$$=$1;}
 			;
+
 
 expression		:
 				logical_or_expression {$$=$1;}
