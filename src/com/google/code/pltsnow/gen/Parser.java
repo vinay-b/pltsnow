@@ -1381,7 +1381,11 @@ case 105:
 //#line 267 "snow.y"
 { yyval = moleCreateOne(val_peek(1));  }
 break;
-//#line 1306 "Parser.java"
+case 106:
+//#line 268 "snow.y"
+{ yyval = moleCreateFromPair(val_peek(1));  }
+break;
+//#line 1310 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

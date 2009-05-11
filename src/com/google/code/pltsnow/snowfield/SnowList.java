@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
-
+//Author - Jon & Willi
 public class SnowList extends SnowType {
 
 	protected LinkedList<SnowType> data;

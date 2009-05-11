@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
-
+//Author - Jon & Willi
 public class BaseSnowProgram {
 	private static final int DEFAULT_POPULATION_SIZE   = 100;
 	private static final int DEFAULT_TOP_PARENT_POOL   = 10;

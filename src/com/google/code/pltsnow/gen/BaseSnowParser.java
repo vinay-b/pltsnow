@@ -5,8 +5,8 @@ import java.util.HashSet;
 
 import com.google.code.pltsnow.snowfield.SnowType;
 
+//Author - Jon
 public abstract class BaseSnowParser {
-	protected HashSet<String> definedGlobalSymbols;
 
 	protected ParserVal doForeach(ParserVal id, ParserVal in, ParserVal as,
 			ParserVal from, ParserVal stmt) {
@@ -52,6 +52,10 @@ public abstract class BaseSnowParser {
 		return new ParserVal("\ttypes.get(mName).addField(\""
 				+ thingToMake.sval + "\");\n");
 	}
+	protected ParserVal moleCreateFromPair(ParserVal from)
+	{
+		return new ParserVal("oops");
+	}
 
 	protected ParserVal assignVariable(ParserVal id, ParserVal val) {
 		String rval = val.sval;
@@ -81,8 +85,8 @@ public abstract class BaseSnowParser {
 
 	protected ParserVal buildCompoundIdentifier(ParserVal left, ParserVal right) {
 		String l = left.sval;
-		if (definedGlobalSymbols.contains(left.sval))
-			l = "symbols.get(\"" + l + "\")";
+//		if (definedGlobalSymbols.contains(left.sval))
+//			l = "symbols.get(\"" + l + "\")";
 
 		if (right != null) {
 			return new ParserVal(l + ".getField(\"" + right.sval + "\")");
@@ -165,7 +169,7 @@ public abstract class BaseSnowParser {
 
 	protected ParserVal defineMolecule(ParserVal name, ParserVal def) {
 		String r = "";
-		definedGlobalSymbols.add(name.sval);
+//		definedGlobalSymbols.add(name.sval);
 		r += "public void moleDef_" + name.sval + "(){\n";
 		r += "types.put(\"" + name.sval + "\",new SnowAtom(SnowType.NIL));\n";
 		r += "String mName = \"" + name.sval + "\";\n";
@@ -188,7 +192,7 @@ public abstract class BaseSnowParser {
 	}
 
 	public BaseSnowParser() {
-		definedGlobalSymbols = new HashSet<String>();
+//		definedGlobalSymbols = new HashSet<String>();
 	}
 
 	protected void yyerror(String s) {
