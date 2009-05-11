@@ -164,6 +164,8 @@ assignment_expression	:
 				compound_identifier EQUALS expression { $$ = assignVariable($1,$3); }
 			;
 
+
+
 statement		: 
 				expression_statement NEWLINE {$$=addLineEnding($1);}
 			|	selection_statement NEWLINE {$$=$1;}
