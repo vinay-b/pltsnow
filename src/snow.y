@@ -51,7 +51,6 @@ global_variable_assignment	:
 atom			:
 				NUMERIC {$$.sval= "new SnowAtom("+$1.sval+")";}
 			|	STRING {$$.sval= "new SnowAtom("+$1.sval+")";}
-			|  	IDENTIFIER {$$.sval = $1.sval;}
 			;
 
 commaq			:
@@ -162,8 +161,8 @@ logical_or_expression	:
 
 assignment_expression	:
 				compound_identifier EQUALS expression { $$ = assignVariable($1,$3); }
-			|	compound_identifier LIST_OP_PUSH expression { $$ = Push($1,$3); }
-			|	compound_identifier LIST_OP_POP compound_identifier { $$ = Pop($1,$3); }
+			|	identifier LIST_OP_PUSH expression { $$ = Push($1,$3); }
+			|	identifier LIST_OP_POP identifier { $$ = Pop($1,$3); }
 			;
 
 
@@ -274,9 +273,27 @@ molecule_defs		:
 molecule_def		:
 				NUMERIC IDENTIFIER NEWLINE { $$ = moleLazyCreate($1,$2);}
 			|	identifier NEWLINE { $$ = moleCreateOne($1);  }
-			|	pair NEWLINE { $$ = moleCreateFromPair($1);  }
+			|	pairs NEWLINE { $$ = moleCreateFromPair($1);  }
 			|	NEWLINE
 			;
+
+atomss			:
+				IDENTIFIER {$$.sval = $1.sval;}
+			;
+
+pairs			:
+				LPAREN atomss commaq NIL RPAREN   { $$.sval = $2.sval;}
+			|	LPAREN atomss commaq atomss RPAREN  { $$.sval = $2.sval + "," + $4.sval;}
+			|	LPAREN atomss commaq pairs RPAREN  { $$.sval = $2.sval + "," + $4.sval;}
+			|	LPAREN atomsss RPAREN 	{ $$.sval = $2.sval;}
+			;
+
+atomsss			:
+				atomss commaq atomsss	{ $$.sval = $1.sval + "," + $3.sval;}
+			|	atomss			{ $$.sval = $1.sval;}
+			;
+
+
 
 
 %%
