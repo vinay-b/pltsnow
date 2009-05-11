@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
-//Author - Jon & Willi
+//Original author - Jon & Willi
 public class SnowAtom extends SnowType {
 	public static final SnowAtom TRUE = new SnowAtom(1);
 	public static final SnowAtom FALSE = new SnowAtom(0);

@@ -2,11 +2,10 @@ package com.google.code.pltsnow.snowfield;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
-//Author - Jon & Willi
+//Original author - Jon & Willi
 public class SnowList extends SnowType {
 
 	protected LinkedList<SnowType> data;

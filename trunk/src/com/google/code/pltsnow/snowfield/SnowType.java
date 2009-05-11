@@ -1,10 +1,7 @@
 package com.google.code.pltsnow.snowfield;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Set;
-//Author - Jon & Willi
+//Original author - Jon & Willi
 public abstract class SnowType implements Iterable<SnowType>, Cloneable {
 
 	protected String complexTypeName;
