@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
+//Author - Jon & Willi
 public class SnowAtom extends SnowType {
 	public static final SnowAtom TRUE = new SnowAtom(1);
 	public static final SnowAtom FALSE = new SnowAtom(0);
@@ -408,10 +409,13 @@ public class SnowAtom extends SnowType {
 	 */
 	public boolean hasApproached(SnowType other, SnowType from)
 			throws UnsupportedOperationException {
-		if(from.getDouble() > other.getDouble()) //We want to check for 
+		if (from.getDouble() > other.getDouble()) // We want to check for
 			return getDouble() <= other.getDouble();
-		else //We are counting up
-			return getDouble() >= other.getDouble(); //do not change this without talking to me. - jb
+		else
+			// We are counting up
+			return getDouble() >= other.getDouble(); // do not change this
+														// without talking to
+														// me. - jb
 	}
 
 	@Override
@@ -513,8 +517,7 @@ public class SnowAtom extends SnowType {
 	}
 
 	@Override
-	public SnowType increment()
-			throws UnsupportedOperationException {
+	public SnowType increment() throws UnsupportedOperationException {
 		if (isNumeric()) {
 			data = plus(new SnowAtom(1)).get();
 			return this;

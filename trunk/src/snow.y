@@ -3,6 +3,7 @@ import java.lang.Math;
 import java.io.*;
 import java.util.StringTokenizer;
 import java.util.Scanner;
+//Authored by Jon, Cesar, Vinay, Sharadh
 %}
 
 
@@ -265,7 +266,7 @@ molecule_defs		:
 molecule_def		:
 				NUMERIC IDENTIFIER NEWLINE { $$ = moleLazyCreate($1,$2);}
 			|	identifier NEWLINE { $$ = moleCreateOne($1);  }
-			|	pair NEWLINE 
+			|	pair NEWLINE { $$ = moleCreateFromPair($1);  }
 			|	NEWLINE
 			;
 
